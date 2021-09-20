@@ -181,7 +181,7 @@ stages:
             steps:
             - task: AzureAppServiceManage@0
               inputs:
-                azureSubscription: 'Traineeship subscription connection'
+                azureSubscription: 'Traineeship(1)(ac58b4ec-0810-44c4-9167-58a33cd159cd)'
                 Action: 'Swap Slots'
                 WebAppName: 'JAVA-FDD-EINDGEBRUIKERSTEST-CIMSOLUTIONS'
                 ResourceGroupName: 'csprsg-eindgebruikertest'
