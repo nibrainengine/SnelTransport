@@ -19,7 +19,7 @@ data "azurerm_client_config" "current" {}
 
 
 
-resource "azurerm_app_service" "snel" {
+resource "azurerm_app_service" "fdd" {
   name                = "SnelTransport"
   location            = "westeurope"
   resource_group_name = "csprsg-Traineeship"
