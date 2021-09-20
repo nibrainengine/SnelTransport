@@ -4,7 +4,6 @@ provider "azurerm" {
     version = "2.46"
     features {}
     skip_provider_registration = true
-    lock=false
 }
 
 
