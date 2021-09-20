@@ -59,7 +59,7 @@ stages:
                 inputs:
                   provider: 'azurerm'
                   command: 'init'
-                  backendServiceArm: 'Terraform SP'
+                  backendServiceArm: 'Traineeship-Terraform-connection'
                   backendAzureRmResourceGroupName: 'csprg-Terraform'
                   backendAzureRmStorageAccountName: 'terraformaccounteindtest'
                   backendAzureRmContainerName: 'terraformstoragecontainer'
@@ -70,14 +70,14 @@ stages:
                 inputs:
                   provider: 'azurerm'
                   command: 'plan'
-                  environmentServiceNameAzureRM: 'Terraform SP'
+                  environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
               
               - task: TerraformTaskV2@2
                 displayName: 'apply'
                 inputs:
                   provider: 'azurerm'
                   command: 'apply'
-                  environmentServiceNameAzureRM: 'Terraform SP'
+                  environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
 
               
 
