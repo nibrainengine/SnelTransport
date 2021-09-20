@@ -156,9 +156,9 @@ stages:
             - task: AzureWebApp@1
               displayName: 'Azure Web App Deploy: SNELTRANSPORT'
               inputs:
-                azureSubscription: 'Traineeship subscription connection'
+                azureSubscription: 'Traineeship(ac58b4ec-0810-44c4-9167-58a33cd159cd)'
                 appType: 'webAppLinux'
-                appName: 'JAVA-FDD-EINDGEBRUIKERSTEST-CIMSOLUTIONS'
+                appName: 'SNELTRANSPORT'
                 deployToSlotOrASE: true
                 resourceGroupName: 'csprsg-eindgebruikertest'
                 slotName: 'blue-deployment'
