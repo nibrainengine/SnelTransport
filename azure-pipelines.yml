@@ -156,7 +156,7 @@ stages:
             - task: AzureWebApp@1
               displayName: 'Azure Web App Deploy: SNELTRANSPORT'
               inputs:
-                azureSubscription: 'Traineeship(ac58b4ec-0810-44c4-9167-58a33cd159cd)'
+                azureSubscription: 'Traineeship-service-connection'
                 appType: 'webAppLinux'
                 appName: 'SNELTRANSPORT'
                 deployToSlotOrASE: true
