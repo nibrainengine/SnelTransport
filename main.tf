@@ -4,6 +4,7 @@ provider "azurerm" {
     version = "2.46"
     features {}
     skip_provider_registration = true
+    lock=false
 }
 
 
@@ -19,7 +20,7 @@ data "azurerm_client_config" "current" {}
 
 
 
-resource "azurerm_app_service" "fdd" {
+resource "azurerm_app_service" "snel" {
   name                = "SnelTransport"
   location            = "westeurope"
   resource_group_name = "csprsg-Traineeship"
