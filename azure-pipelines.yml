@@ -183,6 +183,6 @@ stages:
               inputs:
                 azureSubscription: 'Traineeship(1)(ac58b4ec-0810-44c4-9167-58a33cd159cd)'
                 Action: 'Swap Slots'
-                WebAppName: 'JAVA-FDD-EINDGEBRUIKERSTEST-CIMSOLUTIONS'
-                ResourceGroupName: 'csprsg-eindgebruikertest'
+                WebAppName: 'SNELTRANSPORT'
+                ResourceGroupName: 'csprsg-Traineeship'
                 SourceSlot: 'blue-deployment'
