@@ -93,7 +93,7 @@ stages:
       
       - task: SonarCloudPrepare@1
         inputs:
-          SonarCloud: 'Sonarcloud-connection'
+          SonarCloud: 'Traineeship-SonarCloud-Connection'
           organization: 'cim-cc-devops'
           scannerMode: 'Other'
           extraProperties: |
@@ -154,7 +154,7 @@ stages:
           deploy:
             steps:
             - task: AzureWebApp@1
-              displayName: 'Azure Web App Deploy: CIMSOLUTIONS-FDD-JAVA-SPRING'
+              displayName: 'Azure Web App Deploy: SNELTRANSPORT'
               inputs:
                 azureSubscription: 'Traineeship subscription connection'
                 appType: 'webAppLinux'
