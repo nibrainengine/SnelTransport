@@ -160,7 +160,7 @@ stages:
                 appType: 'webAppLinux'
                 appName: 'SNELTRANSPORT'
                 deployToSlotOrASE: true
-                resourceGroupName: 'csprsg-eindgebruikertest'
+                resourceGroupName: 'csprsg-Traineeship'
                 slotName: 'blue-deployment'
                 package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
                 runtimeStack: 'TOMCAT|9.0-java11'
