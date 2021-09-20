@@ -20,7 +20,7 @@ data "azurerm_client_config" "current" {}
 
 
 resource "azurerm_app_service" "fdd" {
-  name                = "JAVA-FDD-EINDGEBRUIKERSTEST-CIMSOLUTIONS"
+  name                = "SnelTransport"
   location            = "westeurope"
   resource_group_name = "csprsg-Traineeship"
   #Please have a look at the "serverfarms" part of the app_service_plan_id. The standard id that azure generates actually contains "serverFarms" but that breaks the terraform
