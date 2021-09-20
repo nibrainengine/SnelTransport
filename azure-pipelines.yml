@@ -136,7 +136,7 @@ stages:
       
       - task: sonarcloud-buildbreaker@2
         inputs:
-          SonarCloud: 'Sonarcloud-connection'
+          SonarCloud: 'Traineeship-SonarCloud-Connection'
           organization: 'cim-cc-devops'
 
   - stage: Deploy_stage
