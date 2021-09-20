@@ -27,7 +27,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
-          backendServiceArm: 'Terraform SP'
+          backendServiceArm: 'Traineeship-Terraform-connection'
           backendAzureRmResourceGroupName: 'csprg-Terraform'
           backendAzureRmStorageAccountName: 'terraformaccounteindtest'
           backendAzureRmContainerName: 'terraformstoragecontainer'
