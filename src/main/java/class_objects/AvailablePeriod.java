@@ -9,4 +9,5 @@ public class AvailablePeriod {
     private Date startTime;
     private Date endTime;
     private double price;
+    private Boolean isApproved;
 }

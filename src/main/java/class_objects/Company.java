@@ -9,7 +9,9 @@ public class Company {
     private String name;
     private String email;
     private Boolean emailConfirmed;
+    private Boolean isDisabled;
     private String phone;
+    private int loadInTime;
     private int kvkNumber;
     private List<CompanyRepresentative> companyRepresentatives;
     private List<CompanyWorkPeriod> companyWorkPeriods;

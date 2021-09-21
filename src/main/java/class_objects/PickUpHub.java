@@ -4,6 +4,10 @@ import java.util.List;
 
 public class PickUpHub {
 
+    enum VehicleType{
+
+    }
+
     //declare variables
     private int id;
     private Address address;

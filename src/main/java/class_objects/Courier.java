@@ -4,11 +4,15 @@ import java.util.List;
 
 public class Courier extends User{
 
+    enum VehicleType{
+
+    }
+
     //declare variables
     private int id;
     private int kvkNumber;
-    private List<CourierZonePoint> courierZonePoints;
-    private List<Vehicle> vehicles;
+    private List<Zone> zones;
+    private List<VehicleType> vehicles;
     private List<Schedule> schedules;
     private List<AvailablePeriod> availablePeriods;
 }

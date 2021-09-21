@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class OrderItem {
 
+    enum OrderStatus{
+
+    }
+
     //declare variables
     private int id;
     private int quantity;
