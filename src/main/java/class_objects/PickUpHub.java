@@ -11,6 +11,7 @@ public class PickUpHub {
     //declare variables
     private int id;
     private Address address;
+    private Boolean isDisabled;
     private List<OrderItem> orderItems;
     private List<VehicleType> vehicleTypes;
 }
