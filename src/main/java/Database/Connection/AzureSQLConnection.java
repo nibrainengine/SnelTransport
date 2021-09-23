@@ -21,7 +21,7 @@ public class AzureSQLConnection {
      */
     public static Connection getConnection() throws ClassNotFoundException, SQLException, IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream(new File("./SnelTransport/credentials.properties")));
+        properties.load(new FileInputStream(new File("credentials.properties")));
         Class.forName("net.sourceforge.jtds.jdbc.Driver");
         String url = String.format("jdbc:jtds:sqlserver://sneltransport.database.windows.net:1433/SnelTransportDB;user="+properties.getProperty("username")+";password="+properties.getProperty("password")+";encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;ssl=request");
         Connection conn = DriverManager.getConnection(url);
