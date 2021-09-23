@@ -27,10 +27,7 @@ stages:
         displayName: 'Maven Package'
         inputs:
           mavenPomFile: 'pom.xml'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          codeCoverageToolOption: 'JaCoCo'
-          codeCoverageRestoreOriginalPomXml: true
+          publishJUnitResults: false
           javaHomeOption: 'JDKVersion'
           mavenVersionOption: 'Default'
           mavenAuthenticateFeed: false
