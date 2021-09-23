@@ -9,4 +9,9 @@ public class Zone {
     private String zoneTitle;
     private Boolean isApproved;
     private List<ZonePoint> zonePoints;
+
+    public Zone(int id, String zoneTitle) {
+        this.id = id;
+        this.zoneTitle = zoneTitle;
+    }
 }
