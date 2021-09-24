@@ -15,5 +15,5 @@ public interface RouteDAO {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    ArrayList<Route> getRoutes(int courierId) throws SQLException, IOException, ClassNotFoundException;
+    ArrayList<Route> getRoutes(int courierId, int scheduleId) throws SQLException, IOException, ClassNotFoundException;
 }

@@ -23,10 +23,14 @@ public class AzureSQLConnection {
 
         //Properties properties = new Properties();
         //properties.load(new FileInputStream(new File("credentials.properties")));
-
+        try{
         Class.forName("net.sourceforge.jtds.jdbc.Driver");
         String url = String.format("jdbc:jtds:sqlserver://sneltransport.database.windows.net:1433/SnelTransportDB;user=team-so-21@cimsolutions.nl@sneltransport;password=C!M$OL2021;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;ssl=request");
         Connection conn = DriverManager.getConnection(url);
         return conn;
+        }catch (Exception e){
+            System.out.println("Database connection error: " + e);
+            return null;
+        }
     }
 }
