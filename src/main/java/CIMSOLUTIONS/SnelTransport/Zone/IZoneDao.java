@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IZoneDao {
-    Zone save(Zone zone);
-    ArrayList<Zone> getAll() throws SQLException, ClassNotFoundException;
+    Zone save(Zone zone) throws Exception;
+    ArrayList<Zone> getAll() throws Exception;
     Zone update(String id, Zone zone);
     Zone delete(Zone zone);
 }

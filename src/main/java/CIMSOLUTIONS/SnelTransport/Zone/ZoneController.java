@@ -12,24 +12,33 @@ import java.util.ArrayList;
 public class ZoneController {
     private ZoneDao zoneDao = new ZoneDao();
 
-        @PostMapping("/zone")
-        public Zone postZone(@RequestBody Zone zone) {
-            try {
-                zoneDao.save(zone);
-                return zone;
-            } catch (Exception e) {
-                return null;
-            }
+    /**
+     * Add a new zone
+     *
+     * @param zone zone in JSON
+     * @return Http response with Arraylist<Zone>
+     */
+    @PostMapping("/zone")
+    public ResponseEntity<Zone> postZone(@RequestBody Zone zone) {
+        try {
+            zoneDao.save(zone);
+            return ResponseEntity.ok(zone);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
 
-
+    /**
+     * Get all zones
+     *
+     * @return Http response with Arraylist<Zone>
+     */
     @GetMapping("/zone")
-    public ResponseEntity getAllZones() {
+    public ResponseEntity<ArrayList<Zone>> getAllZones() {
         try {
             ArrayList<Zone> zones = zoneDao.getAll();
             return ResponseEntity.ok(zones);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

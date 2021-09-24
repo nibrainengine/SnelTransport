@@ -14,4 +14,16 @@ public class Zone {
         this.id = id;
         this.zoneTitle = zoneTitle;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getZoneTitle() {
+        return zoneTitle;
+    }
+
+    public void setZoneTitle(String zoneTitle) {
+        this.zoneTitle = zoneTitle;
+    }
 }
