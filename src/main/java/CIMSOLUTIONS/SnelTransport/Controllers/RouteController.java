@@ -1,12 +1,12 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
-import Database.DAO.RouteDAO;
-import Database.DAOImplementation.RouteDAOImpl;
-import class_objects.OrderItem;
-import class_objects.Product;
-import class_objects.Route;
+import CIMSOLUTIONS.SnelTransport.DAO.RouteDAO;
+import CIMSOLUTIONS.SnelTransport.Services.RouteService;
+import CIMSOLUTIONS.SnelTransport.class_objects.OrderItem;
+import CIMSOLUTIONS.SnelTransport.class_objects.Route;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -15,12 +15,14 @@ import java.sql.SQLException;
 @RestController
 public class RouteController {
 
+    @Autowired
+    RouteService routeService;
+
     @CrossOrigin
     @GetMapping("my-routes/{courierid}/{scheduleid}")
-    public String getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) throws SQLException, IOException, ClassNotFoundException {
+    public String getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) {
         JSONArray jsonArray = new JSONArray();
-        RouteDAO routeDAO = new RouteDAOImpl();
-        for (Route route : routeDAO.getRoutes(courierid, scheduleid)){
+        for (Route route : routeService.get(courierid, scheduleid)){
             JSONObject json = new JSONObject();
             json.put("id", route.getId());
             json.put("index", route.getIndex());
@@ -56,22 +58,21 @@ public class RouteController {
                 jsonOrderItem.put("orderStatus", orderItem.getOrderStatus());
                 jsonOrderItem.put("quantity", orderItem.getQuantity());
 
-//                JSONObject jsonDeliveryAdress = new JSONObject();
-//                jsonDeliveryAdress.put("id", orderItem.getDeliveryAddress().getId());
-//                jsonDeliveryAdress.put("city", orderItem.getDeliveryAddress().getCity());
-//                jsonDeliveryAdress.put("country", orderItem.getDeliveryAddress().getCountry());
-//                jsonDeliveryAdress.put("street", orderItem.getDeliveryAddress().getStreet());
-//                jsonDeliveryAdress.put("housenumber", orderItem.getDeliveryAddress().getHouseNumber());
-//                jsonDeliveryAdress.put("zipcode", orderItem.getDeliveryAddress().getZipCode());
-//                jsonDeliveryAdress.put("latitude", orderItem.getDeliveryAddress().getLatitude());
-//                jsonDeliveryAdress.put("longitude", orderItem.getDeliveryAddress().getLongitude());
-//                jsonOrderItem.put("deliveryAdress", jsonDeliveryAdress);
+                JSONObject jsonDeliveryAdress = new JSONObject();
+                jsonDeliveryAdress.put("id", orderItem.getDeliveryAddress().getId());
+                jsonDeliveryAdress.put("city", orderItem.getDeliveryAddress().getCity());
+                jsonDeliveryAdress.put("country", orderItem.getDeliveryAddress().getCountry());
+                jsonDeliveryAdress.put("street", orderItem.getDeliveryAddress().getStreet());
+                jsonDeliveryAdress.put("housenumber", orderItem.getDeliveryAddress().getHouseNumber());
+                jsonDeliveryAdress.put("zipcode", orderItem.getDeliveryAddress().getZipCode());
+                jsonDeliveryAdress.put("latitude", orderItem.getDeliveryAddress().getLatitude());
+                jsonDeliveryAdress.put("longitude", orderItem.getDeliveryAddress().getLongitude());
+                jsonOrderItem.put("deliveryAdress", jsonDeliveryAdress);
 
                 JSONObject jsonProduct = new JSONObject();
                 jsonProduct.put("id", orderItem.getProduct().getId());
                 jsonProduct.put("name", orderItem.getProduct().getName());
                 jsonProduct.put("size", orderItem.getProduct().getSize());
-//                jsonProduct.put("suplierNumberIdentification", orderItem.getProduct().getSuplierNumberIdentification());
                 jsonProduct.put("price", orderItem.getProduct().getPrice());
                 jsonProduct.put("category", orderItem.getProduct().getCategories());
                 jsonOrderItem.put("product", jsonProduct);

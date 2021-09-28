@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!src/main/java/Database/Connection/credentials.properties
+!src/main/java/CIMSOLUTIONS/SnelTransport/CIMSOLUTIONS.SnelTransport.Database/Connection/credentials.properties
 
 ### STS ###
 .apt_generated

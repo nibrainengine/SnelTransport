@@ -1,18 +1,6 @@
-package class_objects;
-
-import java.util.List;
+package CIMSOLUTIONS.SnelTransport.class_objects;
 
 public class Product {
-
-    enum ProductSize{
-        Klein,
-        Middel,
-        Groot
-    }
-
-    public enum Category{
-
-    }
 
     //declare variables
     private int id;
@@ -22,36 +10,51 @@ public class Product {
     private String size;
     private String categories;
 
-    public Product(int id, String name, Double price, String size, String categories) {
-        this.id = id;
-        //this.suplierNumberIdentification = suplierNumberIdentification;
-        this.name = name;
-        this.price = price;
-        this.size = size;
-        this.categories = categories;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSuplierNumberIdentification() {
         return suplierNumberIdentification;
     }
 
+    public void setSuplierNumberIdentification(String suplierNumberIdentification) {
+        this.suplierNumberIdentification = suplierNumberIdentification;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getPrice() {
         return price;
     }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public String getSize() {
         return size;
     }
 
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public String getCategories() {
         return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }
