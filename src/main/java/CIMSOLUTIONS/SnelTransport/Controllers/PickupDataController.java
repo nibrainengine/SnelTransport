@@ -1,14 +1,13 @@
-package CIMSOLUTIONS.SnelTransport;
+package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DAO.PickuphubDAO;
 import CIMSOLUTIONS.SnelTransport.Mock.PickupAPI;
 import CIMSOLUTIONS.SnelTransport.Mock.PickupProduct;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -18,31 +17,14 @@ import java.util.Scanner;
 
 @RestController
 @RequestMapping("/api")
-public class PickupData {
-    public PickupData() {
-    }
-
-
-    //RETURNS A JSON OBJECT OF A FAKE PICKUP HUB
-    @GetMapping("/MockPickupData")
-    @ResponseBody
-    public String getMockedPickupData() throws JSONException {
-        PickupAPI pickupAPI = new PickupAPI();
-        JSONArray jsonA = new JSONArray();
-        for(PickupProduct product : pickupAPI.getProducts()){
-            JSONObject json = new JSONObject();
-            json.put("produtID", product.getProductID());
-            json.put("arrivalDate", product.getArrivedOn());
-            jsonA.put(json);
-        }
-        return jsonA.toString();
-    }
-
-
-    @GetMapping("/GetPickupData")
-    @ResponseBody
+public class PickupDataController {
+    PickuphubDAO pickuphubDAO = new PickuphubDAO();
+    @CrossOrigin
+    @ResponseBody()
+    @RequestMapping(value = "/GetPickupData", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getPickupData() throws IOException, JSONException {
         // Pretend we get stuff from the database HERE
+        pickuphubDAO.getURLS();
         ArrayList<String> pickUpAPIs = new ArrayList<>();
         pickUpAPIs.add("http://localhost:8080/api/MockPickupData");
         pickUpAPIs.add("http://localhost:8080/api/MockPickupData");
@@ -63,8 +45,9 @@ public class PickupData {
                 }
                 sc.close();
                 JSONArray jsonArr = new JSONArray(line.toString());
-                JSONObject singleResponse = new JSONObject().put(pickupAPI, jsonArr);
-                responses.put(singleResponse);
+                JSONObject pickupURL = new JSONObject().put("url", pickupAPI);
+                pickupURL.put("products", jsonArr);
+                responses.put(pickupURL);
             }
             else {
                 JSONObject singleResponse = new JSONObject().put(pickupAPI, "Error code: " +responseCode);

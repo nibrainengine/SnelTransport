@@ -17,13 +17,6 @@ public class SnelTransportApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SnelTransportApplication.class, args);
 
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss z");
-//		PickupAPI testPickup = new PickupAPI();
-//		for(PickupProduct product : testPickup.getProducts()){
-//			System.out.println("ProductID: " + product.getProductID() + " arrived on date: " + formatter.format(product.getArrivedOn()));
-//		}
-//		PickupData pickupData = new PickupData();
-//		System.out.println(pickupData.getMockedPickupData());
 
 	}
 

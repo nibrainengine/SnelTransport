@@ -1,9 +1,8 @@
 package CIMSOLUTIONS.SnelTransport.Mock;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 public class PickupProduct {
     private String productID;
@@ -11,9 +10,7 @@ public class PickupProduct {
 
     public PickupProduct() {
         Random random = new Random();
-        byte[] array = new byte[6]; // productID is 6 random characters
-        random.nextBytes(array);
-        String randomString = new String(array, StandardCharsets.UTF_8);
+        String randomString = UUID.randomUUID().toString();
         int daysBack = random.nextInt(10);
         // Every day is 86400000 milliseconds, I grab the current time when generating minus daysBack to generate the date on which this product arrived
         this.arrivedOn = new Date(System.currentTimeMillis() - (daysBack*86400000)) ;
