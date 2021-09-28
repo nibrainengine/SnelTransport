@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
+import class_objects.PickUpHub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,8 +18,13 @@ public class PickuphubDAO {
     }
 
     public List<String> getURLS() {
-        String query = "SELECT url FROM pickUpHub WHERE url IS NOT NULL";
+        String query = "SELECT url FROM pickUpHub WHERE url IS NOT NULL AND isDisabled = 'False'";
         return jdbcTemplate.queryForList(query, String.class);
+    }
+
+    public void postPickupHub(PickUpHub pickupHub){
+        String query = "INSERT INTO pickUpHub VALUES(?,?,?)";
+        jdbcTemplate.update(query, pickupHub.getAddress(), pickupHub.getDisabled(), pickupHub.getUrl());
     }
 
     public void insertDummies(){
