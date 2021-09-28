@@ -6,6 +6,7 @@ import CIMSOLUTIONS.SnelTransport.Mock.PickupProduct;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,22 +14,21 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @RestController
 @RequestMapping("/api")
+
 public class PickupDataController {
-    PickuphubDAO pickuphubDAO = new PickuphubDAO();
+
+    @Autowired
+    PickuphubDAO pickuphubDAO;
     @CrossOrigin
     @ResponseBody()
     @RequestMapping(value = "/GetPickupData", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getPickupData() throws IOException, JSONException {
-        // Pretend we get stuff from the database HERE
-        pickuphubDAO.getURLS();
-        ArrayList<String> pickUpAPIs = new ArrayList<>();
-        pickUpAPIs.add("http://localhost:8080/api/MockPickupData");
-        pickUpAPIs.add("http://localhost:8080/api/MockPickupData");
-        //Add their URLs to this list, later names aswell for more clarity
+        List<String> pickUpAPIs = pickuphubDAO.getURLS();
 
         JSONArray responses = new JSONArray();
         for(String pickupAPI : pickUpAPIs) {
