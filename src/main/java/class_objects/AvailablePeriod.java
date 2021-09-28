@@ -6,6 +6,7 @@ public class AvailablePeriod {
 
     //declare variables
     private int id;
+    private int courierId;
     private Date startTime;
     private Date endTime;
     private double price;
@@ -17,6 +18,14 @@ public class AvailablePeriod {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCourierId() {
+        return courierId;
+    }
+
+    public void setCourierId(int courierId) {
+        this.courierId = courierId;
     }
 
     public Date getStartTime() {

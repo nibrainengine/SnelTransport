@@ -1,14 +1,10 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
 import class_objects.AvailablePeriod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,30 +12,20 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class CourierAvailabilityController {
 
-    @GetMapping("/{id}")
-    public List<AvailablePeriod> get(@PathVariable int id) {
-        System.out.println("GET!");
-        AvailablePeriod availablePeriod = new AvailablePeriod();
-        availablePeriod.setId(id);
-        availablePeriod.setStartTime(new Date());
+    private CourierAvailabilityService courierAvailabilityService;
 
-        // TODO remove test data:
-        Date endDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(endDate);
-        calendar.add(Calendar.HOUR, 2);
-        endDate = calendar.getTime();
+    @Autowired
+    public void setInjectedBean(CourierAvailabilityService courierAvailabilityService) {
+        this.courierAvailabilityService = courierAvailabilityService;
+    }
 
-        availablePeriod.setEndTime(endDate);
-        availablePeriod.setPrice(11.9);
-        availablePeriod.setApproved(true);
-        return Collections.singletonList(availablePeriod);
+    @GetMapping("/{courierId}")
+    public List<AvailablePeriod> get(@PathVariable int courierId) {
+        return courierAvailabilityService.get(courierId);
     }
 
     @PostMapping()
     public int post(@RequestBody AvailablePeriod availablePeriod) {
-        availablePeriod.setId(3);
-        System.out.println(availablePeriod.toString());
-        return availablePeriod.getId();
+        return courierAvailabilityService.create(availablePeriod);
     }
 }
