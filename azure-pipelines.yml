@@ -100,8 +100,8 @@ stages:
             # Additional properties that will be passed to the scanner,
             # Put one key=value per line, example:
             # sonar.exclusions=**/*.bin
-            sonar.projectKey=CIM-CC-DevOps_FDD_Spring2
-            sonar.projectName=FDD_Spring
+            sonar.projectKey=CIM-CC-DevOps_SnelTransport_Java
+            sonar.projectName=SnelTransport_Java
       - task: Maven@3
         displayName: 'Maven Package'
         inputs:
