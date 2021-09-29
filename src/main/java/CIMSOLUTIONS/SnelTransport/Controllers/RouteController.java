@@ -1,6 +1,5 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
-import CIMSOLUTIONS.SnelTransport.DAO.RouteDAO;
 import CIMSOLUTIONS.SnelTransport.Services.RouteService;
 import CIMSOLUTIONS.SnelTransport.class_objects.OrderItem;
 import CIMSOLUTIONS.SnelTransport.class_objects.Route;
@@ -9,8 +8,6 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 
 @RestController
 public class RouteController {
@@ -18,6 +15,16 @@ public class RouteController {
     @Autowired
     RouteService routeService;
 
+    /**
+     * This function fetches the Route object from the database and converts it in a json format. This json format is an
+     * array of Routes, each route had: an id, index, startAddress (each Address containts: id, city, street, country, housenumber, zipcode,
+     * longitude and latitude), endAddress and a json array with OrderItems.
+     *
+     * path can be: my-routes/1/1
+     * @param courierid
+     * @param scheduleid
+     * @return
+     */
     @CrossOrigin
     @GetMapping("my-routes/{courierid}/{scheduleid}")
     public String getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) {
@@ -39,14 +46,14 @@ public class RouteController {
             json.put("startAdress", jsonStartAdress);
 
             JSONObject jsonEndAdress = new JSONObject();
-            jsonEndAdress.put("id", route.getStartAddress().getId());
-            jsonEndAdress.put("city", route.getStartAddress().getCity());
-            jsonEndAdress.put("country", route.getStartAddress().getCountry());
-            jsonEndAdress.put("street", route.getStartAddress().getStreet());
-            jsonEndAdress.put("housenumber", route.getStartAddress().getHouseNumber());
-            jsonEndAdress.put("zipcode", route.getStartAddress().getZipCode());
-            jsonEndAdress.put("latitude", route.getStartAddress().getLatitude());
-            jsonEndAdress.put("longitude", route.getStartAddress().getLongitude());
+            jsonEndAdress.put("id", route.getEndAddress().getId());
+            jsonEndAdress.put("city", route.getEndAddress().getCity());
+            jsonEndAdress.put("country", route.getEndAddress().getCountry());
+            jsonEndAdress.put("street", route.getEndAddress().getStreet());
+            jsonEndAdress.put("housenumber", route.getEndAddress().getHouseNumber());
+            jsonEndAdress.put("zipcode", route.getEndAddress().getZipCode());
+            jsonEndAdress.put("latitude", route.getEndAddress().getLatitude());
+            jsonEndAdress.put("longitude", route.getEndAddress().getLongitude());
             json.put("endAdress", jsonEndAdress);
 
             JSONArray jsonArrayOrderItems = new JSONArray();

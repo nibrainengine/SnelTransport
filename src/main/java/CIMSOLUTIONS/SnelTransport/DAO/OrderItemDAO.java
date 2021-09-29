@@ -17,6 +17,14 @@ public class OrderItemDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * This function fetches all orderItems of a specific Route by inserting the courierid, scheduleid and index in the query.
+     * It returns a List of orderItems.
+     * @param index
+     * @param courierId
+     * @param scheduleId
+     * @return
+     */
     public List<OrderItem> getOrderItems(int index, int courierId, int scheduleId) {
         try {
             String queryOrderItems = "select distinct orderItem.id as id, orderItem.quantity as quantity, orderItem.totalPrice as price, orderItem.eta as eta, orderStatus.name as orderStatus from courier, scheduleRoute, address, orderItem, orderStatus, courierSchedule where courier.userId = "+courierId+" and courierSchedule.id = "+scheduleId+" and courierSchedule.courierId = courier.userId and courierSchedule.id = scheduleRoute.courierScheduleId and scheduleRoute.indexOrder = "+index+" and scheduleRoute.orderItemsId = orderItem.id and orderItem.orderStatusId = orderStatus.id";

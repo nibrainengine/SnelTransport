@@ -12,6 +12,7 @@ public class Address {
     private Double longitude;
     private Double latitude;
 
+    //getters and setters
     public int getId() {
         return id;
     }

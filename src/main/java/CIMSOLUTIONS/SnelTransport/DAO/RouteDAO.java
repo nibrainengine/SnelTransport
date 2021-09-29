@@ -17,6 +17,12 @@ public class RouteDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * This function returns a list of routes for a specific courier on a specific day/schedule by inserting a courierid and scheduleid in the query.
+     * @param courierId
+     * @param scheduleId
+     * @return
+     */
     public List<Route> get(int courierId, int scheduleId) {
         try {
             String queryRoute = "select distinct scheduleRoute.courierScheduleId as id, scheduleRoute.indexOrder as [index] from courier, courierSchedule, scheduleRoute where courier.userId = " + courierId + " and courierSchedule.id = " + scheduleId + " and courierSchedule.courierId = courier.userId";

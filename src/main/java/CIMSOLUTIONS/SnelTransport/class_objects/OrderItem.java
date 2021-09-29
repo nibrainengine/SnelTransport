@@ -14,6 +14,7 @@ public class OrderItem {
     private Product product;
     private Address deliveryAddress;
 
+    //getters and setters
     public int getId() {
         return id;
     }

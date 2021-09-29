@@ -18,6 +18,13 @@ public class ProductDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * This function fetches a product of a specific orderItem from the database by inserting courierid, scheduleid and an index in the query.
+     * @param index
+     * @param courierId
+     * @param scheduleId
+     * @return
+     */
     public Product getProduct(int index, int courierId, int scheduleId) {
         try {
             String queryProduct = "select distinct product.id as id, product.supplierProductId as suplierNumberIdentification, product.name as name, product.price as price, productSize.name as size, category.name as categories from courier, scheduleRoute, address, orderItem, orderStatus, courierSchedule, product, productSize, category, productCategory where courier.userId = " + courierId + " and courierSchedule.id = " + scheduleId + " and courierSchedule.courierId = courier.userId and courierSchedule.id = scheduleRoute.courierScheduleId and scheduleRoute.indexOrder = " + index + " and scheduleRoute.orderItemsId = orderItem.id and orderItem.orderStatusId = orderStatus.id and orderItem.productId = product.id and product.sizeId = productSize.id and product.id = productCategory.productId and category.id = productCategory.categoryId";

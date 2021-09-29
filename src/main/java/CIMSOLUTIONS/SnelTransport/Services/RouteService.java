@@ -19,6 +19,13 @@ public class RouteService {
     private AddressDAO addressDAO;
     private OrderItemDAO orderItemDAO;
 
+    /**
+     * initializing the DAO's in this service class
+     * @param routeDAO
+     * @param productDAO
+     * @param addressDAO
+     * @param orderItemDAO
+     */
     @Autowired
     public void setInjectionBean(RouteDAO routeDAO, ProductDAO productDAO, AddressDAO addressDAO, OrderItemDAO orderItemDAO){
         this.routeDAO = routeDAO;
@@ -27,6 +34,14 @@ public class RouteService {
         this.productDAO = productDAO;
     }
 
+    /**
+     * This function creates a full route object. Firstly the variable 'routes' contains a list of routes where the startAddress,
+     * endAddress and orderItems are null for each route. There variables are given values in the for each route loop.
+     * This function returns a list of the route object without any empty variables.
+     * @param courierid
+     * @param scheduleid
+     * @return
+     */
     public List<Route> get(int courierid, int scheduleid){
         List<Route> routes = routeDAO.get(courierid, scheduleid);
         for (Route route : routes){

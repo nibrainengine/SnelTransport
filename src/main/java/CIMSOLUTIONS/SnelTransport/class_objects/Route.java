@@ -12,6 +12,7 @@ public class Route {
     private List<OrderItem> orderItems;
 
 
+    //getters and setters
     public int getId() {
         return id;
     }
