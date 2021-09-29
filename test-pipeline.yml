@@ -27,12 +27,8 @@ stages:
         displayName: 'Maven Package'
         inputs:
           mavenPomFile: 'pom.xml'
-          publishJUnitResults: false
           javaHomeOption: 'JDKVersion'
           mavenVersionOption: 'Default'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          sonarQubeRunAnalysis: false
           
 
       - task: CopyFiles@2
