@@ -19,11 +19,21 @@ public class CourierAvailabilityController {
         this.courierAvailabilityService = courierAvailabilityService;
     }
 
+    /**
+     * Gets all available periods from a courier
+     * @param courierId
+     * @return List<AvailablePeriod>
+     */
     @GetMapping("/{courierId}")
     public List<AvailablePeriod> get(@PathVariable int courierId) {
         return courierAvailabilityService.get(courierId);
     }
 
+    /**
+     * Posts new available period of a courier
+     * @param availablePeriod
+     * @return int
+     */
     @PostMapping()
     public int post(@RequestBody AvailablePeriod availablePeriod) {
         return courierAvailabilityService.create(availablePeriod);
