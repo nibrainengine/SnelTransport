@@ -10,6 +10,8 @@ public class Zone {
     private Boolean isApproved;
     private List<ZonePoint> zonePoints;
 
+    public Zone(){}
+
     public Zone(int id, String zoneTitle) {
         this.id = id;
         this.zoneTitle = zoneTitle;
@@ -17,6 +19,10 @@ public class Zone {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getZoneTitle() {

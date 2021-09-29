@@ -1,33 +1,30 @@
 package CIMSOLUTIONS.SnelTransport;
 
-import CIMSOLUTIONS.SnelTransport.Zone.IZoneDao;
-import CIMSOLUTIONS.SnelTransport.Zone.ZoneController;
-import CIMSOLUTIONS.SnelTransport.Zone.ZoneDao;
+import CIMSOLUTIONS.SnelTransport.Controller.ZoneController;
+import CIMSOLUTIONS.SnelTransport.Dao.ZoneDao;
 import class_objects.Zone;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-
 @SpringBootTest
 public class ZoneDaoTests {
 
-    IZoneDao zoneDao = Mockito.mock(ZoneDao.class);
+    ZoneDao zoneDao = Mockito.mock(ZoneDao.class);
 
     @Autowired
     private ZoneController controller;
 
     @Test
     void getAllZones() throws Exception{
-        ArrayList zones = new ArrayList<Zone>();
+        List<Zone> zones = new ArrayList<>();
         zones.add(new Zone(0, "test"));
         when(zoneDao.getAll()).thenReturn(zones);
         assertEquals(1, zoneDao.getAll().size());

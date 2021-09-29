@@ -1,4 +1,4 @@
-package CIMSOLUTIONS.SnelTransport.Zone;
+package CIMSOLUTIONS.SnelTransport;
 
 import java.sql.*;
 
