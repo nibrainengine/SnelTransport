@@ -8,11 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Fake controller class that pretends that a PickupHub is running on the same URL as our API.
+ */
 @RestController
 @RequestMapping("/api")
 public class PickupAPIController {
-    //RETURNS A JSON OBJECT OF A FAKE PICKUP HUB
+
+    /**
+     * This method creates a new Pickup API includings its products and then returns it as JSON.
+     * Every time this method is called a new fake PickupAPI is created. Each of these has different data.
+     * @return JSON object of its fake Pickup API.
+     * @throws JSONException
+     */
     @GetMapping("/MockPickupData")
     @ResponseBody
     public String getMockedPickupData() throws JSONException {

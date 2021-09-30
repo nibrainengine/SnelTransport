@@ -1,11 +1,13 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
+import class_objects.Address;
 import class_objects.PickUpHub;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Component
@@ -17,19 +19,50 @@ public class PickuphubDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<String> getURLS() {
-        String query = "SELECT url FROM pickUpHub WHERE url IS NOT NULL AND isDisabled = 'False'";
-        return jdbcTemplate.queryForList(query, String.class);
+    /**
+     * This call returns a list of PickUpHubs with their addresses. This is based on an inner join of the addressId inside the pickuphub table and the primary key inside the address table.
+     * To read this list of values as a nested object (Address object inside PickUpHub object), a custom row mapper has been created.
+     * @return List<PickUpHub>  A list of PickupHubs outfitted with their matching address.
+     */
+    public List<PickUpHub> getURLsandAddresses() {
+        String query = "SELECT url AS 'pickUpHub.url', street AS 'address.street', houseNumber AS 'address.houseNumber', zipCode AS 'address.zipCode', city AS 'address.city', country AS 'address.country', latitude AS 'address.latitude', longitude as 'address.longitude' FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id WHERE url IS NOT NULL AND isDisabled = 'False'";
+        return jdbcTemplate.query(query, new RowMapper<>() {
+            @Override
+            public PickUpHub mapRow(ResultSet rs, int rowNum) throws SQLException {
+                //Query is index based, do not reorganize.
+                PickUpHub pickUpHub = new PickUpHub();
+                pickUpHub.setUrl(rs.getString(1));
+                Address address = new Address();
+                address.setStreet((rs.getString(2)));
+                address.setHouseNumber(rs.getString(3));
+                address.setZipCode(rs.getString(4));
+                address.setCity(rs.getString(5));
+                address.setCountry(rs.getString(6));
+                address.setLatitude(rs.getDouble(7));
+                address.setLongitude(rs.getDouble(8));
+                pickUpHub.setAddress(address);
+
+                return pickUpHub;
+            }
+        });
+
     }
 
-    public void postPickupHub(PickUpHub pickupHub){
-        String query = "INSERT INTO pickUpHub VALUES(?,?,?)";
-        jdbcTemplate.update(query, pickupHub.getAddress(), pickupHub.getDisabled(), pickupHub.getUrl());
-    }
-
-    public void insertDummies(){
-        jdbcTemplate.update("INSERT INTO pickUpHub VALUES (?,?,?) ", 2, false, "http://localhost:8080/api/MockPickupData");
-        jdbcTemplate.update("INSERT INTO pickUpHub VALUES (?,?,?) ", 3, false, "http://localhost:8080/api/MockPickupData");
-        jdbcTemplate.update("INSERT INTO pickUpHub VALUES (?,?,?) ", 4, false, "http://localhost:8080/api/MockPickupData");
+    /**
+     * This method inserts a new PickupHub and its address into our database.
+     * @param pickupHub a PickUpHub object outfitted with address and URL
+     */
+    public void postPickupHub(PickUpHub pickupHub) {
+        String queryAddress = "INSERT INTO address (street, houseNumber, zipCode, city, country, latitude, longitude) VALUES (?,?,?,?,?,?,?)";
+        String queryPickup = "INSERT INTO pickUpHub (addressId, isDisabled, url) VALUES ( (SELECT id FROM address WHERE street=? AND houseNumber=?) ,?,?)";
+        jdbcTemplate.update(queryAddress,
+                pickupHub.getAddress().getStreet(),
+                pickupHub.getAddress().getHouseNumber(),
+                pickupHub.getAddress().getZipCode(),
+                pickupHub.getAddress().getCity(),
+                pickupHub.getAddress().getCountry(),
+                pickupHub.getAddress().getLatitude(),
+                pickupHub.getAddress().getLongitude());
+        jdbcTemplate.update(queryPickup, pickupHub.getAddress().getStreet(), pickupHub.getAddress().getHouseNumber(), false, pickupHub.getUrl());
     }
 }

@@ -3,22 +3,32 @@ package class_objects;
 import java.util.List;
 
 public class PickUpHub {
+    //declare variables
+    private int id;
+    private Address address;
+    private Boolean isDisabled;
+    private List<OrderItem> orderItems;
+    private List<VehicleType> vehicleTypes;
+    private String url;
 
     enum VehicleType{
 
     }
 
-    public PickUpHub(Address address, Boolean isDisabled, List<OrderItem> orderItems, List<VehicleType> vehicleTypes, String url) {
-        this.address = address;
-        this.isDisabled = isDisabled;
-        this.orderItems = orderItems;
-        this.vehicleTypes = vehicleTypes;
-        this.url = url;
+
+    public PickUpHub() {
+        this.isDisabled = false;
     }
 
-    public PickUpHub(Address address, String url) {
+    public void setAddress(Address address) {
         this.address = address;
-        this.isDisabled = false;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -34,11 +44,5 @@ public class PickUpHub {
         return address;
     }
 
-    //declare variables
-    private int id;
-    private Address address;
-    private Boolean isDisabled;
-    private List<OrderItem> orderItems;
-    private List<VehicleType> vehicleTypes;
-    private String url;
+
 }
