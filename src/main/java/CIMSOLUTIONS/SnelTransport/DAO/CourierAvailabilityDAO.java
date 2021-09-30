@@ -24,27 +24,36 @@ public class CourierAvailabilityDAO {
      * Gets all available periods from a courier
      * @return List<AvailablePeriod>
      */
-    public List<AvailablePeriod> get(int courierId)  {
+    public List<AvailablePeriod> get(int courierId) throws Exception {
         String query =  "SELECT id, start as startTime, [end] as endTime, price, isApproved " +
                         "FROM courierAvailablePeriod " +
                         "WHERE courierId = " + courierId;
         List<AvailablePeriod> availablePeriods;
-        availablePeriods = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(AvailablePeriod.class));
-        return availablePeriods;
+
+        try {
+            availablePeriods = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(AvailablePeriod.class));
+            return availablePeriods;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     /**
      * Insert new available period of a courier in the database
      * @return int (id of new availablePeriod in database)
      */
-    public int insert(AvailablePeriod availablePeriod) {
+    public int insert(AvailablePeriod availablePeriod) throws Exception {
         int id = 0;
-        if(!courierAvailablePeriodExists(availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime())) {
-            jdbcTemplate.update("INSERT INTO courierAvailablePeriod (courierId, start, [end], price, isApproved) VALUES (?,?,?,?,?)",
-                    availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime(), availablePeriod.getPrice(), availablePeriod.getApproved());
-            id = getId(availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime());
+        try {
+            if (!courierAvailablePeriodExists(availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime())) {
+                jdbcTemplate.update("INSERT INTO courierAvailablePeriod (courierId, start, [end], price, isApproved) VALUES (?,?,?,?,?)",
+                        availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime(), availablePeriod.getPrice(), availablePeriod.getApproved());
+                id = getId(availablePeriod.getCourierId(), availablePeriod.getStartTime(), availablePeriod.getEndTime());
+            }
+            return id;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
-        return id;
     }
 
     /**

@@ -3,6 +3,8 @@ package CIMSOLUTIONS.SnelTransport.Controllers;
 import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
 import class_objects.AvailablePeriod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,12 @@ public class CourierAvailabilityController {
      * @return List<AvailablePeriod>
      */
     @GetMapping("/{courierId}")
-    public List<AvailablePeriod> get(@PathVariable int courierId) {
-        return courierAvailabilityService.get(courierId);
+    public ResponseEntity<List<AvailablePeriod>> get(@PathVariable int courierId) {
+        try {
+            return ResponseEntity.ok(courierAvailabilityService.get(courierId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     /**
@@ -33,7 +39,11 @@ public class CourierAvailabilityController {
      * @return int (id of new availablePeriod in database)
      */
     @PostMapping()
-    public int post(@RequestBody AvailablePeriod availablePeriod) {
-        return courierAvailabilityService.create(availablePeriod);
+    public ResponseEntity<Integer> post(@RequestBody AvailablePeriod availablePeriod) {
+        try {
+            return ResponseEntity.ok(courierAvailabilityService.create(availablePeriod));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }

@@ -33,25 +33,25 @@ public class CourierAvailabilityServiceTest {
     }
 
     @Test
-    void testGet() {
+    void testGet() throws Exception {
         List<AvailablePeriod> availablePeriods = Collections.singletonList(availablePeriod);
         when(courierAvailabilityDAO.get(availablePeriod.getCourierId())).thenReturn(availablePeriods);
         assertEquals(availablePeriods,courierAvailabilityService.get(availablePeriod.getCourierId()));
     }
 
     @Test
-    void testGetEmptyList() {
+    void testGetEmptyList() throws Exception {
         assertEquals(Collections.emptyList(),courierAvailabilityService.get(availablePeriod.getCourierId()));
     }
 
     @Test
-    void testCreate() {
+    void testCreate() throws Exception {
         when(courierAvailabilityDAO.insert(availablePeriod)).thenReturn(availablePeriod.getId());
         assertEquals(availablePeriod.getId(),courierAvailabilityService.create(availablePeriod));
     }
 
     @Test
-    void testCreateIs0() {
+    void testCreateIs0() throws Exception {
         assertEquals(0,courierAvailabilityService.create(availablePeriod));
     }
 

@@ -19,7 +19,7 @@ public class CourierAvailabilityDAOTest {
     private CourierAvailabilityDAO availabilityDAO;
 
     @Test
-    void get() {
+    void get() throws Exception {
         List<AvailablePeriod> availablePeriods = Collections.singletonList(new AvailablePeriod());
         int courierId = 1;
 
@@ -28,7 +28,7 @@ public class CourierAvailabilityDAOTest {
     }
 
     @Test
-    void insert() {
+    void insert() throws Exception {
         AvailablePeriod availablePeriod = new AvailablePeriod();
         availablePeriod.setId(1);
         availablePeriod.setCourierId(1);

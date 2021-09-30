@@ -21,7 +21,7 @@ public class CourierAvailabilityService {
      * Gets all available periods from a courier
      * @return List<AvailablePeriod>
      */
-    public List<AvailablePeriod> get(int courierId) {
+    public List<AvailablePeriod> get(int courierId) throws Exception {
         return courierAvailabilityDAO.get(courierId);
     }
 
@@ -29,7 +29,7 @@ public class CourierAvailabilityService {
      * Creates new available period of a courier
      * @return int (id of new availablePeriod in database)
      */
-    public int create(AvailablePeriod availablePeriod) {
+    public int create(AvailablePeriod availablePeriod) throws Exception {
         return courierAvailabilityDAO.insert(availablePeriod);
     }
 }

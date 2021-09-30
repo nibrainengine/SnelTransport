@@ -61,6 +61,13 @@ public class CourierAvailabilityControllerTest {
     }
 
     @Test
+    public void testGetBadRequest() throws Exception {
+        when(courierAvailabilityService.get(availablePeriod.getCourierId())).thenThrow(Exception.class);
+        this.mockMvc.perform(get("/available-periods/" + availablePeriod.getCourierId()))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void testPost() throws Exception {
         when(courierAvailabilityService.create(availablePeriod)).thenReturn(1);
         this.mockMvc.perform(post("/available-periods/")
@@ -69,12 +76,21 @@ public class CourierAvailabilityControllerTest {
     }
 
     @Test
-    public void testPostWrongBody() throws Exception {
+    public void testPostBadRequest() throws Exception {
+        when(courierAvailabilityService.create(any(AvailablePeriod.class))).thenThrow(Exception.class);
+        this.mockMvc.perform(post("/available-periods/"))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPostBadRequestWrongBody() throws Exception {
         when(courierAvailabilityService.create(any(AvailablePeriod.class))).thenReturn(1);
         this.mockMvc.perform(post("/available-periods/")
                 .contentType("application/json").content(objectMapper.writeValueAsString(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
+
+
 
     private SimpleDateFormat getSimpleDateFormat(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+00:00");
