@@ -9,8 +9,21 @@ public class Address {
     private String zipCode;
     private String city;
     private String country;
-    private Double longitude;
     private Double latitude;
+    private Double longitude;
+
+    public Address(String street, String houseNumber, String zipCode, String city, String country, Double latitude, Double longitude) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public Address() {
+    }
 
     public Double getLongitude() {
         return longitude;

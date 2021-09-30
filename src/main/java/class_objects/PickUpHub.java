@@ -15,6 +15,11 @@ public class PickUpHub {
 
     }
 
+    public PickUpHub(Address address, Boolean isDisabled, String url) {
+        this.address = address;
+        this.isDisabled = isDisabled;
+        this.url = url;
+    }
 
     public PickUpHub() {
         this.isDisabled = false;

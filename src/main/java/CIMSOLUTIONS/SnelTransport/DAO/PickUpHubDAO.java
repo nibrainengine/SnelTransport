@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class PickuphubDAO {
+public class PickUpHubDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -25,7 +25,7 @@ public class PickuphubDAO {
      * @return List<PickUpHub>  A list of PickupHubs outfitted with their matching address.
      */
     public List<PickUpHub> getURLsandAddresses() {
-        String query = "SELECT url AS 'pickUpHub.url', street AS 'address.street', houseNumber AS 'address.houseNumber', zipCode AS 'address.zipCode', city AS 'address.city', country AS 'address.country', latitude AS 'address.latitude', longitude as 'address.longitude' FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id WHERE url IS NOT NULL AND isDisabled = 'False'";
+        String query = "SELECT pickUpHub.url, address.street, address.houseNumber,address.zipCode, address.city, address.country, address.latitude, address.longitude FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id WHERE url IS NOT NULL AND isDisabled = 'False'";
         return jdbcTemplate.query(query, new RowMapper<>() {
             @Override
             public PickUpHub mapRow(ResultSet rs, int rowNum) throws SQLException {
