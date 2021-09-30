@@ -48,7 +48,7 @@ public class ZoneDAOTests {
     @Test
     void saveZone_ShouldAddZone() {
         try {
-            Zone zone = new Zone(12, "testZone");
+            Zone zone = new Zone(12, "newTestZone");
             zoneDao.save(zone);
             List<Zone> zones = zoneDao.getAll();
             assertEquals(5, zones.size());

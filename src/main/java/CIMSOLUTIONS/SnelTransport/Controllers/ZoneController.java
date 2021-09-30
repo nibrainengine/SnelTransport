@@ -26,8 +26,8 @@ public class ZoneController {
     @RequestMapping(method = RequestMethod.POST, path = "")
     public ResponseEntity<Zone> postZone(@RequestBody Zone zone) {
         try {
-            zoneService.save(zone);
-            return ResponseEntity.ok(zone);
+            Zone newZone = zoneService.save(zone);
+            return ResponseEntity.ok(newZone);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

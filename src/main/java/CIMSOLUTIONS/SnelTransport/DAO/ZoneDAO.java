@@ -27,9 +27,12 @@ public class ZoneDAO {
     public Zone save(Zone zone) throws Exception {
         try{
             String query = "INSERT INTO Zone (title) VALUES ('" + zone.getZoneTitle() + "')";
-            jdbcTemplate.execute(query);
+            String selectQuery = "select id as id, title as zoneTitle from Zone Where title= '"+ zone.getZoneTitle() + "'";
 
-            return zone;
+            jdbcTemplate.execute(query);
+            Zone newZone = jdbcTemplate.queryForObject(selectQuery, BeanPropertyRowMapper.newInstance(Zone.class));
+
+            return newZone;
         }
         catch(Exception e){
             throw new Exception(e.getMessage());

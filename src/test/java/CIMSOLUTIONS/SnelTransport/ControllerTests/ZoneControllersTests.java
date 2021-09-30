@@ -68,7 +68,6 @@ public class ZoneControllersTests {
      */
     @Test
     void deleteZone_ReturnOk(){
-        Zone zone = new Zone(0, "test");
         when(zoneController.deleteZone(0)).thenReturn(ResponseEntity.ok("success"));
         assertEquals(ResponseEntity.ok("success"), zoneController.deleteZone(0));
     }
@@ -78,7 +77,6 @@ public class ZoneControllersTests {
      */
     @Test
     void deleteZone_ReturnBadRequest(){
-        Zone zone = new Zone(0, "test");
         when(zoneController.deleteZone(0)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("could not remove zone"));
         assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("could not remove zone"), zoneController.deleteZone(0));
     }
