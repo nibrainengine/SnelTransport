@@ -27,12 +27,14 @@ public class RouteController {
      */
     @CrossOrigin
     @GetMapping("my-routes/{courierid}/{scheduleid}")
-    public String getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) {
+    public String getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) throws Exception {
         JSONArray jsonArray = new JSONArray();
         for (Route route : routeService.get(courierid, scheduleid)){
             JSONObject json = new JSONObject();
             json.put("id", route.getId());
             json.put("index", route.getIndex());
+            json.put("startTime", route.getStartTime().toString());
+            json.put("endTime", route.getEndTime().toString());
 
             JSONObject jsonStartAdress = new JSONObject();
             jsonStartAdress.put("id", route.getStartAddress().getId());
@@ -56,12 +58,23 @@ public class RouteController {
             jsonEndAdress.put("longitude", route.getEndAddress().getLongitude());
             json.put("endAdress", jsonEndAdress);
 
+            JSONObject jsonDelAdress = new JSONObject();
+            jsonDelAdress.put("id", route.getDeliveryAddress().getId());
+            jsonDelAdress.put("city", route.getDeliveryAddress().getCity());
+            jsonDelAdress.put("country", route.getDeliveryAddress().getCountry());
+            jsonDelAdress.put("street", route.getDeliveryAddress().getStreet());
+            jsonDelAdress.put("housenumber", route.getDeliveryAddress().getHouseNumber());
+            jsonDelAdress.put("zipcode", route.getDeliveryAddress().getZipCode());
+            jsonDelAdress.put("latitude", route.getDeliveryAddress().getLatitude());
+            jsonDelAdress.put("longitude", route.getDeliveryAddress().getLongitude());
+            json.put("deliveryAddress", jsonDelAdress);
+
             JSONArray jsonArrayOrderItems = new JSONArray();
             for(OrderItem orderItem : route.getOrderItems()){
                 JSONObject jsonOrderItem = new JSONObject();
                 jsonOrderItem.put("id", orderItem.getId());
                 jsonOrderItem.put("price", orderItem.getPrice());
-                jsonOrderItem.put("eta", orderItem.getEta());
+                jsonOrderItem.put("eta", orderItem.getEta().toString());
                 jsonOrderItem.put("orderStatus", orderItem.getOrderStatus());
                 jsonOrderItem.put("quantity", orderItem.getQuantity());
 
@@ -75,6 +88,83 @@ public class RouteController {
                 jsonDeliveryAdress.put("latitude", orderItem.getDeliveryAddress().getLatitude());
                 jsonDeliveryAdress.put("longitude", orderItem.getDeliveryAddress().getLongitude());
                 jsonOrderItem.put("deliveryAdress", jsonDeliveryAdress);
+
+                JSONObject jsonProduct = new JSONObject();
+                jsonProduct.put("id", orderItem.getProduct().getId());
+                jsonProduct.put("name", orderItem.getProduct().getName());
+                jsonProduct.put("size", orderItem.getProduct().getSize());
+                jsonProduct.put("price", orderItem.getProduct().getPrice());
+                jsonProduct.put("category", orderItem.getProduct().getCategories());
+                jsonOrderItem.put("product", jsonProduct);
+                jsonArrayOrderItems.add(jsonOrderItem);
+            }
+            json.put("orderItems", jsonArrayOrderItems);
+            jsonArray.add(json);
+        }
+        return jsonArray.toJSONString();
+    }
+
+    /**
+     * This function fetches the Route object from the database and converts it in a json format. This json format is an
+     * array of Routes, each route had: an id, index, startAddress (each Address containts: id, city, street, country, housenumber, zipcode,
+     * longitude and latitude), endAddress and a json array with OrderItems.
+     *
+     * path can be: my-routes/2021-10-01
+     * @param date
+     * @return
+     */
+    @CrossOrigin
+    @GetMapping("routes/{date}")
+    public String getAllRoutes(@PathVariable String date) throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        for (Route route : routeService.getWithDate(date)){
+            JSONObject json = new JSONObject();
+            json.put("id", route.getId());
+            json.put("index", route.getIndex());
+            json.put("startTime", route.getStartTime().toString());
+            json.put("endTime", route.getEndTime().toString());
+
+            JSONObject jsonStartAdress = new JSONObject();
+            jsonStartAdress.put("id", route.getStartAddress().getId());
+            jsonStartAdress.put("city", route.getStartAddress().getCity());
+            jsonStartAdress.put("country", route.getStartAddress().getCountry());
+            jsonStartAdress.put("street", route.getStartAddress().getStreet());
+            jsonStartAdress.put("housenumber", route.getStartAddress().getHouseNumber());
+            jsonStartAdress.put("zipcode", route.getStartAddress().getZipCode());
+            jsonStartAdress.put("latitude", route.getStartAddress().getLatitude());
+            jsonStartAdress.put("longitude", route.getStartAddress().getLongitude());
+            json.put("startAdress", jsonStartAdress);
+
+            JSONObject jsonEndAdress = new JSONObject();
+            jsonEndAdress.put("id", route.getEndAddress().getId());
+            jsonEndAdress.put("city", route.getEndAddress().getCity());
+            jsonEndAdress.put("country", route.getEndAddress().getCountry());
+            jsonEndAdress.put("street", route.getEndAddress().getStreet());
+            jsonEndAdress.put("housenumber", route.getEndAddress().getHouseNumber());
+            jsonEndAdress.put("zipcode", route.getEndAddress().getZipCode());
+            jsonEndAdress.put("latitude", route.getEndAddress().getLatitude());
+            jsonEndAdress.put("longitude", route.getEndAddress().getLongitude());
+            json.put("endAdress", jsonEndAdress);
+
+            JSONObject jsonDelAdress = new JSONObject();
+            jsonDelAdress.put("id", route.getDeliveryAddress().getId());
+            jsonDelAdress.put("city", route.getDeliveryAddress().getCity());
+            jsonDelAdress.put("country", route.getDeliveryAddress().getCountry());
+            jsonDelAdress.put("street", route.getDeliveryAddress().getStreet());
+            jsonDelAdress.put("housenumber", route.getDeliveryAddress().getHouseNumber());
+            jsonDelAdress.put("zipcode", route.getDeliveryAddress().getZipCode());
+            jsonDelAdress.put("latitude", route.getDeliveryAddress().getLatitude());
+            jsonDelAdress.put("longitude", route.getDeliveryAddress().getLongitude());
+            json.put("deliveryAddress", jsonDelAdress);
+
+            JSONArray jsonArrayOrderItems = new JSONArray();
+            for(OrderItem orderItem : route.getOrderItems()){
+                JSONObject jsonOrderItem = new JSONObject();
+                jsonOrderItem.put("id", orderItem.getId());
+                jsonOrderItem.put("price", orderItem.getPrice());
+                jsonOrderItem.put("eta", orderItem.getEta().toString());
+                jsonOrderItem.put("orderStatus", orderItem.getOrderStatus());
+                jsonOrderItem.put("quantity", orderItem.getQuantity());
 
                 JSONObject jsonProduct = new JSONObject();
                 jsonProduct.put("id", orderItem.getProduct().getId());

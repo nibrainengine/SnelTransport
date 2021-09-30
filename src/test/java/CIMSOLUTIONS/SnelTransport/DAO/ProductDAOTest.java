@@ -12,8 +12,13 @@ class ProductDAOTest {
     ProductDAO productDAO = Mockito.mock(ProductDAO.class);
 
     @Test
-    void getProduct() {
+    void getProduct() throws Exception {
         when(productDAO.getProduct(0,0,0)).thenReturn(new Product());
         assertTrue(productDAO.getProduct(0,0,0).getClass() == Product.class);
+    }
+    @Test
+    void getProductDate() throws Exception {
+        when(productDAO.getProductWithDate(0,0)).thenReturn(new Product());
+        assertTrue(productDAO.getProductWithDate(0,0).getClass() == Product.class);
     }
 }

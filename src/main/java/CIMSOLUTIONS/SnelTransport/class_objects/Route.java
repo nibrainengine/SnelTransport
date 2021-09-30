@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.class_objects;
 
+import java.util.Date;
 import java.util.List;
 
 public class Route {
@@ -7,12 +8,16 @@ public class Route {
     //declare variables
     private int id;
     private int index;
+    private Date startTime;
+    private Date endTime;
     private Address startAddress;
     private Address endAddress;
     private List<OrderItem> orderItems;
+    private Address deliveryAddress;
 
 
     //getters and setters
+
     public int getId() {
         return id;
     }
@@ -51,5 +56,29 @@ public class Route {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

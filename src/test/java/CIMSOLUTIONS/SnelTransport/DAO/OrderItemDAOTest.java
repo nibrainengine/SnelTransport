@@ -15,10 +15,18 @@ class OrderItemDAOTest {
     OrderItemDAO orderItemDAO = Mockito.mock(OrderItemDAO.class);
 
     @Test
-    void getOrderItems() {
+    void getOrderItems() throws Exception {
         List<OrderItem> orderItems = new ArrayList<>();
         orderItems.add(new OrderItem());
         when(orderItemDAO.getOrderItems(0,0,0)).thenReturn(orderItems);
         assertTrue(orderItemDAO.getOrderItems(0,0,0).get(0).getClass() == OrderItem.class);
+    }
+
+    @Test
+    void getOrderItemsDate() throws Exception {
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(new OrderItem());
+        when(orderItemDAO.getOrderItemsWithDate(0,0)).thenReturn(orderItems);
+        assertTrue(orderItemDAO.getOrderItemsWithDate(0,0).get(0).getClass() == OrderItem.class);
     }
 }
