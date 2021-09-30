@@ -10,4 +10,37 @@ public class Schedule {
     private Date startTime;
     private Date endTime;
     private List<Route> routes;
+
+    //getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
 }
