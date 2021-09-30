@@ -1,6 +1,6 @@
-package CIMSOLUTIONS.SnelTransport.Zone;
+package CIMSOLUTIONS.SnelTransport.DAOTests;
 
-import CIMSOLUTIONS.SnelTransport.Dao.ZoneDao;
+import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import class_objects.Zone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,15 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
 @Sql({"classpath:schema.sql", "classpath:test-data.sql"})
-public class ZoneDaoTests {
+public class ZoneDAOTests {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private ZoneDao zoneDao;
+    private ZoneDAO zoneDao;
 
     @BeforeEach
     void BeforeEach() {
-        zoneDao = new ZoneDao();
+        zoneDao = new ZoneDAO();
         zoneDao.setInjectedBean(this.jdbcTemplate);
     }
 

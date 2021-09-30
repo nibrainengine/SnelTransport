@@ -1,9 +1,8 @@
-package CIMSOLUTIONS.SnelTransport.Service;
+package CIMSOLUTIONS.SnelTransport.Services;
 
-import CIMSOLUTIONS.SnelTransport.Dao.ZoneDao;
+import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import class_objects.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 public class ZoneService {
 
     @Autowired
-    ZoneDao zoneDao;
+    ZoneDAO zoneDao;
 
     /**
      * Add a new zone

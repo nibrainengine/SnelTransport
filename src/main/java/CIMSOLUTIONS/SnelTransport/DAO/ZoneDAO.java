@@ -1,20 +1,15 @@
-package CIMSOLUTIONS.SnelTransport.Dao;
+package CIMSOLUTIONS.SnelTransport.DAO;
 
-import CIMSOLUTIONS.SnelTransport.GetConnection;
 import class_objects.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ZoneDao{
+public class ZoneDAO {
 
     private JdbcTemplate jdbcTemplate;
 

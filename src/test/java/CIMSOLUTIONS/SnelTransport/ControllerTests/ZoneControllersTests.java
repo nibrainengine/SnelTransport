@@ -1,11 +1,9 @@
-package CIMSOLUTIONS.SnelTransport.Zone;
+package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
-import CIMSOLUTIONS.SnelTransport.Controller.ZoneController;
-import CIMSOLUTIONS.SnelTransport.Dao.ZoneDao;
+import CIMSOLUTIONS.SnelTransport.Controllers.ZoneController;
 import class_objects.Zone;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +39,8 @@ public class ZoneControllersTests {
         List<Zone> zones = new ArrayList<>();
         Zone zone = new Zone(0, "test");
         zones.add(zone);
-        when(zoneController.getAllZones()).thenReturn(ResponseEntity.ok(zones));
-        assertEquals(ResponseEntity.ok(zones), zoneController.getAllZones());
+        when(zoneController.getAllZones()).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null), zoneController.getAllZones());
     }
 
     /**
