@@ -1,13 +1,12 @@
 package CIMSOLUTIONS.SnelTransport.Controller;
 
-import CIMSOLUTIONS.SnelTransport.Dao.ZoneDao;
+import CIMSOLUTIONS.SnelTransport.Service.ZoneService;
 import class_objects.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,7 +15,7 @@ import java.util.List;
 public class ZoneController {
 
     @Autowired
-    ZoneDao zoneDao;
+    ZoneService zoneService;
 
     /**
      * Add a new zone
@@ -27,7 +26,7 @@ public class ZoneController {
     @RequestMapping(method = RequestMethod.POST, path = "")
     public ResponseEntity<Zone> postZone(@RequestBody Zone zone) {
         try {
-            zoneDao.save(zone);
+            zoneService.save(zone);
             return ResponseEntity.ok(zone);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -42,7 +41,7 @@ public class ZoneController {
     @RequestMapping(method = RequestMethod.GET, path = "")
     public ResponseEntity<List<Zone>> getAllZones() {
         try {
-            List<Zone> zones = zoneDao.getAll();
+            List<Zone> zones = zoneService.getAll();
             return ResponseEntity.ok(zones);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -57,7 +56,7 @@ public class ZoneController {
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     public ResponseEntity<String> deleteZone(@PathVariable int id){
         try{
-            zoneDao.delete(id);
+            zoneService.delete(id);
             return ResponseEntity.ok("success");
         }
         catch (Exception e) {
