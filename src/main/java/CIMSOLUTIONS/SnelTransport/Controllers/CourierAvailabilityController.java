@@ -21,7 +21,6 @@ public class CourierAvailabilityController {
 
     /**
      * Gets all available periods from a courier
-     * @param courierId
      * @return List<AvailablePeriod>
      */
     @GetMapping("/{courierId}")
@@ -31,8 +30,7 @@ public class CourierAvailabilityController {
 
     /**
      * Posts new available period of a courier
-     * @param availablePeriod
-     * @return int
+     * @return int (id of new availablePeriod in database)
      */
     @PostMapping()
     public int post(@RequestBody AvailablePeriod availablePeriod) {

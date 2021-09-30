@@ -59,15 +59,4 @@ public class AvailablePeriod {
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
-
-    @Override
-    public String toString() {
-        return "AvailablePeriod{" +
-                "id=" + id +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", price=" + price +
-                ", isApproved=" + isApproved +
-                '}';
-    }
 }
