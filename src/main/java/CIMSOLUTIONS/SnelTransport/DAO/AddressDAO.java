@@ -12,8 +12,8 @@ import java.util.List;
 public class AddressDAO {
 
     private JdbcTemplate jdbcTemplate;
-    @Autowired
 
+    @Autowired
     public void setInjectedBean(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

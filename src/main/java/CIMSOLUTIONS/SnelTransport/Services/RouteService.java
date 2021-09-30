@@ -40,20 +40,20 @@ public class RouteService {
      * This function creates a full route object. Firstly the variable 'routes' contains a list of routes where the startAddress,
      * endAddress and orderItems are null for each route. There variables are given values in the for each route loop.
      * This function returns a list of the route object without any empty variables.
-     * @param courierid
-     * @param scheduleid
+     * @param courierId
+     * @param scheduleId
      * @return
      */
-    public List<Route> get(int courierid, int scheduleid) throws Exception {
-        List<Route> routes = routeDAO.get(courierid, scheduleid);
+    public List<Route> get(int courierId, int scheduleId) throws Exception {
+        List<Route> routes = routeDAO.get(courierId, scheduleId);
         for (Route route : routes){
-            route.setStartAddress(addressDAO.getStartAddress(courierid, scheduleid));
-            route.setEndAddress(addressDAO.getEndAddress(courierid, scheduleid));
-            route.setDeliveryAddress(addressDAO.getDeliveryAddress(route.getIndex(),courierid,scheduleid));
-            route.setOrderItems(orderItemDAO.getOrderItems(route.getIndex(),courierid,scheduleid));
+            route.setStartAddress(addressDAO.getStartAddress(courierId, scheduleId));
+            route.setEndAddress(addressDAO.getEndAddress(courierId, scheduleId));
+            route.setDeliveryAddress(addressDAO.getDeliveryAddress(route.getIndex(),courierId,scheduleId));
+            route.setOrderItems(orderItemDAO.getOrderItems(route.getIndex(),courierId,scheduleId));
             for(OrderItem orderItem : route.getOrderItems()){
-                orderItem.setProduct(productDAO.getProduct(route.getIndex(),courierid,scheduleid));
-                orderItem.setDeliveryAddress(addressDAO.getDeliveryAddress(route.getIndex(),courierid,scheduleid));
+                orderItem.setProduct(productDAO.getProduct(route.getIndex(),courierId,scheduleId));
+                orderItem.setDeliveryAddress(addressDAO.getDeliveryAddress(route.getIndex(),courierId,scheduleId));
             }
         }
         return routes;
