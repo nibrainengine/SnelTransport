@@ -1,10 +1,10 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
-import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import CIMSOLUTIONS.SnelTransport.DTO.*;
 import java.util.List;
 
 @Component
@@ -17,7 +17,7 @@ public class CouriersDAO {
     }
 
     /**
-     * Function that returns a list of couriers in dto format, ensuring only the id and name are given, by extracting
+     * Function that returns a list of couriers in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the id and name are given, by extracting
      * data both from the couriers and user tables.
      * @return List<CourierDTO>
      */

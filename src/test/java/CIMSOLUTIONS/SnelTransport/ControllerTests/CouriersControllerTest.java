@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
-import dto.CourierDTO;
+import CIMSOLUTIONS.SnelTransport.DTO.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

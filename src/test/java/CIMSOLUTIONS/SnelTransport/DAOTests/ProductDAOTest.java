@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ProductDAO;
-import CIMSOLUTIONS.SnelTransport.class_objects.Product;
+import CIMSOLUTIONS.SnelTransport.Models.Product;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,11 +15,11 @@ class ProductDAOTest {
     @Test
     void getProduct() throws Exception {
         when(productDAO.getProduct(0,0,0)).thenReturn(new Product());
-        assertTrue(productDAO.getProduct(0,0,0).getClass() == Product.class);
+        assertSame(productDAO.getProduct(0, 0, 0).getClass(), Product.class);
     }
     @Test
     void getProductDate() throws Exception {
         when(productDAO.getProductWithDate(0,0)).thenReturn(new Product());
-        assertTrue(productDAO.getProductWithDate(0,0).getClass() == Product.class);
+        assertSame(productDAO.getProductWithDate(0, 0).getClass(), Product.class);
     }
 }

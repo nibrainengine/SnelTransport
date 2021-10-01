@@ -2,7 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ServicesTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
-import CIMSOLUTIONS.SnelTransport.class_objects.Schedule;
+import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +10,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import java.util.Date;
 
@@ -37,7 +37,7 @@ public class CourierScheduleServiceTest {
         when(courierScheduleDAO.get(schedule.getId())).thenReturn(schedules);
         assertEquals(schedules,courierScheduleService.get(schedule.getId()));
         when(courierScheduleService.get(0)).thenReturn(schedules);
-        assertTrue(courierScheduleService.get(0).get(0).getClass() == Schedule.class);
+        assertSame(courierScheduleService.get(0).get(0).getClass(), Schedule.class);
     }
 
     @Test

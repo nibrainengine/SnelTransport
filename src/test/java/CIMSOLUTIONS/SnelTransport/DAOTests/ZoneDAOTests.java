@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
-import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

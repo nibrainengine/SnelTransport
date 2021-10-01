@@ -1,4 +1,4 @@
-package CIMSOLUTIONS.SnelTransport.class_objects;
+package CIMSOLUTIONS.SnelTransport.Models;
 
 import java.util.Date;
 import java.util.List;

@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
-import CIMSOLUTIONS.SnelTransport.class_objects.AvailablePeriod;
+import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

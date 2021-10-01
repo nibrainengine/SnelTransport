@@ -1,6 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
-import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

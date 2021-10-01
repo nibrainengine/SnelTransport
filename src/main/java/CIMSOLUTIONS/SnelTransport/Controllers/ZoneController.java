@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
-import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

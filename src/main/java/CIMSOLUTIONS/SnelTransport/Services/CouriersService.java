@@ -1,9 +1,9 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CouriersDAO;
-import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import CIMSOLUTIONS.SnelTransport.DTO.*;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class CouriersService {
     }
 
     /**
-     * Gets all couriers in dto format, ensuring only the id and name are given.
+     * Gets all couriers in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the id and name are given.
      * @return List<CourierDTO>
      */
     public List<CourierDTO> getAll() {
