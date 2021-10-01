@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
-import class_objects.Schedule;
+import CIMSOLUTIONS.SnelTransport.class_objects.Schedule;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;

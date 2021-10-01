@@ -2,7 +2,7 @@ package CIMSOLUTIONS.SnelTransport.Controller;
 
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
-import class_objects.*;
+import CIMSOLUTIONS.SnelTransport.class_objects.Schedule;
 import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

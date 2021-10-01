@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
-import class_objects.AvailablePeriod;
+import CIMSOLUTIONS.SnelTransport.class_objects.AvailablePeriod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

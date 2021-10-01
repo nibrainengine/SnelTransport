@@ -1,5 +1,6 @@
-package CIMSOLUTIONS.SnelTransport.Controllers;
+package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
+import CIMSOLUTIONS.SnelTransport.Controllers.RouteController;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

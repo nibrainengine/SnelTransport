@@ -1,5 +1,6 @@
-package CIMSOLUTIONS.SnelTransport.DAO;
+package CIMSOLUTIONS.SnelTransport.DAOTests;
 
+import CIMSOLUTIONS.SnelTransport.DAO.AddressDAO;
 import CIMSOLUTIONS.SnelTransport.class_objects.Address;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

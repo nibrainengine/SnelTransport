@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
-import class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
