@@ -55,14 +55,14 @@ public class PickUpHubDAO {
     public void postPickupHub(PickUpHub pickupHub) {
         String queryAddress = "INSERT INTO address (street, houseNumber, zipCode, city, country, latitude, longitude) VALUES (?,?,?,?,?,?,?)";
         String queryPickup = "INSERT INTO pickUpHub (addressId, isDisabled, url) VALUES ( (SELECT id FROM address WHERE street=? AND houseNumber=?) ,?,?)";
-        jdbcTemplate.update(queryAddress,
-                pickupHub.getAddress().getStreet(),
-                pickupHub.getAddress().getHouseNumber(),
-                pickupHub.getAddress().getZipCode(),
-                pickupHub.getAddress().getCity(),
-                pickupHub.getAddress().getCountry(),
-                pickupHub.getAddress().getLatitude(),
-                pickupHub.getAddress().getLongitude());
-        jdbcTemplate.update(queryPickup, pickupHub.getAddress().getStreet(), pickupHub.getAddress().getHouseNumber(), false, pickupHub.getUrl());
+            jdbcTemplate.update(queryAddress,
+                    pickupHub.getAddress().getStreet(),
+                    pickupHub.getAddress().getHouseNumber(),
+                    pickupHub.getAddress().getZipCode(),
+                    pickupHub.getAddress().getCity(),
+                    pickupHub.getAddress().getCountry(),
+                    pickupHub.getAddress().getLatitude(),
+                    pickupHub.getAddress().getLongitude());
+            jdbcTemplate.update(queryPickup, pickupHub.getAddress().getStreet(), pickupHub.getAddress().getHouseNumber(), false, pickupHub.getUrl());
     }
 }
