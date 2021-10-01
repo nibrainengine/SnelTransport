@@ -1,34 +1,66 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Controllers.ZoneController;
+import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
 import class_objects.Zone;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 public class ZoneControllersTests {
 
-    ZoneController zoneController = Mockito.mock(ZoneController.class);
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
+    ZoneService zoneService;
+
+    private Zone zone;
+    private List<Zone> zones;
+
+    @BeforeEach
+    public void setup(){
+        zone = new Zone(0, "testZone");
+        zones = new ArrayList<>();
+        zones.add(zone);
+    }
 
     /**
      * Test: Throws exception on getting a list of zones. Can't retrieve a list of all zones
      */
     @Test
     void getAllZones_ReturnOk(){
-        List<Zone> zones = new ArrayList<>();
-        Zone zone = new Zone(0, "test");
-        zones.add(zone);
-        when(zoneController.getAllZones()).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null), zoneController.getAllZones());
+        try{
+            when(zoneService.getAll()).thenReturn(zones);
+            this.mockMvc.perform(get("/zone/")).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     /**
@@ -36,11 +68,13 @@ public class ZoneControllersTests {
      */
     @Test
     void getAllZones_ReturnBadRequest(){
-        List<Zone> zones = new ArrayList<>();
-        Zone zone = new Zone(0, "test");
-        zones.add(zone);
-        when(zoneController.getAllZones()).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null), zoneController.getAllZones());
+        try{
+            when(zoneService.getAll()).thenThrow(new Exception());
+            this.mockMvc.perform(get("/zone/")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     /**
@@ -48,9 +82,13 @@ public class ZoneControllersTests {
      */
     @Test
     void addZone_ReturnOk(){
-        Zone zone = new Zone(0, "testZone");
-        when(zoneController.postZone(zone)).thenReturn(ResponseEntity.ok(zone));
-        assertEquals(ResponseEntity.ok(zone), zoneController.postZone(zone));
+        try{
+            when(zoneService.save(zone)).thenReturn(zone);
+            this.mockMvc.perform(post("/zone/").contentType("application/json").content(objectMapper.writeValueAsString(zone))).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     /**
@@ -58,9 +96,13 @@ public class ZoneControllersTests {
      */
     @Test
     void addZone_ReturnBadRequest(){
-        Zone zone = new Zone(0, "testZone");
-        when(zoneController.postZone(zone)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null), zoneController.postZone(zone));
+        try{
+            when(zoneService.save(zone)).thenThrow(new Exception());
+            this.mockMvc.perform(post("/zone/")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     /**
@@ -68,8 +110,12 @@ public class ZoneControllersTests {
      */
     @Test
     void deleteZone_ReturnOk(){
-        when(zoneController.deleteZone(0)).thenReturn(ResponseEntity.ok("success"));
-        assertEquals(ResponseEntity.ok("success"), zoneController.deleteZone(0));
+        try{
+            this.mockMvc.perform(delete("/zone/"+ 0)).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     /**
@@ -77,7 +123,12 @@ public class ZoneControllersTests {
      */
     @Test
     void deleteZone_ReturnBadRequest(){
-        when(zoneController.deleteZone(0)).thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("could not remove zone"));
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("could not remove zone"), zoneController.deleteZone(0));
+        try{
+            doThrow(new Exception()).when(zoneService).delete(0);
+            this.mockMvc.perform(delete("/zone/"+ 0)).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 }
