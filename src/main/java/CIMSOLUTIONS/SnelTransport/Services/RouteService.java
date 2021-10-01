@@ -4,11 +4,9 @@ import CIMSOLUTIONS.SnelTransport.DAO.AddressDAO;
 import CIMSOLUTIONS.SnelTransport.DAO.OrderItemDAO;
 import CIMSOLUTIONS.SnelTransport.DAO.ProductDAO;
 import CIMSOLUTIONS.SnelTransport.DAO.RouteDAO;
-import CIMSOLUTIONS.SnelTransport.class_objects.OrderItem;
-import CIMSOLUTIONS.SnelTransport.class_objects.Route;
+import CIMSOLUTIONS.SnelTransport.Models.OrderItem;
+import CIMSOLUTIONS.SnelTransport.Models.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

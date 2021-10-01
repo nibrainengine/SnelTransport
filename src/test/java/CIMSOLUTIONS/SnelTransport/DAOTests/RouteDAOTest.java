@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.RouteDAO;
-import CIMSOLUTIONS.SnelTransport.class_objects.Route;
+import CIMSOLUTIONS.SnelTransport.Models.Route;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -20,7 +20,7 @@ class RouteDAOTest {
         List<Route> routes = new ArrayList<>();
         routes.add(new Route());
         when(routeDAO.get(0,0)).thenReturn(routes);
-        assertTrue(routeDAO.get(0,0).get(0).getClass() == Route.class);
+        assertSame(routeDAO.get(0, 0).get(0).getClass(), Route.class);
     }
 
     @Test
@@ -28,6 +28,6 @@ class RouteDAOTest {
         List<Route> routes = new ArrayList<>();
         routes.add(new Route());
         when(routeDAO.getWithDate("2021-01-01")).thenReturn(routes);
-        assertTrue(routeDAO.getWithDate("2021-01-01").get(0).getClass() == Route.class);
+        assertSame(routeDAO.getWithDate("2021-01-01").get(0).getClass(), Route.class);
     }
 }

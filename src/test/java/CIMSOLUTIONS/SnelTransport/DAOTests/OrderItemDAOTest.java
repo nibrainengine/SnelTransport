@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.OrderItemDAO;
-import CIMSOLUTIONS.SnelTransport.class_objects.OrderItem;
+import CIMSOLUTIONS.SnelTransport.Models.OrderItem;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -20,7 +20,7 @@ class OrderItemDAOTest {
         List<OrderItem> orderItems = new ArrayList<>();
         orderItems.add(new OrderItem());
         when(orderItemDAO.getOrderItems(0,0,0)).thenReturn(orderItems);
-        assertTrue(orderItemDAO.getOrderItems(0,0,0).get(0).getClass() == OrderItem.class);
+        assertSame(orderItemDAO.getOrderItems(0, 0, 0).get(0).getClass(), OrderItem.class);
     }
 
     @Test
@@ -28,6 +28,6 @@ class OrderItemDAOTest {
         List<OrderItem> orderItems = new ArrayList<>();
         orderItems.add(new OrderItem());
         when(orderItemDAO.getOrderItemsWithDate(0,0)).thenReturn(orderItems);
-        assertTrue(orderItemDAO.getOrderItemsWithDate(0,0).get(0).getClass() == OrderItem.class);
+        assertSame(orderItemDAO.getOrderItemsWithDate(0, 0).get(0).getClass(), OrderItem.class);
     }
 }

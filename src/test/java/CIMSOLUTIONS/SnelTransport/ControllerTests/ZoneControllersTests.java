@@ -1,18 +1,14 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
-import CIMSOLUTIONS.SnelTransport.Controllers.ZoneController;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
-import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;

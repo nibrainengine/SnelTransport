@@ -1,6 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
-import CIMSOLUTIONS.SnelTransport.class_objects.Schedule;
+import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

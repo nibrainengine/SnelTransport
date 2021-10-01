@@ -2,7 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ServicesTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierAvailabilityDAO;
 import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
-import CIMSOLUTIONS.SnelTransport.class_objects.AvailablePeriod;
+import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

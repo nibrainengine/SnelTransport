@@ -1,8 +1,8 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.Services.RouteService;
-import CIMSOLUTIONS.SnelTransport.class_objects.OrderItem;
-import CIMSOLUTIONS.SnelTransport.class_objects.Route;
+import CIMSOLUTIONS.SnelTransport.Models.OrderItem;
+import CIMSOLUTIONS.SnelTransport.Models.Route;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
