@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
 
-@SpringBootApplication
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @RestController
+@SpringBootApplication
 public class SnelTransportApplication {
 
 	public static void main(String[] args) {

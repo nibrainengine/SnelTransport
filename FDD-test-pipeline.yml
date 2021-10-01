@@ -1,0 +1,43 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+variables:
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+trigger:
+- handmatig
+
+stages:
+            
+  - stage: Build
+    displayName: Build stage
+    jobs:
+    - job: MavenPackageAndPublishArtifacts
+      displayName: Maven Package and Publish Artifacts
+      pool:
+        vmImage: $(vmImageName)
+
+      steps:
+      
+
+      - task: Maven@3
+        displayName: 'Maven Package'
+        inputs:
+          mavenPomFile: 'pom.xml'
+          publishJUnitResults: false
+          javaHomeOption: 'JDKVersion'
+          mavenVersionOption: 'Default'
+          mavenAuthenticateFeed: false
+          effectivePomSkip: false
+          sonarQubeRunAnalysis: false
+          
+
+      - task: CopyFiles@2
+        displayName: 'Copy Files to artifact staging directory'
+        inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: '**/target/*.?(war|jar)'
+          TargetFolder: $(Build.ArtifactStagingDirectory)
