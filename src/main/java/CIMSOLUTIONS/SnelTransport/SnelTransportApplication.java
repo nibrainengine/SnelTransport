@@ -14,4 +14,5 @@ public class SnelTransportApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SnelTransportApplication.class, args);
 	}
+
 }
