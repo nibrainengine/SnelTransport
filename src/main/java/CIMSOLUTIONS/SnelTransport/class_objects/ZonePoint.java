@@ -1,4 +1,4 @@
-package class_objects;
+package CIMSOLUTIONS.SnelTransport.class_objects;
 
 public class ZonePoint {
 

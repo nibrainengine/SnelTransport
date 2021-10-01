@@ -2,7 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Controllers.ZoneController;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
-import class_objects.Zone;
+import CIMSOLUTIONS.SnelTransport.class_objects.Zone;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

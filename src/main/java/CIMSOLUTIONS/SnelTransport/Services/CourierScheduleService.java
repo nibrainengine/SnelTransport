@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
-import class_objects.Schedule;
+import CIMSOLUTIONS.SnelTransport.class_objects.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
