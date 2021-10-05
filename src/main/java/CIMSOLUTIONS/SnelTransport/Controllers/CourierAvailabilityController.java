@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.ProductDTO;
 import CIMSOLUTIONS.SnelTransport.Services.CourierAvailabilityService;
 import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class CourierAvailabilityController {
      */
     @GetMapping("/{courierId}")
     public ResponseEntity<List<AvailablePeriod>> get(@PathVariable int courierId) {
+        ProductDTO productDTO = new ProductDTO();
+
         try {
             return ResponseEntity.ok(courierAvailabilityService.get(courierId));
         } catch (Exception e) {
