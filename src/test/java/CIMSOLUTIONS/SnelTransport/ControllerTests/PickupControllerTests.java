@@ -2,8 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
-import class_objects.Address;
-import class_objects.PickUpHub;
+import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.json.JSONString;

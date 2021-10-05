@@ -1,8 +1,8 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
-import class_objects.Address;
-import class_objects.PickUpHub;
+import CIMSOLUTIONS.SnelTransport.Models.Address;
+import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

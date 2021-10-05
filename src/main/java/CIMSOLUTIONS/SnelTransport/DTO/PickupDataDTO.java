@@ -1,7 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DTO;
 
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
-import class_objects.Address;
+import CIMSOLUTIONS.SnelTransport.Models.Address;
 
 import java.util.Collections;
 import java.util.List;

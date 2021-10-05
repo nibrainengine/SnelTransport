@@ -4,3 +4,7 @@ INSERT INTO address (id, street, houseNumber, zipCode, city, country, latitude, 
 INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (1, 1, false, 'http://testurl.com/api');
 INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (2, 3, true, 'http://disabledurl.com/disabled');
 INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (3, 2, false, 'http://localhost:8080');
+INSERT INTO zone (id, title) VALUES (1, 'Utrecht');
+INSERT INTO zone (id, title) VALUES (2, 'Groningen');
+INSERT INTO zone (id, title) VALUES (3, 'Noord-Brabant');
+INSERT INTO zone (id, title) VALUES (4, 'Limburg');

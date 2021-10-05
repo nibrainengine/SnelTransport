@@ -3,7 +3,7 @@ package CIMSOLUTIONS.SnelTransport.Controllers;
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
-import class_objects.PickUpHub;
+import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
