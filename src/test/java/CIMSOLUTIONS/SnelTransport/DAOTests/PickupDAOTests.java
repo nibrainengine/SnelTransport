@@ -1,4 +1,4 @@
-package CIMSOLUTIONS.SnelTransport.PickUp;
+package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import class_objects.Address;

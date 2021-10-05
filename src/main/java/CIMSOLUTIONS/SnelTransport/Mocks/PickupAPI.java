@@ -1,4 +1,4 @@
-package CIMSOLUTIONS.SnelTransport.Mock;
+package CIMSOLUTIONS.SnelTransport.Mocks;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

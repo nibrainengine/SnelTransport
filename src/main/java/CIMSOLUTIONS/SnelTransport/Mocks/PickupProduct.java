@@ -1,4 +1,4 @@
-package CIMSOLUTIONS.SnelTransport.Mock;
+package CIMSOLUTIONS.SnelTransport.Mocks;
 
 import java.util.Date;
 import java.util.Random;

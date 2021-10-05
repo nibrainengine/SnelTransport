@@ -2,9 +2,8 @@ package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
-import CIMSOLUTIONS.SnelTransport.Mock.PickupProduct;
+import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import class_objects.PickUpHub;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -39,9 +37,14 @@ public class PickupDataController {
             for (PickUpHub pickupHub : pickUpAPIs) {
                 if (!Objects.equals(pickupHub.getUrl(), "")) {
                     //Incase of bad url in database -> Internal server error
-                    ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
-                    PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
-                    responses.add(pickupDataDTO);
+                    try {
+                        ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
+                        PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
+                        responses.add(pickupDataDTO);
+                    }
+                    catch (Exception e){
+                        //Bad URL exception, skip this one API and move on, not worthy of an error 500.
+                    }
 
                 }
             }
