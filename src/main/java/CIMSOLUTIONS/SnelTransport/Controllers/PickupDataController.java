@@ -4,6 +4,7 @@ import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
+import CIMSOLUTIONS.SnelTransport.Services.PickUpHubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ import java.util.*;
 
 public class PickupDataController {
     @Autowired
-    PickUpHubDAO pickuphubDAO;
+    PickUpHubService pickUpHubService;
     RestTemplate restTemplate = new RestTemplate();
 
     /**
@@ -32,11 +33,10 @@ public class PickupDataController {
     public ResponseEntity<List<PickupDataDTO>> getPickupData() {
         List<PickupDataDTO> responses = new ArrayList<>();
         try {
-            List<PickUpHub> pickUpAPIs = pickuphubDAO.getURLsandAddresses();
+            List<PickUpHub> pickUpAPIs = pickUpHubService.getActiveAPIsWithAdresses();
 
             for (PickUpHub pickupHub : pickUpAPIs) {
                 if (!Objects.equals(pickupHub.getUrl(), "")) {
-                    //Incase of bad url in database -> Internal server error
                     try {
                         ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
                         PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
@@ -63,9 +63,13 @@ public class PickupDataController {
     @CrossOrigin
     @PostMapping(value = "/PickupAPI", consumes = "application/json", produces = "application/json")
     public ResponseEntity<PickUpHub> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
-
-        pickuphubDAO.postPickupHub(pickUpHub);
-        return ResponseEntity.ok(pickUpHub);
+        try{
+            pickUpHubService.save(pickUpHub);
+            return ResponseEntity.ok(pickUpHub);
+        }
+        catch (Exception xD){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(pickUpHub);
+        }
 
     }
 
