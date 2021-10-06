@@ -1,9 +1,12 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CouriersDAO;
+import CIMSOLUTIONS.SnelTransport.DAO.PackageSizeDAO;
+import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -11,10 +14,12 @@ import java.util.List;
 public class CouriersService {
 
     private CouriersDAO couriersDAO;
+    private PackageSizeDAO packageSizeDAO;
 
     @Autowired
-    public void setInjectedBean(CouriersDAO couriersDAO){
+    public void setInjectedBean(CouriersDAO couriersDAO, PackageSizeDAO packageSizeDAO){
         this.couriersDAO = couriersDAO;
+        this.packageSizeDAO = packageSizeDAO;
     }
 
     /**
@@ -23,5 +28,17 @@ public class CouriersService {
      */
     public List<CourierDTO> getAll() {
         return couriersDAO.getAll();
+    }
+
+    /**
+     * Fuses a Courier and Packagesize Object
+     * @param courierId unique identifier of courier
+     * @return Single Courier object
+     * @throws Exception Exeption message.
+     */
+    public Courier getCourierInfo(int courierId) throws Exception {
+        Courier courier = couriersDAO.getCourierInfo(courierId);
+        courier.setPackageSizes(packageSizeDAO.getPackageSizeCourier(courierId));
+        return courier;
     }
 }
