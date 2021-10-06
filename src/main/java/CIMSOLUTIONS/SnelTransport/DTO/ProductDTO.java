@@ -4,12 +4,14 @@ import java.util.List;
 
 public class ProductDTO {
 
+    //declare variables
     private int id;
     private String name;
     private Double price;
     private List<String> categories;
     private int quantity;
 
+    //getters and setters
     public int getId() {
         return id;
     }

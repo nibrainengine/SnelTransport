@@ -23,7 +23,7 @@ public class CourierAvailabilityDAO {
     /**
      * Gets all available periods from a courier
      * @param courierId identification of a courier
-     * @return List<AvailablePeriod>
+     * @return List<AvailablePeriod> AvailablePeriod contains data on when a courier is available
      */
     public List<AvailablePeriod> get(int courierId) throws Exception {
         String query =  "SELECT id, start as startTime, [end] as endTime, price, isApproved " +
