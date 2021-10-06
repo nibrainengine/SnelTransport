@@ -34,7 +34,7 @@ public class ProductServiceTest {
     @Test
     void testGet() throws Exception {
         List<ProductDTO> productDTOS = Collections.singletonList(productDTO);
-        when(productDAO.getAll()).thenReturn(productDTOS);
+        when(productDAO.getAllAvailable()).thenReturn(productDTOS);
         assertEquals(productDTOS, productService.getAll());
     }
 

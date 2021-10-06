@@ -19,7 +19,7 @@ public class CourierAvailabilityService {
 
     /**
      * Gets all available periods from a courier
-     * @return List<AvailablePeriod>
+     * @return List<AvailablePeriod> contains data on when a courier is available
      */
     public List<AvailablePeriod> get(int courierId) throws Exception {
         return courierAvailabilityDAO.get(courierId);

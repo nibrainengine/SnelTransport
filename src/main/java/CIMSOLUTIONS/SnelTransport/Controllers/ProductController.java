@@ -23,6 +23,11 @@ public class ProductController {
         this.productService = productService;
     }
 
+    /**
+     * Gets all Products from database that are currently available for customers.
+     * @return ResponseEntity<List<ProductDTO>> The productDTO object is a simple version of the Product Object with
+     * only information the customer has to see. Quantity is added to the ProductDTO.
+     */
     @GetMapping("/available")
     public ResponseEntity<List<ProductDTO>> getAll() {
         try {

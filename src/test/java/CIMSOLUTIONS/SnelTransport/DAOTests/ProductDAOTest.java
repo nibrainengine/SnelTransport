@@ -47,7 +47,7 @@ public class ProductDAOTest {
     @Test
     void getAll() {
         try {
-            List<ProductDTO> products = productDAOWithJdbc.getAll();
+            List<ProductDTO> products = productDAOWithJdbc.getAllAvailable();
             assertEquals(1, products.size());
         }
         catch (Exception e) {
