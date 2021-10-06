@@ -12,7 +12,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-public class PickupAPIController {
+public class MockPickupAPIController {
 
     /**
      * This method creates a new Pickup API includings its products and then returns it as JSON.
@@ -21,7 +21,7 @@ public class PickupAPIController {
      */
     @RequestMapping(value = "/MockPickupData", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PickupProduct>> getMockedPickupData(){
-        PickupAPI pickupAPI = new PickupAPI();
+        MockPickupAPI pickupAPI = new MockPickupAPI();
         return ResponseEntity.ok(pickupAPI.getProducts());
     }
 

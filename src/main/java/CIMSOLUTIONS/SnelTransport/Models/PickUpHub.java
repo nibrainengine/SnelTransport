@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PickUpHub {
     //declare variables
+    private int id;
     private Address address;
     private Boolean isDisabled;
     private List<OrderItem> orderItems;
@@ -12,6 +13,14 @@ public class PickUpHub {
 
     enum VehicleType{
 
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        isDisabled = disabled;
     }
 
     public PickUpHub(Address address, Boolean isDisabled, String url) {

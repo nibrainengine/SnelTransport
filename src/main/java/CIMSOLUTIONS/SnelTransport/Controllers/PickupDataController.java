@@ -1,16 +1,17 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.*;
 
 @RestController
@@ -36,7 +37,7 @@ public class PickupDataController {
 
             for (PickUpHub pickupHub : pickUpAPIs) {
                 if (!Objects.equals(pickupHub.getUrl(), "")) {
-                    //Incase of bad url in database -> Internal server error
+                    //In case of bad url in database -> Internal server error
                     try {
                         ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
                         PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
@@ -67,6 +68,30 @@ public class PickupDataController {
         pickuphubDAO.postPickupHub(pickUpHub);
         return ResponseEntity.ok(pickUpHub);
 
+    }
+
+    /**
+     * Returns the information of all registered pickup hubs. Returns pickup hubs without API's aswell as disabled pickup hubs.
+     * @return List of all pickup hubs registered in the database.
+     */
+
+    @CrossOrigin
+    @GetMapping(value="/PickupAPI", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PickUpAPIDTO>> getAPIList(){
+        List<PickUpAPIDTO> pickUpAPIs = pickuphubDAO.getAPIs();
+        return ResponseEntity.ok(pickUpAPIs);
+    }
+
+    /**
+     * Swaps the status of a pickup hub from disabled to enabled, or the other way around, both in the same call.
+     * @param id    Primary Key from the Pickup hub table.
+     * @return PickUpHub    Copy of the PickUpHub object with its newly set status.
+     */
+    @CrossOrigin
+    @PutMapping(value="/PickupStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PickUpHub> enableDisable(@PathVariable int id){
+        PickUpHub changedPickupHub = pickuphubDAO.enableDisablePickup(id);
+        return ResponseEntity.ok(changedPickupHub);
     }
 
 }

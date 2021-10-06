@@ -1,8 +1,11 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
+import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Address;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -34,27 +37,43 @@ public class PickUpHubDAO {
      */
     public List<PickUpHub> getURLsandAddresses() {
         String query = "SELECT pickUpHub.url, address.street, address.houseNumber,address.zipCode, address.city, address.country, address.latitude, address.longitude, address.id FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id WHERE url IS NOT NULL AND isDisabled = 'False'";
-        return jdbcTemplate.query(query, new RowMapper<PickUpHub>() {
-            @Override
-            public PickUpHub mapRow(ResultSet rs, int rowNum) throws SQLException {
-                //Query is index based, do not reorganize.
-                PickUpHub pickUpHub = new PickUpHub();
-                pickUpHub.setUrl(rs.getString(1));
-                Address address = new Address();
-                address.setStreet((rs.getString(2)));
-                address.setHouseNumber(rs.getString(3));
-                address.setZipCode(rs.getString(4));
-                address.setCity(rs.getString(5));
-                address.setCountry(rs.getString(6));
-                address.setLatitude(rs.getDouble(7));
-                address.setLongitude(rs.getDouble(8));
-                address.setId(rs.getInt(9));
-                pickUpHub.setAddress(address);
+        return jdbcTemplate.query(query, (rs, rowNum) -> {
+            //Query is index based, do not reorganize.
+            PickUpHub pickUpHub = new PickUpHub();
+            pickUpHub.setUrl(rs.getString(1));
+            Address address = new Address();
+            address.setStreet((rs.getString(2)));
+            address.setHouseNumber(rs.getString(3));
+            address.setZipCode(rs.getString(4));
+            address.setCity(rs.getString(5));
+            address.setCountry(rs.getString(6));
+            address.setLatitude(rs.getDouble(7));
+            address.setLongitude(rs.getDouble(8));
+            address.setId(rs.getInt(9));
+            pickUpHub.setAddress(address);
 
-                return pickUpHub;
-            }
+            return pickUpHub;
         });
 
+    }
+    public List<PickUpAPIDTO> getAPIs(){
+        String query ="SELECT pickUpHub.id, pickUpHub.url,  address.street, address.houseNumber,address.zipCode, address.city, address.country, address.latitude, address.longitude, address.id, pickUpHub.isDisabled FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id";
+        return jdbcTemplate.query(query, (resultSet, i) -> {
+            PickUpAPIDTO dto = new PickUpAPIDTO();
+            dto.setId(resultSet.getInt(1));
+            dto.setUrl(resultSet.getString(2));
+            dto.setAddress( new Address(
+                    resultSet.getString(3), //Street
+                    resultSet.getString(4), //houseNumber
+                    resultSet.getString(5), //zipCode
+                    resultSet.getString(6), //city
+                    resultSet.getString(7), //country
+                    resultSet.getDouble(8), //latitude
+                    resultSet.getDouble(9), //longitude
+                    resultSet.getInt(10))); //id
+            dto.setDisabled(resultSet.getBoolean(11));
+            return dto;
+        });
     }
 
     /**
@@ -80,5 +99,44 @@ public class PickUpHubDAO {
         catch (NullPointerException e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Swaps the value of isDisabled from true to false, or the other way around.
+     * Works both ways with the same query.
+     * @param id    The primary key of the PickUpHub
+     * @return PickUpHub    PickUpHub object with the newly set value
+     */
+    public PickUpHub enableDisablePickup(int id){
+        String query = "UPDATE pickUpHub SET isDisabled = 1 ^ isDisabled WHERE id=?";
+        jdbcTemplate.update(query, id);
+        return getPickup(id);
+    }
+
+    /**
+     * Query to obtain a single PickUpHub by its ID
+     * @param id    The primary key of the PickUpHub
+     * @return PickUpHub   PickUpHub object
+     */
+    public PickUpHub getPickup(int id){
+        String query ="SELECT pickUpHub.id, pickUpHub.url,  address.street, address.houseNumber,address.zipCode, address.city, address.country, address.latitude, address.longitude, address.id, pickUpHub.isDisabled FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id WHERE pickUpHub.id = " + id;
+        List<PickUpHub> tempHolder = jdbcTemplate.query(query, (resultSet, i) -> {
+            PickUpHub pickUpHub = new PickUpHub();
+            pickUpHub.setId(resultSet.getInt(1));
+            pickUpHub.setUrl(resultSet.getString(2));
+            pickUpHub.setAddress(new Address(
+                    resultSet.getString(3), //Street
+                    resultSet.getString(4), //houseNumber
+                    resultSet.getString(5), //zipCode
+                    resultSet.getString(6), //city
+                    resultSet.getString(7), //country
+                    resultSet.getDouble(8), //latitude
+                    resultSet.getDouble(9), //longitude
+                    resultSet.getInt(10))); //id
+            pickUpHub.setDisabled(resultSet.getBoolean(11));
+            return pickUpHub;
+        });
+        //The query can only return one item but our row mapper does not know that.
+        return tempHolder.get(0);
     }
 }

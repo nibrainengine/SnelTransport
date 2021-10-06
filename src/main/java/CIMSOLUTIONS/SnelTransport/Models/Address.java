@@ -21,6 +21,16 @@ public class Address {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+    public Address(String street, String houseNumber, String zipCode, String city, String country, Double latitude, Double longitude, int id) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.id = id;
+    }
 
     public Address() {
     }
