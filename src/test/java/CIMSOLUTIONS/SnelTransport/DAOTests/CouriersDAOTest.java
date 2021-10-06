@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CouriersDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
+import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,5 +26,12 @@ public class CouriersDAOTest {
         assertEquals(1, couriersDAO.getAll().size());
         when(couriersDAO.getAll()).thenReturn(courierDTOS);
         assertSame(couriersDAO.getAll().get(0).getClass(), CourierDTO.class);
+    }
+
+    @Test
+    void getCourierInfo() throws Exception {
+        Courier courier = new Courier();
+        when(couriersDAO.getCourierInfo(1)).thenReturn(courier);
+        assertTrue(couriersDAO.getCourierInfo(1).getClass() == Courier.class);
     }
 }

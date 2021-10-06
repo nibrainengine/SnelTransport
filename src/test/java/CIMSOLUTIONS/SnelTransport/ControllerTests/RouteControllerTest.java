@@ -1,25 +1,101 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
-import CIMSOLUTIONS.SnelTransport.Controllers.RouteController;
+import CIMSOLUTIONS.SnelTransport.Models.Address;
+import CIMSOLUTIONS.SnelTransport.Models.Route;
+import CIMSOLUTIONS.SnelTransport.Services.RouteService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class RouteControllerTest {
 
-    RouteController routeController = Mockito.mock(RouteController.class);
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Test
-    void getAllRoutesCourier() throws Exception {
-        when(routeController.getAllRoutesCourier(1,1)).thenReturn("[{\"endAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52},\"startAdress\":{\"zipcode\":\"3971KA\",\"country\":\"The Netherlands\",\"city\":\"Zeist\",\"housenumber\":\"23A\",\"street\":\"Hoofdstraat\",\"latitude\":5,\"id\":1,\"longitude\":52},\"index\":1,\"id\":1,\"orderItems\":[{\"product\":{\"size\":\"klein\",\"price\":1300,\"name\":\"Macbook Pro 2021 A7 Chip\",\"id\":1,\"category\":\"Laptop\"},\"eta\":{\"nanos\":0},\"quantity\":1,\"price\":1300,\"orderStatus\":\"in progress\",\"id\":1,\"deliveryAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52}},{\"product\":{\"size\":\"klein\",\"price\":1300,\"name\":\"Macbook Pro 2021 A7 Chip\",\"id\":1,\"category\":\"Laptop\"},\"eta\":{\"nanos\":0},\"quantity\":1,\"price\":1000,\"orderStatus\":\"in progress\",\"id\":2,\"deliveryAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52}}]}]");
-        assertTrue(routeController.getAllRoutesCourier(1,1).contains("endAdress") && routeController.getAllRoutesCourier(1,1).contains("index"));
+    @MockBean
+    private RouteService routeService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private List<Route> route;
+
+    @BeforeEach
+    public void setup(){
+        route = getRoutes();
     }
 
     @Test
-    void getAllRoutes() throws Exception {
-        when(routeController.getAllRoutes("2021-01-01")).thenReturn("[{\"endAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52},\"startAdress\":{\"zipcode\":\"3971KA\",\"country\":\"The Netherlands\",\"city\":\"Zeist\",\"housenumber\":\"23A\",\"street\":\"Hoofdstraat\",\"latitude\":5,\"id\":1,\"longitude\":52},\"index\":1,\"id\":1,\"orderItems\":[{\"product\":{\"size\":\"klein\",\"price\":1300,\"name\":\"Macbook Pro 2021 A7 Chip\",\"id\":1,\"category\":\"Laptop\"},\"eta\":{\"nanos\":0},\"quantity\":1,\"price\":1300,\"orderStatus\":\"in progress\",\"id\":1,\"deliveryAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52}},{\"product\":{\"size\":\"klein\",\"price\":1300,\"name\":\"Macbook Pro 2021 A7 Chip\",\"id\":1,\"category\":\"Laptop\"},\"eta\":{\"nanos\":0},\"quantity\":1,\"price\":1000,\"orderStatus\":\"in progress\",\"id\":2,\"deliveryAdress\":{\"zipcode\":\"3438EW\",\"country\":\"The Netherlands\",\"city\":\"Nieuwegein\",\"housenumber\":\"1\",\"street\":\"Symfonielaan\",\"latitude\":5,\"id\":2,\"longitude\":52}}]}]");
-        assertTrue(routeController.getAllRoutes("2021-01-01").contains("endAdress") && routeController.getAllRoutes("2021-01-01").contains("index"));
+    void getAllRoutesCourier_ReturnOk() throws Exception{
+        try{
+            when(routeService.get(1,1)).thenReturn(route);
+            this.mockMvc.perform(get("/my-route/1/1")).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void getAllRoutesCourier_ReturnBadRequest() throws Exception{
+        try{
+            when(routeService.get(1,1)).thenThrow(new Exception());
+            this.mockMvc.perform(get("/my-route/1/1")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void getAllRoutes_ReturnOk() throws Exception{
+        try{
+            when(routeService.getWithDate("2021-10-01")).thenReturn(route);
+            this.mockMvc.perform(get("/routes/2021-10-01")).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void getAllRoutes_ReturnBadRequest() throws Exception{
+        try{
+            when(routeService.getWithDate("2021-10-01")).thenThrow(new Exception());
+            this.mockMvc.perform(get("/routes/2021-10-01")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    private List<Route> getRoutes(){
+        List<Route> routeList = new ArrayList<Route>();
+        Route route = new Route();
+        route.setId(1);
+        route.setStartTime(new Date());
+        route.setEndTime(new Date());
+        route.setIndex(1);
+        route.setDeliveryAddress(new Address());
+        route.setEndAddress(new Address());
+        route.setStartAddress(new Address());
+        routeList.add(route);
+        return routeList;
     }
 }
