@@ -62,7 +62,7 @@ public class PickUpHubDAO {
      *
      * @param pickupHub a PickUpHub object outfitted with address and URL
      */
-    public void postPickupHub(PickUpHub pickupHub) {
+    public void postPickupHub(PickUpHub pickupHub) throws Exception {
         try {
             simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("address").usingGeneratedKeyColumns("id");
             Map<String, Object> parameters = new HashMap<>(7);
@@ -76,9 +76,8 @@ public class PickUpHubDAO {
             Number addressId = simpleJdbcInsert.executeAndReturnKey(parameters);
             String queryPickup = "INSERT INTO pickUpHub (addressId, isDisabled, url) VALUES (?,?,?)";
             jdbcTemplate.update(queryPickup, addressId, false, pickupHub.getUrl());
-        }
-        catch (NullPointerException e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }

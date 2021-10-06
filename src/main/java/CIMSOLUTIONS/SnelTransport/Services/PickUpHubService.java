@@ -31,7 +31,7 @@ public class PickUpHubService {
      * @param pickUpHub A JSON format PickupHub must be added to the body of the HTTP Request, this consists of 2 parts, an address object and a url.
      * @return This call returns a generic "Success!" string and response code 200.
      */
-    public void save(PickUpHub pickUpHub){
+    public void save(PickUpHub pickUpHub) throws Exception {
         pickUpHubDAO.postPickupHub(pickUpHub);
     }
 }

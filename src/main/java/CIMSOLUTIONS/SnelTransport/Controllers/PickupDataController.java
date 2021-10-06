@@ -1,6 +1,5 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
-import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
@@ -18,9 +17,15 @@ import java.util.*;
 @RequestMapping("/api")
 
 public class PickupDataController {
-    @Autowired
+
+    RestTemplate restTemplate;
     PickUpHubService pickUpHubService;
-    RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    public void setInjectedBean(PickUpHubService pickUpHubService, RestTemplate restTemplate) {
+        this.pickUpHubService = pickUpHubService;
+        this.restTemplate = restTemplate;
+    }
 
     /**
      * This method queries the database to collect all PickupHubs that have an API, these API's are then requested for their products using their URL. Results as well as general information about these Pickup hubs are returned to the frontend in JSON format.
@@ -62,15 +67,13 @@ public class PickupDataController {
      */
     @CrossOrigin
     @PostMapping(value = "/PickupAPI", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<PickUpHub> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
+    public ResponseEntity<Void> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
         try{
             pickUpHubService.save(pickUpHub);
-            return ResponseEntity.ok(pickUpHub);
+            return ResponseEntity.ok().build();
         }
         catch (Exception xD){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(pickUpHub);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-
     }
-
 }
