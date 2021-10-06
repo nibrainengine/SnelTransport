@@ -60,7 +60,6 @@ public class CouriersController {
         try {
             return ResponseEntity.ok(couriersService.getCourierInfo(courierId));
         } catch (Exception e) {
-            System.out.println(e.toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

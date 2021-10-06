@@ -23,11 +23,15 @@ public class CouriersService {
     }
 
     /**
-     * Gets all couriers in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the id and name are given.
+     * Gets all couriers in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the id, name and package size are given.
      * @return List<CourierDTO>
      */
     public List<CourierDTO> getAll() {
-        return couriersDAO.getAll();
+        List<CourierDTO> courierDTOS = couriersDAO.getAll();
+        for (CourierDTO courierDTO : courierDTOS){
+            courierDTO.setPackageSize(packageSizeDAO.getPackageSizeCourier(courierDTO.getId()));
+        }
+        return courierDTOS;
     }
 
     /**

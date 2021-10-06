@@ -45,9 +45,9 @@ public class CouriersServiceTest {
     void testGet() {
         List<CourierDTO> courierDTOS = Collections.singletonList(courierDTO);
         when(couriersDAO.getAll()).thenReturn(courierDTOS);
-        assertEquals(courierDTOS,couriersService.getAll());
-        when(couriersService.getAll()).thenReturn(courierDTOS);
-        assertSame(couriersService.getAll().get(0).getClass(), CourierDTO.class);
+        assertEquals(courierDTOS,couriersDAO.getAll());
+        when(mockService.getAll()).thenReturn(courierDTOS);
+        assertSame(mockService.getAll().get(0).getClass(), CourierDTO.class);
     }
 
     @Test
