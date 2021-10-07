@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
+import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
@@ -74,6 +75,14 @@ public class CouriersControllerTest {
         doThrow(new Exception()).when(courierScheduleService).insertCancelRequest(any(CancelCourierScheduleRequestDTO.class));
         this.mockMvc.perform(post("/couriers/cancel-schedule/")
                         .contentType("application/json").content(objectMapper.writeValueAsString(cancelRequest)))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPostBadRequestWrongBody() throws Exception {
+        doNothing().when(courierScheduleService).insertCancelRequest(any(CancelCourierScheduleRequestDTO.class));
+        this.mockMvc.perform(post("/couriers/cancel-schedule/")
+                        .contentType("application/json").content(objectMapper.writeValueAsString(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
