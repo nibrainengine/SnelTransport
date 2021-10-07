@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,22 @@ public class PickUpHubService {
      */
     public void save(PickUpHub pickUpHub) throws Exception {
         pickUpHubDAO.postPickupHub(pickUpHub);
+    }
+
+    /**
+     * Returns the information of all registered pickup hubs. Returns pickup hubs without API's aswell as disabled pickup hubs.
+     * @return List of all pickup hubs registered in the database.
+     */
+    public List<PickUpAPIDTO> getAPIs() throws Exception{
+        return pickUpHubDAO.getAPIs();
+    }
+    /**
+     * Swaps the status of a pickup hub from disabled to enabled, or the other way around, both in the same call.
+     *
+     * @param id Primary Key from the Pickup hub table.
+     * @return PickUpHub    Copy of the PickUpHub object with its newly set status.
+     */
+    public PickUpHub enableDisablePickup(int id){
+        return pickUpHubDAO.enableDisablePickup(id);
     }
 }

@@ -107,7 +107,7 @@ public class PickUpHubDAO {
      * @return PickUpHub    PickUpHub object with the newly set value
      */
     public PickUpHub enableDisablePickup(int id){
-        String query = "UPDATE pickUpHub SET isDisabled = 1 ^ isDisabled WHERE id=?";
+        String query = "UPDATE pickUpHub SET isDisabled = 1 - isDisabled WHERE id=?";
         jdbcTemplate.update(query, id);
         return getPickup(id);
     }

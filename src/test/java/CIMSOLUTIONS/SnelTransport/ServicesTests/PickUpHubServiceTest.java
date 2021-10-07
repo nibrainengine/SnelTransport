@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.ServicesTests;
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Address;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import CIMSOLUTIONS.SnelTransport.Services.PickUpHubService;
@@ -39,14 +40,36 @@ public class PickUpHubServiceTest {
     }
 
     @Test
-    void testGet(){
+    void testGetActiveAPIsWithURLs(){
         List<PickUpHub> pickUpHubs = Collections.singletonList(pickUpHub);
         when(pickUpHubDAO.getURLsandAddresses()).thenReturn(pickUpHubs);
         assertEquals(pickUpHubs, pickUpHubService.getActiveAPIsWithAdresses());
         assertSame(pickUpHubService.getActiveAPIsWithAdresses().get(0).getClass(), PickUpHub.class);
     }
 
+    @Test
+    void testStatusUpdate(){
+        PickUpHub pickUpHub = getPickUpHub();
+        when(pickUpHubDAO.enableDisablePickup(pickUpHub.getId())).thenReturn(pickUpHub);
+        assertSame(pickUpHubService.enableDisablePickup(pickUpHub.getId()).getClass(), PickUpHub.class);
+    }
 
+    @Test
+    void testGetAPIS() throws Exception{
+        PickUpAPIDTO pickUpAPIDTO = getPickupAPIDTO();
+        List<PickUpAPIDTO> pickUpAPIDTOS = Collections.singletonList(pickUpAPIDTO);
+        when(pickUpHubDAO.getAPIs()).thenReturn(pickUpAPIDTOS);
+        assertEquals(pickUpAPIDTOS, pickUpHubService.getAPIs());
+        assertSame(pickUpHubService.getAPIs().get(0).getClass(), PickUpAPIDTO.class);
+    }
+
+
+    private PickUpAPIDTO getPickupAPIDTO() {
+        return new PickUpAPIDTO(1, "http://test.nl", getAddress(), false);
+    }
+    private Address getAddress(){
+        return new Address("straat", "nummer", "postcode", "stad", "land", 12.5, 3.3);
+    }
 
     private PickUpHub getPickUpHub(){
         PickUpHub pickUpHub = new PickUpHub();

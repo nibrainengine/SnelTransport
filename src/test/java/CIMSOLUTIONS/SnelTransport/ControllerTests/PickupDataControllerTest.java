@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.Address;
@@ -20,8 +21,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,15 +86,46 @@ public class PickupDataControllerTest {
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void testGetAPIS() throws Exception {
+        PickUpAPIDTO pickupAPIDTO = getPickupAPIDTO();
+        List<PickUpAPIDTO> pickUpAPIDTOS = Collections.singletonList(pickupAPIDTO);
+        when(pickUpHubService.getAPIs()).thenReturn(pickUpAPIDTOS);
+        this.mockMvc.perform(get("/api/PickupAPI/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(pickupAPIDTO.getId()))
+                .andExpect(jsonPath("$[0].address.zipCode").value(pickupAPIDTO.getAddress().getZipCode()));
+    }
+
+    @Test
+    public void testUpdateStatus() throws Exception {
+        PickUpHub pickUpHub = getPickUpHub();
+        when(pickUpHubService.enableDisablePickup(pickUpHub.getId())).thenReturn(pickUpHub);
+        pickUpHub.setDisabled(!pickUpHub.getDisabled());
+        this.mockMvc.perform(put("/api/PickupStatus/" + pickUpHub.getId())).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.disabled").value(pickUpHub.getDisabled()));
+    }
+
+    @Test
+    public void testUpdateStatusBadId() throws Exception{
+        this.mockMvc.perform(put("/api/PickupStatus/kaas")).andExpect(status().isBadRequest());
+    }
+
+    private PickUpAPIDTO getPickupAPIDTO() {
+        return new PickUpAPIDTO(1, "http://test.nl", getAddress(), false);
+    }
+    private Address getAddress(){
+        return new Address("straat", "nummer", "postcode", "stad", "land", 12.5, 3.3);
+    }
+
     private PickUpHub getPickUpHub(){
         PickUpHub pickUpHub = new PickUpHub();
         pickUpHub.setUrl("http://localhost:8080/api/MockPickupData");
-        pickUpHub.setAddress(new Address("straat", "nummer", "postcode", "stad", "land", 12.5, 3.3));
+        pickUpHub.setAddress(getAddress());
         return pickUpHub;
     }
 
     private PickupDataDTO getPickupDataDTO(PickupProduct pickupProduct, String url){
-        Address address = new Address("straat", "nummer", "postcode", "stad", "land", 12.5, 3.3);
+        Address address = getAddress();
         return new PickupDataDTO(address, url, Collections.singletonList(pickupProduct));
     }
 }
