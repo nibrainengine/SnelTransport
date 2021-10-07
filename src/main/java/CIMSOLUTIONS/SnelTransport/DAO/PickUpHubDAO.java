@@ -56,6 +56,12 @@ public class PickUpHubDAO {
         });
 
     }
+
+    /**
+     * This method returns a list of all the Pickup hubs including their address as PickUpAPI Data Transfer Objects.
+     * There are no arguments for this method. It returns all, regardless of disabled variable or the lackter of a URL.
+     * @return List<PickUpAPIDTO> A list containing PickUpAPIDTO objects filled with an id, url, address and wether they are disabled.
+     */
     public List<PickUpAPIDTO> getAPIs(){
         String query ="SELECT pickUpHub.id, pickUpHub.url,  address.street, address.houseNumber,address.zipCode, address.city, address.country, address.latitude, address.longitude, address.id, pickUpHub.isDisabled FROM pickUpHub INNER JOIN address ON pickUpHub.addressId=address.id";
         return jdbcTemplate.query(query, (resultSet, i) -> {
