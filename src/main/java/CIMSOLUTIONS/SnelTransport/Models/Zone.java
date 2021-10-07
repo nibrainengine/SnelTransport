@@ -32,4 +32,12 @@ public class Zone {
     public void setZoneTitle(String zoneTitle) {
         this.zoneTitle = zoneTitle;
     }
+
+    public List<ZonePoint> getZonePoints() {
+        return zonePoints;
+    }
+
+    public void setZonePoints(List<ZonePoint> zonePoints) {
+        this.zonePoints = zonePoints;
+    }
 }
