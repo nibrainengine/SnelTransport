@@ -62,10 +62,10 @@ public class PickupDataController {
      */
     @CrossOrigin
     @PostMapping(value = "/PickupAPI", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<PickUpHub> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
+    public ResponseEntity addPickupAPI(@RequestBody PickUpHub pickUpHub) {
         try{
             pickUpHubService.save(pickUpHub);
-            return ResponseEntity.ok(pickUpHub);
+            return ResponseEntity.ok(null);
         }
         catch (Exception xD){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(pickUpHub);
