@@ -28,7 +28,6 @@ public class RouteDAO {
             String queryRoute = "select distinct scheduleRoute.courierScheduleId as id, scheduleRoute.indexOrder as [index], scheduleRoute.startTime as startTime, scheduleRoute.endTime as endTime from courier, courierSchedule, scheduleRoute where courier.userId = " + courierId + " and courierSchedule.id = " + scheduleId + " and courierSchedule.courierId = courier.userId and courierSchedule.id = scheduleRoute.courierScheduleId";
             List<Route> routes;
             routes = jdbcTemplate.query(queryRoute, BeanPropertyRowMapper.newInstance(Route.class));
-            System.out.println(routes.get(0).getId());
             return routes;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

@@ -6,6 +6,7 @@ import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.apache.coyote.Response;
+import CIMSOLUTIONS.SnelTransport.Services.PickUpHubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,9 +19,15 @@ import java.util.*;
 @RequestMapping("/api")
 
 public class PickupDataController {
+
+    RestTemplate restTemplate;
+    PickUpHubService pickUpHubService;
+
     @Autowired
-    PickUpHubDAO pickuphubDAO;
-    RestTemplate restTemplate = new RestTemplate();
+    public void setInjectedBean(PickUpHubService pickUpHubService, RestTemplate restTemplate) {
+        this.pickUpHubService = pickUpHubService;
+        this.restTemplate = restTemplate;
+    }
 
     /**
      * This method queries the database to collect all PickupHubs that have an API, these API's are then requested for their products using their URL. Results as well as general information about these Pickup hubs are returned to the frontend in JSON format.
@@ -33,11 +40,10 @@ public class PickupDataController {
     public ResponseEntity<List<PickupDataDTO>> getPickupData() {
         List<PickupDataDTO> responses = new ArrayList<>();
         try {
-            List<PickUpHub> pickUpAPIs = pickuphubDAO.getURLsandAddresses();
+            List<PickUpHub> pickUpAPIs = pickUpHubService.getActiveAPIsWithAdresses();
 
             for (PickUpHub pickupHub : pickUpAPIs) {
                 if (!Objects.equals(pickupHub.getUrl(), "")) {
-                    //In case of bad url in database -> Internal server error
                     try {
                         ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
                         PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
@@ -63,11 +69,14 @@ public class PickupDataController {
      */
     @CrossOrigin
     @PostMapping(value = "/PickupAPI", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<PickUpHub> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
-
-        pickuphubDAO.postPickupHub(pickUpHub);
-        return ResponseEntity.ok(pickUpHub);
-
+    public ResponseEntity<Void> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
+        try{
+            pickUpHubService.save(pickUpHub);
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception xD){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     /**
