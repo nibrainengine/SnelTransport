@@ -1,6 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,13 @@ public class CourierScheduleService {
      */
     public List<Schedule> get(int courierId) {
         return courierScheduleDAO.get(courierId);
+    }
+
+    /**
+     * Insert a new CancelCourierScheduleRequestDTO
+     * @param cancelRequest consists of the schedule ID and the reason for the cancel request
+     */
+    public void insertCancelRequest(CancelCourierScheduleRequestDTO cancelRequest) throws Exception {
+        courierScheduleDAO.insertCancelRequest(cancelRequest);
     }
 }

@@ -5,11 +5,14 @@ import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("couriers")
 @CrossOrigin(origins = "*")
 public class CouriersController {
 
@@ -29,7 +32,7 @@ public class CouriersController {
      * kvkNumber)).
      * @return List<CourierDTO>
      */
-    @GetMapping("couriers")
+    @GetMapping()
     public List<CourierDTO> getAll(){
         return couriersService.getAll();
     }
@@ -40,8 +43,23 @@ public class CouriersController {
      * @param courierId the id of the courier whose schedule is required
      * @return List<Schedule>
      */
-    @GetMapping("courier/{courierId}/schedule")
+    @GetMapping("{courierId}/schedule") //TODO change URL in frontend: courier -> couriers
     public List<Schedule> getSchedule(@PathVariable int courierId){
         return courierScheduleService.get(courierId);
+    }
+
+    /**
+     * Posts a new CancelCourierScheduleRequestDTO
+     * @param cancelRequest consists of the schedule ID and the reason for the cancel request
+     * @return ResponseEntity<Void> the responseEntity status can be ok or bad request
+     */
+    @PostMapping("cancel-schedule")
+    public ResponseEntity<Void> postCancelRequest(@RequestBody CancelCourierScheduleRequestDTO cancelRequest){
+        try {
+            courierScheduleService.insertCancelRequest(cancelRequest);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }
