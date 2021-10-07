@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
@@ -58,6 +59,22 @@ public class CouriersController {
         try {
             courierScheduleService.insertCancelRequest(cancelRequest);
             return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    /**
+     * Fetches a single courier of which the account information is required from the database. It gets converted into a json format.
+     * Currently this method only fetches the id, kvkNumber and package size. json can be expanded in further iterations.
+     * @param courierId the id of the courier whose information is requested.
+     * @return Json String of a single courier.
+     * @throws Exception
+     */
+    @GetMapping("courier/my-info/{courierId}")
+    public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) throws Exception {
+        try {
+            return ResponseEntity.ok(couriersService.getCourierInfo(courierId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

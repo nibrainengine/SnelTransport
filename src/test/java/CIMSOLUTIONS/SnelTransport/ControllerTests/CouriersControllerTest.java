@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
+import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,10 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -45,9 +49,36 @@ public class CouriersControllerTest {
 
     private CourierDTO courierDTO;
 
+    private Courier courier;
+
     @BeforeEach
     public void setup(){
         courierDTO = getCourierDTO();
+    }
+
+    @BeforeEach
+    public void setupCourier(){courier = getCourier();}
+
+    @Test
+    void getAllRoutesCourier_ReturnOk() throws Exception{
+        try{
+            when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
+            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void getAllRoutesCourier_ReturnBadRequest() throws Exception{
+        try{
+            when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
+            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     @Test
@@ -91,5 +122,12 @@ public class CouriersControllerTest {
         courierDTO.setId(1);
         courierDTO.setUsername("Courier 01");
         return courierDTO;
+    }
+
+    private Courier getCourier(){
+        Courier courier = new Courier();
+        courier.setId(1);
+        courier.setKvkNumber(11111111);
+        return courier;
     }
 }
