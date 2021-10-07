@@ -9,7 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.mockito.Mockito.when;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class PickUpHubServiceTest {
@@ -27,11 +32,19 @@ public class PickUpHubServiceTest {
         pickUpHub = getPickUpHub();
     }
 
-//    @Test
-//    void testSave() throws Exception {
-//    when(pickUpHubDAO.postPickupHub(pickUpHub));
-//    assertEquals()
-//    }
+    @Test
+    void testGoodSave() throws Exception {
+    doNothing().when(pickUpHubDAO).postPickupHub(pickUpHub);
+    pickUpHubService.save(pickUpHub);
+    }
+
+    @Test
+    void testGet(){
+        List<PickUpHub> pickUpHubs = Collections.singletonList(pickUpHub);
+        when(pickUpHubDAO.getURLsandAddresses()).thenReturn(pickUpHubs);
+        assertEquals(pickUpHubs, pickUpHubService.getActiveAPIsWithAdresses());
+        assertSame(pickUpHubService.getActiveAPIsWithAdresses().get(0).getClass(), PickUpHub.class);
+    }
 
 
 
