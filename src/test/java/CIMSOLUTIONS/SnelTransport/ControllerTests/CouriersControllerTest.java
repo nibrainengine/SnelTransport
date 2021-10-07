@@ -1,6 +1,5 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
-import CIMSOLUTIONS.SnelTransport.Models.AvailablePeriod;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
@@ -12,13 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,10 +54,10 @@ public class CouriersControllerTest {
     public void setupCourier(){courier = getCourier();}
 
     @Test
-    void getAllRoutesCourier_ReturnOk() throws Exception{
+    void getAllRoutesCourier_ReturnOk() {
         try{
             when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/couriers/my-info/1")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -71,10 +65,10 @@ public class CouriersControllerTest {
     }
 
     @Test
-    void getAllRoutesCourier_ReturnBadRequest() throws Exception{
+    void getAllRoutesCourier_ReturnBadRequest() {
         try{
             when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/couriers/my-info/1")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();

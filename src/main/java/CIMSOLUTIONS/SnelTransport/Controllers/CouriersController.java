@@ -71,7 +71,7 @@ public class CouriersController {
      * @return Json String of a single courier.
      * @throws Exception
      */
-    @GetMapping("courier/my-info/{courierId}")
+    @GetMapping("my-info/{courierId}") //TODO change URL in frontend: courier -> couriers
     public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) throws Exception {
         try {
             return ResponseEntity.ok(couriersService.getCourierInfo(courierId));

@@ -17,7 +17,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-//@SpringBootTest
 @JdbcTest
 @Sql({"classpath:schema.sql", "classpath:test-data.sql"})
 public class CourierScheduleDAOTest {
