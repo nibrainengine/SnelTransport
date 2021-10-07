@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.PickupDataDTO;
 import CIMSOLUTIONS.SnelTransport.Mocks.PickupProduct;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
@@ -46,8 +47,7 @@ public class PickupDataController {
                         ResponseEntity<PickupProduct[]> products = restTemplate.getForEntity(pickupHub.getUrl(), PickupProduct[].class);
                         PickupDataDTO pickupDataDTO = new PickupDataDTO(pickupHub.getAddress(), pickupHub.getUrl(), Arrays.asList(products.getBody()));
                         responses.add(pickupDataDTO);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         //Bad URL exception, skip this one API and move on, not worthy of an error 500.
                     }
 
@@ -68,12 +68,42 @@ public class PickupDataController {
     @CrossOrigin
     @PostMapping(value = "/PickupAPI", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Void> addPickupAPI(@RequestBody PickUpHub pickUpHub) {
-        try{
+        try {
             pickUpHubService.save(pickUpHub);
             return ResponseEntity.ok().build();
-        }
-        catch (Exception xD){
+        } catch (Exception xD) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    /**
+     * Returns the information of all registered pickup hubs. Returns pickup hubs without API's aswell as disabled pickup hubs.
+     *
+     * @return List of all pickup hubs registered in the database.
+     */
+
+    @CrossOrigin
+    @GetMapping(value = "/PickupAPI", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PickUpAPIDTO>> getAPIList() {
+        try {
+            List<PickUpAPIDTO> pickUpAPIs = pickUpHubService.getAPIs();
+            return ResponseEntity.ok(pickUpAPIs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Swaps the status of a pickup hub from disabled to enabled, or the other way around, both in the same call.
+     *
+     * @param id Primary Key from the Pickup hub table.
+     * @return PickUpHub    Copy of the PickUpHub object with its newly set status.
+     */
+    @CrossOrigin
+    @PutMapping(value = "/PickupStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PickUpHub> enableDisable(@PathVariable int id) {
+        PickUpHub changedPickupHub = pickUpHubService.enableDisablePickup(id);
+        return ResponseEntity.ok(changedPickupHub);
+    }
+
 }

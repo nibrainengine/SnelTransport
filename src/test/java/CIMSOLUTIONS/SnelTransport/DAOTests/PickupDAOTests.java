@@ -1,6 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.PickUpHubDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.PickUpAPIDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Address;
 import CIMSOLUTIONS.SnelTransport.Models.PickUpHub;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,7 @@ public class PickupDAOTests {
     @Test
     void getPickupAddress(){
         List<PickUpHub> hubs = pickUpHubDAO.getURLsandAddresses();
-        assertEquals("Teststraat2", hubs.get(1).getAddress().getStreet());
+        assertEquals("Teststraat1", hubs.get(0).getAddress().getStreet());
     }
 
     @Test
@@ -56,5 +57,18 @@ public class PickupDAOTests {
             fail();
         }
 
+    }
+
+    @Test
+    void getAPIs(){
+        List<PickUpAPIDTO> dtos = pickUpHubDAO.getAPIs();
+        assertEquals(3, dtos.size());
+        assertEquals(true, dtos.get(1).isDisabled());
+    }
+
+    @Test
+    void updateStatus(){
+        PickUpHub changedHub = pickUpHubDAO.enableDisablePickup(1);
+        assertEquals(true, changedHub.getDisabled());
     }
 }
