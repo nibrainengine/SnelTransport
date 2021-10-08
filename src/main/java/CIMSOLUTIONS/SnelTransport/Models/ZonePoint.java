@@ -9,6 +9,14 @@ public class ZonePoint {
     private Double latitude;
     private Double longitude;
 
+    public ZonePoint(){}
+
+    public ZonePoint(int zoneId, Double latitude, Double longitude) {
+        this.zoneId = zoneId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public int getId() {
         return id;
     }
