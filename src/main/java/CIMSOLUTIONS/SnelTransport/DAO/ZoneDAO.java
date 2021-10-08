@@ -3,6 +3,7 @@ package CIMSOLUTIONS.SnelTransport.DAO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,9 +55,10 @@ public class ZoneDAO {
                     return zone.getZonePoints().size();
                 }
             });
-
-
             return zone;
+        }
+        catch(DuplicateKeyException e){
+            throw new DuplicateKeyException(e.getMessage());
         }
         catch(Exception e){
             throw new Exception(e.getMessage());

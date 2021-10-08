@@ -3,6 +3,7 @@ package CIMSOLUTIONS.SnelTransport.Services;
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +18,13 @@ public class ZoneService {
      * Add a new zone
      * @param zone to add a new zone
      * @return Zone
-     * @throws Exception can't create new zone
+     * @throws Exception ZonePoints are empty
      */
     public Zone save(Zone zone) throws Exception {
-        try{
-            return zoneDao.save(zone);
+        if(zone.getZonePoints().size() < 4){
+            throw new Exception();
         }
-        catch(Exception e){
-            throw new Exception(e.getMessage());
-        }
+        return zoneDao.save(zone);
     }
 
     /**
