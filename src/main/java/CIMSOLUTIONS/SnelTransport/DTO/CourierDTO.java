@@ -4,15 +4,15 @@ public class CourierDTO {
 
     //declare variables
     private int id;
-    private String username;
+    private String fullName;
 
     //getters
     public int getId() {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
     //setters
@@ -20,7 +20,7 @@ public class CourierDTO {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }
