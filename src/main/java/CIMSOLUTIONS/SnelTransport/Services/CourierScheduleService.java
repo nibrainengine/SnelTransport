@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
+import CIMSOLUTIONS.SnelTransport.Enums.ScheduleStatus;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,14 @@ public class CourierScheduleService {
     }
 
     /**
-     * Gets all schedules of a specified courier.
+     * Gets all active schedules of a specified courier, canceled schedules are filtered out
      * @param courierId the id of the courier whose schedule is required
      * @return List<Schedule>
      */
-    public List<Schedule> get(int courierId) {
-        return courierScheduleDAO.get(courierId);
+    public List<Schedule> getScheduled(int courierId) {
+        List<Schedule> schedules = courierScheduleDAO.get(courierId);
+        schedules.removeIf(schedule -> schedule.getScheduleStatus().equals(ScheduleStatus.Cancelled.name()));
+        return schedules;
     }
 
     /**

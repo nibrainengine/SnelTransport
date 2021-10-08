@@ -38,14 +38,14 @@ public class CourierScheduleServiceTest {
     void testGet() {
         List<Schedule> schedules = Collections.singletonList(schedule);
         when(courierScheduleDAO.get(schedule.getId())).thenReturn(schedules);
-        assertEquals(schedules,courierScheduleService.get(schedule.getId()));
-        when(courierScheduleService.get(0)).thenReturn(schedules);
-        assertSame(courierScheduleService.get(0).get(0).getClass(), Schedule.class);
+        assertEquals(schedules,courierScheduleService.getScheduled(schedule.getId()));
+        when(courierScheduleService.getScheduled(0)).thenReturn(schedules);
+        assertSame(courierScheduleService.getScheduled(0).get(0).getClass(), Schedule.class);
     }
 
     @Test
     void testGetEmptyList() {
-        assertEquals(Collections.emptyList(),courierScheduleService.get(schedule.getId()));
+        assertEquals(Collections.emptyList(),courierScheduleService.getScheduled(schedule.getId()));
     }
 
     @Test
