@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
+import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,11 +42,38 @@ public class CouriersControllerTest {
     private Schedule schedule;
     private ScheduleDTO scheduleDTO;
 
+    private Courier courier;
+
     @BeforeEach
     public void setup(){
         courierDTO = getCourierDTO();
         schedule = getSchedule();
         scheduleDTO = getScheduleDTO();
+    }
+
+    @BeforeEach
+    public void setupCourier(){courier = getCourier();}
+
+    @Test
+    void getAllRoutesCourier_ReturnOk() throws Exception{
+        try{
+            when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
+            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void getAllRoutesCourier_ReturnBadRequest() throws Exception{
+        try{
+            when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
+            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
     }
 
     @Test
@@ -118,5 +152,12 @@ public class CouriersControllerTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+00:00");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         return sdf;
+    }
+
+    private Courier getCourier(){
+        Courier courier = new Courier();
+        courier.setId(1);
+        courier.setKvkNumber(11111111);
+        return courier;
     }
 }

@@ -15,6 +15,7 @@ public class Courier extends User{
     private List<VehicleType> vehicles;
     private List<Schedule> schedules;
     private List<AvailablePeriod> availablePeriods;
+    private List<String> packageSizes;
 
     //getters
     public int getId() {
@@ -41,6 +42,10 @@ public class Courier extends User{
         return availablePeriods;
     }
 
+    public List<String> getPackageSizes() {
+        return packageSizes;
+    }
+
     //setters
     public void setId(int id) {
         this.id = id;
@@ -64,5 +69,9 @@ public class Courier extends User{
 
     public void setAvailablePeriods(List<AvailablePeriod> availablePeriods) {
         this.availablePeriods = availablePeriods;
+    }
+
+    public void setPackageSizes(List<String> packageSizes) {
+        this.packageSizes = packageSizes;
     }
 }

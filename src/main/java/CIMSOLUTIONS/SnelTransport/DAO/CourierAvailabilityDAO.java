@@ -22,7 +22,8 @@ public class CourierAvailabilityDAO {
 
     /**
      * Gets all available periods from a courier
-     * @return List<AvailablePeriod>
+     * @param courierId identification of a courier
+     * @return List<AvailablePeriod> AvailablePeriod contains data on when a courier is available
      */
     public List<AvailablePeriod> get(int courierId) throws Exception {
         String query =  "SELECT id, start as startTime, [end] as endTime, price, isApproved " +
@@ -40,6 +41,7 @@ public class CourierAvailabilityDAO {
 
     /**
      * Insert new available period of a courier in the database
+     * @param availablePeriod contains data on when a courier is available
      * @return int (id of new availablePeriod in database)
      */
     public int insert(AvailablePeriod availablePeriod) throws Exception {
@@ -58,6 +60,9 @@ public class CourierAvailabilityDAO {
 
     /**
      * Gets available period id from database
+     * @param courierId identification of a courier
+     * @param startTime the start date and time of an available period of a courier
+     * @param endTime the end date and time of an available period of a courier
      * @return int (id of availablePeriod in database)
      */
     public int getId(int courierId, Date startTime, Date endTime) {
@@ -75,6 +80,9 @@ public class CourierAvailabilityDAO {
 
     /**
      * Checks if available period of the courier already exists in the database
+     * @param courierId identification of a courier
+     * @param startTime the start date and time of an available period of a courier
+     * @param endTime the end date and time of an available period of a courier
      * @return boolean (true when exists, false when not exists)
      */
     private boolean courierAvailablePeriodExists(int courierId, Date startTime, Date endTime){
