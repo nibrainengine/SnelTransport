@@ -46,7 +46,7 @@ public class CourierScheduleDAO {
      * @return List<Schedule>
      */
     public List<Schedule> getAllSchedulesFilteredByZones(int[] zoneFilters)  {
-        if(zoneFilters.length <= 0){
+        if(zoneFilters.length < 1){
             return new ArrayList<>();
         }
         String reformatZoneIds = Arrays.toString(zoneFilters);
