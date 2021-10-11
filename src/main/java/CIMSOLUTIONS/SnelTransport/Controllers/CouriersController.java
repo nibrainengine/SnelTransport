@@ -13,6 +13,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("api")
 public class CouriersController {
 
     private CouriersService couriersService;
@@ -31,7 +32,7 @@ public class CouriersController {
      * kvkNumber)).
      * @return List<CourierDTO>
      */
-    @GetMapping("couriers")
+    @GetMapping("/couriers")
     public List<CourierDTO> getAll(){
         return couriersService.getAll();
     }
@@ -42,7 +43,7 @@ public class CouriersController {
      * @param courierId the id of the courier whose schedule is required
      * @return List<Schedule>
      */
-    @GetMapping("courier/{courierId}/schedule")
+    @GetMapping("/courier/{courierId}/schedule")
     public List<Schedule> getSchedule(@PathVariable int courierId){
         return courierScheduleService.get(courierId);
     }
@@ -52,7 +53,7 @@ public class CouriersController {
      * of ScheduleDTOs with an id, start, endtime and the amount of couriers working during that half hour block.
      * @return List<ScheduleDTO>
      */
-    @GetMapping("couriers/combined-schedules")
+    @GetMapping("/couriers/combined-schedules")
     public List<ScheduleDTO> getCombinedSchedules(){
         return courierScheduleService.getCombinedSchedules();
     }
@@ -64,7 +65,7 @@ public class CouriersController {
      * @param zoneFilters - a list of courier zoneIds to filter the couriers with
      * @return List<ScheduleDTO>
      */
-    @GetMapping("couriers/combined-schedules/filter")
+    @GetMapping("/couriers/combined-schedules/filter")
     public List<ScheduleDTO> getCombinedSchedulesFilteredByZones(@RequestParam int[] zoneFilters){
         return courierScheduleService.getCombinedSchedulesFilteredByZones(zoneFilters);
     }
@@ -74,10 +75,9 @@ public class CouriersController {
      * Currently this method only fetches the id, kvkNumber and package size. json can be expanded in further iterations.
      * @param courierId the id of the courier whose information is requested.
      * @return Json String of a single courier.
-     * @throws Exception
      */
-    @GetMapping("courier/my-info/{courierId}")
-    public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) throws Exception {
+    @GetMapping("/courier/my-info/{courierId}")
+    public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) {
         try {
             return ResponseEntity.ok(couriersService.getCourierInfo(courierId));
         } catch (Exception e) {

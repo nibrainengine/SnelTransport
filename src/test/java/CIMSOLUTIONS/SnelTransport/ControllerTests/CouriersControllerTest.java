@@ -55,7 +55,7 @@ public class CouriersControllerTest {
     void getAllRoutesCourier_ReturnOk() {
         try{
             when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/api/courier/my-info/1")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -66,7 +66,7 @@ public class CouriersControllerTest {
     void getAllRoutesCourier_ReturnBadRequest() {
         try{
             when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/api/courier/my-info/1")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
@@ -78,7 +78,7 @@ public class CouriersControllerTest {
         List<CourierDTO> courierDTOS = Collections.singletonList(courierDTO);
         when(couriersService.getAll()).thenReturn(courierDTOS);
 
-        this.mockMvc.perform(get("/couriers/")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/couriers/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(courierDTO.getId()))
                 .andExpect(jsonPath("$[0].fullName").value(courierDTO.getFullName()));
     }
@@ -90,7 +90,7 @@ public class CouriersControllerTest {
         when(courierScheduleService.get(schedule.getId())).thenReturn(schedules);
         SimpleDateFormat sdf = getSimpleDateFormat();
 
-        this.mockMvc.perform(get("/courier/"+ 1 + "/schedule/")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/courier/"+ 1 + "/schedule/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(schedule.getId()))
                 .andExpect(jsonPath("$[0].startTime").value(sdf.format(schedule.getStartTime())))
                 .andExpect(jsonPath("$[0].endTime").value(sdf.format(schedule.getEndTime())));
@@ -102,7 +102,7 @@ public class CouriersControllerTest {
         when(courierScheduleService.getCombinedSchedules()).thenReturn(scheduleDTOS);
         SimpleDateFormat sdf = getSimpleDateFormat();
 
-        this.mockMvc.perform(get("/couriers/combined-schedules/")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/couriers/combined-schedules/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].startTime").value(sdf.format(scheduleDTO.getStartTime())))
                 .andExpect(jsonPath("$[0].endTime").value(sdf.format(scheduleDTO.getEndTime())))
                 .andExpect(jsonPath("$[0].nrScheduledCouriers").value(scheduleDTO.getNrScheduledCouriers()));
@@ -115,7 +115,7 @@ public class CouriersControllerTest {
         when(courierScheduleService.getCombinedSchedulesFilteredByZones(zones)).thenReturn(scheduleDTOS);
         SimpleDateFormat sdf = getSimpleDateFormat();
 
-        this.mockMvc.perform(get("/couriers/combined-schedules/filter/?zoneFilters="+zones[0]))
+        this.mockMvc.perform(get("/api/couriers/combined-schedules/filter/?zoneFilters="+zones[0]))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].startTime").value(sdf.format(scheduleDTO.getStartTime())))
                 .andExpect(jsonPath("$[0].endTime").value(sdf.format(scheduleDTO.getEndTime())))
