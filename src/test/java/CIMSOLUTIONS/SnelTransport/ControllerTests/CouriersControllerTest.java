@@ -14,11 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,7 +52,7 @@ public class CouriersControllerTest {
     public void setupCourier(){courier = getCourier();}
 
     @Test
-    void getAllRoutesCourier_ReturnOk() throws Exception{
+    void getAllRoutesCourier_ReturnOk() {
         try{
             when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
             this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
@@ -66,7 +63,7 @@ public class CouriersControllerTest {
     }
 
     @Test
-    void getAllRoutesCourier_ReturnBadRequest() throws Exception{
+    void getAllRoutesCourier_ReturnBadRequest() {
         try{
             when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
             this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
