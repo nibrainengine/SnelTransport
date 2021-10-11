@@ -1,10 +1,11 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.CourierDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
-import CIMSOLUTIONS.SnelTransport.DTO.*;
+import CIMSOLUTIONS.SnelTransport.DTO.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,9 +76,10 @@ public class CouriersController {
      * Currently this method only fetches the id, kvkNumber and package size. json can be expanded in further iterations.
      * @param courierId the id of the courier whose information is requested.
      * @return Json String of a single courier.
+     * @throws Exception
      */
-    @GetMapping("/courier/my-info/{courierId}")
-    public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) {
+    @GetMapping("courier/my-info/{courierId}")
+    public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) throws Exception {
         try {
             return ResponseEntity.ok(couriersService.getCourierInfo(courierId));
         } catch (Exception e) {
