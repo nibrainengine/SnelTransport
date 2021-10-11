@@ -45,7 +45,7 @@ class RouteControllerTest {
     void getAllRoutesCourier_ReturnOk() throws Exception{
         try{
             when(routeService.get(1,1)).thenReturn(route);
-            this.mockMvc.perform(get("/my-route/1/1")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/api/my-route/1/1")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -56,7 +56,7 @@ class RouteControllerTest {
     void getAllRoutesCourier_ReturnBadRequest() throws Exception{
         try{
             when(routeService.get(1,1)).thenThrow(new Exception());
-            this.mockMvc.perform(get("/my-route/1/1")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/api/my-route/1/1")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
@@ -67,7 +67,7 @@ class RouteControllerTest {
     void getAllRoutes_ReturnOk() throws Exception{
         try{
             when(routeService.getWithDate("2021-10-01")).thenReturn(route);
-            this.mockMvc.perform(get("/routes/2021-10-01")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/api/routes/2021-10-01")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -78,7 +78,7 @@ class RouteControllerTest {
     void getAllRoutes_ReturnBadRequest() throws Exception{
         try{
             when(routeService.getWithDate("2021-10-01")).thenThrow(new Exception());
-            this.mockMvc.perform(get("/routes/2021-10-01")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/api/routes/2021-10-01")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
