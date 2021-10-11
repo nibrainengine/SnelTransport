@@ -1,5 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.ControllerTests;
 
+import CIMSOLUTIONS.SnelTransport.Models.Schedule;
+import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import java.util.Collections;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,28 +28,95 @@ public class CouriersControllerTest {
 
     @MockBean
     private CouriersService couriersService;
+    @MockBean
+    private CourierScheduleService courierScheduleService;
 
     private CourierDTO courierDTO;
+    private Schedule schedule;
+    private ScheduleDTO scheduleDTO;
 
     @BeforeEach
     public void setup(){
         courierDTO = getCourierDTO();
+        schedule = getSchedule();
+        scheduleDTO = getScheduleDTO();
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testGetAll() throws Exception {
         List<CourierDTO> courierDTOS = Collections.singletonList(courierDTO);
         when(couriersService.getAll()).thenReturn(courierDTOS);
 
         this.mockMvc.perform(get("/couriers/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(courierDTO.getId()))
-                .andExpect(jsonPath("$[0].username").value(courierDTO.getUsername()));
+                .andExpect(jsonPath("$[0].fullName").value(courierDTO.getFullName()));
+    }
+
+    @Test
+    public void testGetSchedule() throws Exception {
+        List<Schedule> schedules = Collections.singletonList(schedule);
+        when(courierScheduleService.get(1)).thenReturn(schedules);
+        when(courierScheduleService.get(schedule.getId())).thenReturn(schedules);
+        SimpleDateFormat sdf = getSimpleDateFormat();
+
+        this.mockMvc.perform(get("/courier/"+ 1 + "/schedule/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(schedule.getId()))
+                .andExpect(jsonPath("$[0].startTime").value(sdf.format(schedule.getStartTime())))
+                .andExpect(jsonPath("$[0].endTime").value(sdf.format(schedule.getEndTime())));
+    }
+
+    @Test
+    public void testGetCombinedSchedules() throws Exception {
+        List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
+        when(courierScheduleService.getCombinedSchedules()).thenReturn(scheduleDTOS);
+        SimpleDateFormat sdf = getSimpleDateFormat();
+
+        this.mockMvc.perform(get("/couriers/combined-schedules/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].startTime").value(sdf.format(scheduleDTO.getStartTime())))
+                .andExpect(jsonPath("$[0].endTime").value(sdf.format(scheduleDTO.getEndTime())))
+                .andExpect(jsonPath("$[0].nrScheduledCouriers").value(scheduleDTO.getNrScheduledCouriers()));
+    }
+
+    @Test
+    public void testGetCombinedSchedulesFilteredByZones() throws Exception {
+        List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
+        int[] zones = {1};
+        when(courierScheduleService.getCombinedSchedulesFilteredByZones(zones)).thenReturn(scheduleDTOS);
+        SimpleDateFormat sdf = getSimpleDateFormat();
+
+        this.mockMvc.perform(get("/couriers/combined-schedules/filter/?zoneFilters="+zones[0]))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].startTime").value(sdf.format(scheduleDTO.getStartTime())))
+                .andExpect(jsonPath("$[0].endTime").value(sdf.format(scheduleDTO.getEndTime())))
+                .andExpect(jsonPath("$[0].nrScheduledCouriers").value(scheduleDTO.getNrScheduledCouriers()));
     }
 
     private CourierDTO getCourierDTO(){
         CourierDTO courierDTO = new CourierDTO();
         courierDTO.setId(1);
-        courierDTO.setUsername("Courier 01");
+        courierDTO.setFullName("Courier 01");
         return courierDTO;
+    }
+
+    private Schedule getSchedule(){
+        Schedule schedule = new Schedule();
+        schedule.setId(1);
+        schedule.setStartTime(new Date());
+        schedule.setEndTime(new Date());
+        return schedule;
+    }
+
+    private ScheduleDTO getScheduleDTO(){
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setStartTime(new Date());
+        scheduleDTO.setEndTime(new Date());
+        scheduleDTO.setNrScheduledCouriers(1);
+        return scheduleDTO;
+    }
+
+    private SimpleDateFormat getSimpleDateFormat(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+00:00");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf;
     }
 }
