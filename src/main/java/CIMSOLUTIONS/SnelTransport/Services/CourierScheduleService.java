@@ -22,14 +22,12 @@ public class CourierScheduleService {
     }
 
     /**
-     * Gets all active schedules of a specified courier, canceled schedules are filtered out
+     * Gets all active schedules of a specified courier
      * @param courierId the id of the courier whose schedule is required
      * @return List<Schedule>
      */
     public List<Schedule> getScheduled(int courierId) {
-        List<Schedule> schedules = courierScheduleDAO.get(courierId);
-        schedules.removeIf(schedule -> schedule.getScheduleStatus().equals(ScheduleStatus.Cancelled.name()));
-        return schedules;
+        return filterGetOnlyScheduled(courierScheduleDAO.get(courierId));
     }
 
     /**
@@ -37,7 +35,7 @@ public class CourierScheduleService {
      * @return List<ScheduleDTO>
      */
     public List<ScheduleDTO> getCombinedSchedules() {
-        return getCombinedSchedulesPerHalfHour(courierScheduleDAO.getAllSchedules());
+        return getCombinedSchedulesPerHalfHour(filterGetOnlyScheduled(courierScheduleDAO.getAllSchedules()));
     }
 
     /**
@@ -46,7 +44,7 @@ public class CourierScheduleService {
      * @return List<ScheduleDTO>
      */
     public List<ScheduleDTO> getCombinedSchedulesFilteredByZones(int[] zoneFilters) {
-        return getCombinedSchedulesPerHalfHour(courierScheduleDAO.getAllSchedulesFilteredByZones(zoneFilters));
+        return getCombinedSchedulesPerHalfHour(filterGetOnlyScheduled(courierScheduleDAO.getAllSchedulesFilteredByZones(zoneFilters)));
     }
 
     /**
@@ -84,5 +82,15 @@ public class CourierScheduleService {
      */
     public void insertCancelRequest(CancelCourierScheduleRequestDTO cancelRequest) throws Exception {
         courierScheduleDAO.insertCancelRequest(cancelRequest);
+    }
+
+    /**
+     * Removes canceled schedules from a list of schedules
+     * @param schedules list of schedules of a courier
+     * @return List<Schedule> filtered list of schedules of courier (that are not cancelled)
+     */
+    private List<Schedule> filterGetOnlyScheduled(List<Schedule> schedules) {
+        schedules.removeIf(schedule -> schedule.getScheduleStatus().equals(ScheduleStatus.Cancelled.name()));
+        return schedules;
     }
 }

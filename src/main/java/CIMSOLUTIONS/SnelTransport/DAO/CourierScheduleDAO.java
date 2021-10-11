@@ -40,8 +40,11 @@ public class CourierScheduleDAO {
      * @return List<Schedule>
      */
     public List<Schedule> getAllSchedules()  {
-        String scheduleQuery =  "SELECT DISTINCT courierSchedule.start as startTime, courierSchedule.[end] as endTime " +
-            "FROM courierSchedule";
+        String scheduleQuery =  "SELECT DISTINCT cs.start as startTime, cs.[end] as endTime, " +
+                                    "iif(ccs.approved IS NULL, '"+ ScheduleStatus.Scheduled.name() +"', " +
+                                    "iif(ccs.approved = 1, '"+ ScheduleStatus.Cancelled.name() +"', '"+
+                                    ScheduleStatus.CancelRequest.name() +"')) AS scheduleStatus " +
+                                "FROM courierSchedule cs FULL OUTER JOIN canceledCourierSchedule ccs on cs.id = ccs.courierScheduleId";
         return jdbcTemplate.query(scheduleQuery, BeanPropertyRowMapper.newInstance(Schedule.class));
     }
 
@@ -56,13 +59,15 @@ public class CourierScheduleDAO {
         }
         String reformatZoneIds = Arrays.toString(zoneFilters);
         reformatZoneIds = reformatZoneIds.replace("[", "(").replace("]", ")");
-        String scheduleQuery =  "SELECT DISTINCT courierSchedule.start as startTime, courierSchedule.[end] as endTime " +
-                "FROM courierSchedule, courierZone " +
-                "WHERE courierSchedule.courierId = courierZone.courierId " +
-                "AND courierZone.zoneId in "+ reformatZoneIds;
+        String scheduleQuery =  "SELECT DISTINCT cs.start as startTime, cs.[end] as endTime, " +
+                                    "iif(ccs.approved IS NULL, '"+ ScheduleStatus.Scheduled.name() +"', " +
+                                    "iif(ccs.approved = 1, '"+ ScheduleStatus.Cancelled.name() +"', '"+
+                                    ScheduleStatus.CancelRequest.name() +"')) AS scheduleStatus " +
+                                "FROM courierSchedule cs FULL OUTER JOIN canceledCourierSchedule ccs on cs.id = ccs.courierScheduleId, courierZone " +
+                                "WHERE cs.courierId = courierZone.courierId " +
+                                "AND courierZone.zoneId in "+ reformatZoneIds;
         return jdbcTemplate.query(scheduleQuery, BeanPropertyRowMapper.newInstance(Schedule.class));
     }
-
 
     /**
      * Insert an canceledCourierSchedule in the database, the canceledCourierSchedule is formed by the cancelRequest

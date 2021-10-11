@@ -61,7 +61,7 @@ public class CourierScheduleServiceTest {
 
     @Test
     void testGetCombinedSchedules() {
-        List<Schedule> schedules = Collections.singletonList(schedule);
+        List<Schedule> schedules = new java.util.ArrayList<>(Collections.singletonList(schedule));
         List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
 
         when(courierScheduleDAO.getAllSchedules()).thenReturn(schedules);
@@ -72,7 +72,7 @@ public class CourierScheduleServiceTest {
 
     @Test
     void testGetCombinedSchedulesFilteredByZones() {
-        List<Schedule> schedules = Collections.singletonList(schedule);
+        List<Schedule> schedules = new java.util.ArrayList<>(Collections.singletonList(schedule));
         List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
         int[] zones = {1};
 
