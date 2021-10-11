@@ -16,12 +16,13 @@ public class ZoneService {
 
     /**
      * Add a new zone
+     *
      * @param zone to add a new zone
      * @return Zone
      * @throws Exception ZonePoints are empty
      */
     public Zone save(Zone zone) throws Exception {
-        if(zone.getZonePoints().size() < 4){
+        if (zone.getZonePoints().size() < 4) {
             throw new Exception();
         }
         return zoneDao.save(zone);
@@ -34,24 +35,19 @@ public class ZoneService {
      * @throws Exception Can't create database connection
      */
     public List<Zone> getAll() throws Exception {
-        try{
-            return zoneDao.getAll();
-        }
-        catch(Exception e){
-            throw new Exception(e.getMessage());
-        }
+        return zoneDao.getAll();
     }
 
     /**
      * Deletes requested zone
+     *
      * @param id id of zone to delete
      * @throws Exception Can't remove zone
      */
     public void delete(int id) throws Exception {
-        try{
+        try {
             zoneDao.delete(id);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
