@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("api")
 @CrossOrigin(origins = "*")
 @RequestMapping("api")
 public class CouriersController {
