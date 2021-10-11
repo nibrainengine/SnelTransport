@@ -52,7 +52,7 @@ public class ZoneControllersTests {
     void getAllZones_ReturnOk(){
         try{
             when(zoneService.getAll()).thenReturn(zones);
-            this.mockMvc.perform(get("/zone/")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/api/zone/")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -66,7 +66,7 @@ public class ZoneControllersTests {
     void getAllZones_ReturnBadRequest(){
         try{
             when(zoneService.getAll()).thenThrow(new Exception());
-            this.mockMvc.perform(get("/zone/")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/api/zone/")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
@@ -80,7 +80,7 @@ public class ZoneControllersTests {
     void addZone_ReturnOk(){
         try{
             when(zoneService.save(zone)).thenReturn(zone);
-            this.mockMvc.perform(post("/zone/").contentType("application/json").content(objectMapper.writeValueAsString(zone))).andExpect(status().isOk());
+            this.mockMvc.perform(post("/api/zone/").contentType("application/json").content(objectMapper.writeValueAsString(zone))).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -94,7 +94,7 @@ public class ZoneControllersTests {
     void addZone_ReturnBadRequest(){
         try{
             when(zoneService.save(zone)).thenThrow(new Exception());
-            this.mockMvc.perform(post("/zone/")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(post("/api/zone/")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
@@ -107,7 +107,7 @@ public class ZoneControllersTests {
     @Test
     void deleteZone_ReturnOk(){
         try{
-            this.mockMvc.perform(delete("/zone/"+ 0)).andExpect(status().isOk());
+            this.mockMvc.perform(delete("/api/zone/"+ 0)).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -121,7 +121,7 @@ public class ZoneControllersTests {
     void deleteZone_ReturnBadRequest(){
         try{
             doThrow(new Exception()).when(zoneService).delete(0);
-            this.mockMvc.perform(delete("/zone/"+ 0)).andExpect(status().isBadRequest());
+            this.mockMvc.perform(delete("/api/zone/"+ 0)).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();

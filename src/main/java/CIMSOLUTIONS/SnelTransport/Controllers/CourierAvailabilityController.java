@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("available-periods")
+@RequestMapping("api/available-periods")
 @CrossOrigin(origins = "*")
 public class CourierAvailabilityController {
 

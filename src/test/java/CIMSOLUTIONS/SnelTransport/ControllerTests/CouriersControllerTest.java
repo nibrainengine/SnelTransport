@@ -48,7 +48,7 @@ public class CouriersControllerTest {
     void getAllRoutesCourier_ReturnOk() throws Exception{
         try{
             when(couriersService.getCourierInfo(1)).thenReturn(this.courier);
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isOk());
+            this.mockMvc.perform(get("/api/courier/my-info/1")).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -59,7 +59,7 @@ public class CouriersControllerTest {
     void getAllRoutesCourier_ReturnBadRequest() throws Exception{
         try{
             when(couriersService.getCourierInfo(1)).thenThrow(new Exception());
-            this.mockMvc.perform(get("/courier/my-info/1")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(get("/api/courier/my-info/1")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
@@ -71,7 +71,7 @@ public class CouriersControllerTest {
         List<CourierDTO> courierDTOS = Collections.singletonList(courierDTO);
         when(couriersService.getAll()).thenReturn(courierDTOS);
 
-        this.mockMvc.perform(get("/couriers/")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/couriers/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(courierDTO.getId()))
                 .andExpect(jsonPath("$[0].username").value(courierDTO.getUsername()));
     }

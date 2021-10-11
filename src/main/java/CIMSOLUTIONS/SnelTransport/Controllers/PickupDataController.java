@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 
 public class PickupDataController {
 

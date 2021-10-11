@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api")
 @CrossOrigin(origins = "*")
 public class CouriersController {
 
@@ -32,7 +33,7 @@ public class CouriersController {
      * kvkNumber)).
      * @return List<CourierDTO>
      */
-    @GetMapping("couriers")
+    @GetMapping("/couriers")
     public List<CourierDTO> getAll(){
         return couriersService.getAll();
     }
@@ -43,7 +44,7 @@ public class CouriersController {
      * @param courierId the id of the courier whose schedule is required
      * @return List<Schedule>
      */
-    @GetMapping("courier/{courierId}/schedule")
+    @GetMapping("/courier/{courierId}/schedule")
     public List<Schedule> getSchedule(@PathVariable int courierId){
         return courierScheduleService.get(courierId);
     }
@@ -55,7 +56,7 @@ public class CouriersController {
      * @return Json String of a single courier.
      * @throws Exception
      */
-    @GetMapping("courier/my-info/{courierId}")
+    @GetMapping("/courier/my-info/{courierId}")
     public ResponseEntity<Courier> getAllRoutes(@PathVariable int courierId) throws Exception {
         try {
             return ResponseEntity.ok(couriersService.getCourierInfo(courierId));
