@@ -19,7 +19,8 @@ public class CourierAvailabilityService {
 
     /**
      * Gets all available periods from a courier
-     * @return List<AvailablePeriod>
+     * @param courierId identification of a courier,
+     * @return List<AvailablePeriod> AvailablePeriod contains data on when a courier is available
      */
     public List<AvailablePeriod> get(int courierId) throws Exception {
         return courierAvailabilityDAO.get(courierId);
@@ -27,6 +28,7 @@ public class CourierAvailabilityService {
 
     /**
      * Creates new available period of a courier
+     * @param availablePeriod contains data on when a courier is available
      * @return int (id of new availablePeriod in database)
      */
     public int create(AvailablePeriod availablePeriod) throws Exception {

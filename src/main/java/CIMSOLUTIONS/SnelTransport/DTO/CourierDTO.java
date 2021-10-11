@@ -1,18 +1,25 @@
 package CIMSOLUTIONS.SnelTransport.DTO;
 
+import java.util.List;
+
 public class CourierDTO {
 
     //declare variables
     private int id;
-    private String username;
+    private String fullName;
+    private List<String> packageSize;
 
     //getters
     public int getId() {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public List<String> getPackageSize() {
+        return packageSize;
     }
 
     //setters
@@ -20,7 +27,11 @@ public class CourierDTO {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setPackageSize(List<String> packageSize) {
+        this.packageSize = packageSize;
     }
 }

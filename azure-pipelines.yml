@@ -12,72 +12,72 @@ trigger:
 
 stages:
 #in the first two stages we validate our terraform file and create the resources to which the app can be deployed
-  - stage: validateterraform
-    jobs:
-    - job: validate
-      continueOnError: false
-      steps:
-      - task: TerraformInstaller@0
-        displayName: 'install'
-        inputs:
-          terraformVersion: '0.12.3'
+  # - stage: validateterraform
+  #   jobs:
+  #   - job: validate
+  #     continueOnError: false
+  #     steps:
+  #     - task: TerraformInstaller@0
+  #       displayName: 'install'
+  #       inputs:
+  #         terraformVersion: '0.12.3'
       
-      - task: TerraformTaskV2@2
-        displayName: 'init'
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          backendServiceArm: 'Traineeship-Terraform-connection'
-          backendAzureRmResourceGroupName: 'csprg-Terraform'
-          backendAzureRmStorageAccountName: 'terraformaccounteindtest'
-          backendAzureRmContainerName: 'terraformstoragecontainer'
-          backendAzureRmKey: 'terraformstoragecontainer.tfstate'
+  #     - task: TerraformTaskV2@2
+  #       displayName: 'init'
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'init'
+  #         backendServiceArm: 'Traineeship-Terraform-connection'
+  #         backendAzureRmResourceGroupName: 'csprg-Terraform'
+  #         backendAzureRmStorageAccountName: 'terraformaccounteindtest'
+  #         backendAzureRmContainerName: 'terraformstoragecontainer'
+  #         backendAzureRmKey: 'terraformstoragecontainer.tfstate'
 
-      - task: TerraformTaskV2@2
-        displayName: 'validate'
-        inputs:
-          provider: 'azurerm'
-          command: 'validate'
+  #     - task: TerraformTaskV2@2
+  #       displayName: 'validate'
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'validate'
 
-  - stage: deployterraform
-    jobs:
-    - deployment: deploy_terraform
-      continueOnError: false
-      environment: 'dev'
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-              - checkout: self
-              - task: TerraformInstaller@0 
-                displayName: 'install'
-                inputs:
-                  terraformVersion: '0.12.3'
+  # - stage: deployterraform
+  #   jobs:
+  #   - deployment: deploy_terraform
+  #     continueOnError: false
+  #     environment: 'dev'
+  #     strategy:
+  #       runOnce:
+  #         deploy:
+  #           steps:
+  #             - checkout: self
+  #             - task: TerraformInstaller@0 
+  #               displayName: 'install'
+  #               inputs:
+  #                 terraformVersion: '0.12.3'
 
-              - task: TerraformTaskV2@2
-                displayName: 'init'
-                inputs:
-                  provider: 'azurerm'
-                  command: 'init'
-                  backendServiceArm: 'Traineeship-Terraform-connection'
-                  backendAzureRmResourceGroupName: 'csprg-Terraform'
-                  backendAzureRmStorageAccountName: 'terraformaccounteindtest'
-                  backendAzureRmContainerName: 'terraformstoragecontainer'
-                  backendAzureRmKey: 'terraformstoragecontainer.tfstate'
+  #             - task: TerraformTaskV2@2
+  #               displayName: 'init'
+  #               inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'init'
+  #                 backendServiceArm: 'Traineeship-Terraform-connection'
+  #                 backendAzureRmResourceGroupName: 'csprg-Terraform'
+  #                 backendAzureRmStorageAccountName: 'terraformaccounteindtest'
+  #                 backendAzureRmContainerName: 'terraformstoragecontainer'
+  #                 backendAzureRmKey: 'terraformstoragecontainer.tfstate'
               
-              - task: TerraformTaskV2@2
-                displayName: 'plan'
-                inputs:
-                  provider: 'azurerm'
-                  command: 'plan'
-                  environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
+  #             - task: TerraformTaskV2@2
+  #               displayName: 'plan'
+  #               inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'plan'
+  #                 environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
               
-              - task: TerraformTaskV2@2
-                displayName: 'apply'
-                inputs:
-                  provider: 'azurerm'
-                  command: 'apply'
-                  environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
+  #             - task: TerraformTaskV2@2
+  #               displayName: 'apply'
+  #               inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'apply'
+  #                 environmentServiceNameAzureRM: 'Traineeship-Terraform-connection'
 
               
 
@@ -100,8 +100,8 @@ stages:
             # Additional properties that will be passed to the scanner,
             # Put one key=value per line, example:
             # sonar.exclusions=**/*.bin
-            sonar.projectKey=CIM-CC-DevOps_FDD_Spring2
-            sonar.projectName=FDD_Spring
+            sonar.projectKey=CIM-CC-DevOps_SnelTransport_Java
+            sonar.projectName=SnelTransport_Java
       - task: Maven@3
         displayName: 'Maven Package'
         inputs:

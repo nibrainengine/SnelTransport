@@ -12,6 +12,7 @@ public class AvailablePeriod {
     private double price;
     private boolean isApproved;
 
+    //getters and setters
     public int getId() {
         return id;
     }

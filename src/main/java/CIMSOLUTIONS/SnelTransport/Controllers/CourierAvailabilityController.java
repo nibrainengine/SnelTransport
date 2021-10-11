@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("available-periods")
+@RequestMapping("api/available-periods")
 @CrossOrigin(origins = "*")
 public class CourierAvailabilityController {
 
@@ -23,7 +23,8 @@ public class CourierAvailabilityController {
 
     /**
      * Gets all available periods from a courier
-     * @return List<AvailablePeriod>
+     * @param courierId identification of a courier, need to be sent in the URL.
+     * @return List<AvailablePeriod> AvailablePeriod contains data on when a courier is available
      */
     @GetMapping("/{courierId}")
     public ResponseEntity<List<AvailablePeriod>> get(@PathVariable int courierId) {
@@ -36,6 +37,7 @@ public class CourierAvailabilityController {
 
     /**
      * Posts new available period of a courier
+     * @param availablePeriod contains data on when a courier is available, need to be sent in the body of the request.
      * @return int (id of new availablePeriod in database)
      */
     @PostMapping()

@@ -1,16 +1,15 @@
-package CIMSOLUTIONS.SnelTransport.Models;
+package CIMSOLUTIONS.SnelTransport.DTO;
 
 import java.util.List;
 
-public class Product {
+public class ProductDTO {
 
     //declare variables
     private int id;
-    private String supplierNumberIdentification;
     private String name;
     private Double price;
-    private String size;
     private List<String> categories;
+    private int quantity;
 
     //getters and setters
     public int getId() {
@@ -19,14 +18,6 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getSupplierNumberIdentification() {
-        return supplierNumberIdentification;
-    }
-
-    public void setSupplierNumberIdentification(String supplierNumberIdentification) {
-        this.supplierNumberIdentification = supplierNumberIdentification;
     }
 
     public String getName() {
@@ -45,14 +36,6 @@ public class Product {
         this.price = price;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     public List<String> getCategories() {
         return categories;
     }
@@ -61,5 +44,11 @@ public class Product {
         this.categories = categories;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
