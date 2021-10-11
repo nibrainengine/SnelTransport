@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.CourierDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
@@ -54,7 +55,7 @@ public class CouriersController {
      * of ScheduleDTOs with an id, start, endtime and the amount of couriers working during that half hour block.
      * @return List<ScheduleDTO>
      */
-    @GetMapping("/couriers/combined-schedules")
+    @GetMapping("/combined-schedules")
     public List<ScheduleDTO> getCombinedSchedules(){
         return courierScheduleService.getCombinedSchedules();
     }
@@ -66,7 +67,7 @@ public class CouriersController {
      * @param zoneFilters - a list of courier zoneIds to filter the couriers with
      * @return List<ScheduleDTO>
      */
-    @GetMapping("/couriers/combined-schedules/filter")
+    @GetMapping("/combined-schedules/filter")
     public List<ScheduleDTO> getCombinedSchedulesFilteredByZones(@RequestParam int[] zoneFilters){
         return courierScheduleService.getCombinedSchedulesFilteredByZones(zoneFilters);
     }

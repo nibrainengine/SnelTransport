@@ -93,8 +93,8 @@ public class CouriersControllerTest {
     @Test
     public void testGetSchedule() throws Exception {
         List<Schedule> schedules = Collections.singletonList(schedule);
-        when(courierScheduleService.get(1)).thenReturn(schedules);
-        when(courierScheduleService.get(schedule.getId())).thenReturn(schedules);
+        when(courierScheduleService.getScheduled(1)).thenReturn(schedules);
+        when(courierScheduleService.getScheduled(schedule.getId())).thenReturn(schedules);
         SimpleDateFormat sdf = getSimpleDateFormat();
 
         this.mockMvc.perform(get("/api/couriers/"+ 1 + "/schedule/")).andDo(print()).andExpect(status().isOk())

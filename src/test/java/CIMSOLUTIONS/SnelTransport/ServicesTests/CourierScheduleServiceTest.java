@@ -3,6 +3,7 @@ package CIMSOLUTIONS.SnelTransport.ServicesTests;
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.ScheduleDTO;
+import CIMSOLUTIONS.SnelTransport.Enums.ScheduleStatus;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,12 +39,19 @@ public class CourierScheduleServiceTest {
     }
 
     @Test
-    void testGet() {
-        List<Schedule> schedules = Collections.singletonList(schedule);
+    void testGetScheduled() {
+        schedule.setScheduleStatus(ScheduleStatus.Scheduled.name());
+        List<Schedule> schedules = new java.util.ArrayList<>(Collections.singletonList(schedule));
         when(courierScheduleDAO.get(schedule.getId())).thenReturn(schedules);
-        assertEquals(schedules,courierScheduleService.getScheduled(schedule.getId()));
-        when(courierScheduleService.getScheduled(0)).thenReturn(schedules);
-        assertSame(courierScheduleService.getScheduled(0).get(0).getClass(), Schedule.class);
+        assertSame(schedules,courierScheduleService.getScheduled(schedule.getId()));
+    }
+
+    @Test
+    void testGetScheduledEmptyListWhenCancelled() {
+        schedule.setScheduleStatus(ScheduleStatus.Cancelled.name());
+        List<Schedule> schedules = new java.util.ArrayList<>(Collections.singletonList(schedule));
+        when(courierScheduleDAO.get(schedule.getId())).thenReturn(schedules);
+        assertSame(0,courierScheduleService.getScheduled(schedule.getId()).size());
     }
 
     @Test
@@ -89,6 +97,7 @@ public class CourierScheduleServiceTest {
         Date halfHourLater = new Date();
         halfHourLater.setTime(halfHourLater.getTime() + (1800 * 1000));
         schedule.setEndTime(halfHourLater);
+        schedule.setScheduleStatus(ScheduleStatus.Scheduled.name());
         return schedule;
     }
 
