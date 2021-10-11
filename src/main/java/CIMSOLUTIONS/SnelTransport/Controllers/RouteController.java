@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api")
 @CrossOrigin(origins = "*")
 public class RouteController {
 
@@ -27,7 +28,7 @@ public class RouteController {
      * @return
      * @throws Exception
      */
-    @GetMapping("routes/{date}")
+    @GetMapping("/routes/{date}")
     public ResponseEntity<List<Route>> getAllRoutes(@PathVariable String date) throws Exception {
         try {
             return ResponseEntity.ok(routeService.getWithDate(date));
@@ -45,7 +46,7 @@ public class RouteController {
      * @return
      * @throws Exception
      */
-    @GetMapping("my-route/{courierid}/{scheduleid}")
+    @GetMapping("/my-route/{courierid}/{scheduleid}")
     public ResponseEntity<List<Route>> getAllRoutesCourier(@PathVariable int courierid, @PathVariable int scheduleid) throws Exception {
         try {
             return ResponseEntity.ok(routeService.get(courierid,scheduleid));

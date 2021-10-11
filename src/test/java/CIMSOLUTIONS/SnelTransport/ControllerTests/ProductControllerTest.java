@@ -34,7 +34,7 @@ public class ProductControllerTest {
         List<ProductDTO> products = Collections.singletonList(productDTO);
         when(productService.getAll()).thenReturn(products);
 
-        this.mockMvc.perform(get("/products/available")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/products/available")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(productDTO.getId()))
                 .andExpect(jsonPath("$[0].name").value(productDTO.getName()))
                 .andExpect(jsonPath("$[0].price").value(productDTO.getPrice()))
@@ -45,7 +45,7 @@ public class ProductControllerTest {
     @Test
     public void testGetBadRequest() throws Exception {
         when(productService.getAll()).thenThrow(Exception.class);
-        this.mockMvc.perform(get("/products/available")).andDo(print()).andExpect(status().isBadRequest());
+        this.mockMvc.perform(get("/api/products/available")).andDo(print()).andExpect(status().isBadRequest());
     }
 
     private ProductDTO getProductDTO(){

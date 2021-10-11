@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.ServicesTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CourierScheduleDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
+import CIMSOLUTIONS.SnelTransport.DTO.ScheduleDTO;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +29,12 @@ public class CourierScheduleServiceTest {
     private CourierScheduleDAO courierScheduleDAO;
 
     private Schedule schedule;
+    private ScheduleDTO scheduleDTO;
 
     @BeforeEach
     public void setup(){
         schedule = getSchedule();
+        scheduleDTO = getScheduleDTO();
     }
 
     @Test
@@ -49,6 +52,29 @@ public class CourierScheduleServiceTest {
     }
 
     @Test
+    void testGetCombinedSchedules() {
+        List<Schedule> schedules = Collections.singletonList(schedule);
+        List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
+
+        when(courierScheduleDAO.getAllSchedules()).thenReturn(schedules);
+        assertEquals(scheduleDTOS.get(0).getNrScheduledCouriers(),courierScheduleService.getCombinedSchedules().get(0).getNrScheduledCouriers());
+        when(courierScheduleDAO.getAllSchedules()).thenReturn(schedules);
+        assertEquals(courierScheduleService.getCombinedSchedules().get(0).getClass(), ScheduleDTO.class);
+    }
+
+    @Test
+    void testGetCombinedSchedulesFilteredByZones() {
+        List<Schedule> schedules = Collections.singletonList(schedule);
+        List<ScheduleDTO> scheduleDTOS = Collections.singletonList(scheduleDTO);
+        int[] zones = {1};
+
+        when(courierScheduleDAO.getAllSchedulesFilteredByZones(zones)).thenReturn(schedules);
+        assertEquals(scheduleDTOS.get(0).getNrScheduledCouriers(),courierScheduleService.getCombinedSchedulesFilteredByZones(zones).get(0).getNrScheduledCouriers());
+        when(courierScheduleDAO.getAllSchedulesFilteredByZones(zones)).thenReturn(schedules);
+        assertEquals(courierScheduleService.getCombinedSchedulesFilteredByZones(zones).get(0).getClass(), ScheduleDTO.class);
+    }
+
+    @Test
     void testInsertCancelRequest() throws Exception {
         CancelCourierScheduleRequestDTO cancelRequest = new CancelCourierScheduleRequestDTO();
         doNothing().when(courierScheduleDAO).insertCancelRequest(cancelRequest);
@@ -60,7 +86,20 @@ public class CourierScheduleServiceTest {
         Schedule schedule = new Schedule();
         schedule.setId(1);
         schedule.setStartTime(new Date());
-        schedule.setEndTime(new Date());
+        Date halfHourLater = new Date();
+        halfHourLater.setTime(halfHourLater.getTime() + (1800 * 1000));
+        schedule.setEndTime(halfHourLater);
         return schedule;
+    }
+
+    private ScheduleDTO getScheduleDTO(){
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setStartTime(new Date());
+        System.out.println("Date: "+scheduleDTO.getStartTime());
+        Date halfHourLater = new Date();
+        halfHourLater.setTime(halfHourLater.getTime() + (1800 * 1000));
+        scheduleDTO.setEndTime(halfHourLater);
+        scheduleDTO.setNrScheduledCouriers(1);
+        return scheduleDTO;
     }
 }

@@ -64,7 +64,7 @@ public class CouriersServiceTest {
     private CourierDTO getCourierDTO(){
         CourierDTO courierDTO = new CourierDTO();
         courierDTO.setId(1);
-        courierDTO.setUsername("Courier 01");
+        courierDTO.setFullName("Courier 01");
         return courierDTO;
     }
 

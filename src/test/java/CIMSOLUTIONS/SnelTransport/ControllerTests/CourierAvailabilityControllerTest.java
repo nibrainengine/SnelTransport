@@ -51,7 +51,7 @@ public class CourierAvailabilityControllerTest {
         when(courierAvailabilityService.get(availablePeriod.getCourierId())).thenReturn(availablePeriods);
         SimpleDateFormat sdf = getSimpleDateFormat();
 
-        this.mockMvc.perform(get("/available-periods/" + availablePeriod.getCourierId())).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/api/available-periods/" + availablePeriod.getCourierId())).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(availablePeriod.getId()))
                 .andExpect(jsonPath("$[0].courierId").value(availablePeriod.getCourierId()))
                 .andExpect(jsonPath("$[0].startTime").value(sdf.format(availablePeriod.getStartTime())))
@@ -63,14 +63,14 @@ public class CourierAvailabilityControllerTest {
     @Test
     public void testGetBadRequest() throws Exception {
         when(courierAvailabilityService.get(availablePeriod.getCourierId())).thenThrow(Exception.class);
-        this.mockMvc.perform(get("/available-periods/" + availablePeriod.getCourierId()))
+        this.mockMvc.perform(get("/api/available-periods/" + availablePeriod.getCourierId()))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
     public void testPost() throws Exception {
         when(courierAvailabilityService.create(availablePeriod)).thenReturn(1);
-        this.mockMvc.perform(post("/available-periods/")
+        this.mockMvc.perform(post("/api/available-periods/")
                 .contentType("application/json").content(objectMapper.writeValueAsString(availablePeriod)))
                 .andDo(print()).andExpect(status().isOk());
     }
@@ -78,14 +78,14 @@ public class CourierAvailabilityControllerTest {
     @Test
     public void testPostBadRequest() throws Exception {
         when(courierAvailabilityService.create(any(AvailablePeriod.class))).thenThrow(Exception.class);
-        this.mockMvc.perform(post("/available-periods/"))
+        this.mockMvc.perform(post("/api/available-periods/"))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
     public void testPostBadRequestWrongBody() throws Exception {
         when(courierAvailabilityService.create(any(AvailablePeriod.class))).thenReturn(1);
-        this.mockMvc.perform(post("/available-periods/")
+        this.mockMvc.perform(post("/api/available-periods/")
                 .contentType("application/json").content(objectMapper.writeValueAsString(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
