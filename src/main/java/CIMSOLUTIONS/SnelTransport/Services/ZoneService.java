@@ -1,6 +1,7 @@
 package CIMSOLUTIONS.SnelTransport.Services;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,14 @@ public class ZoneService {
         catch(Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     *
+     * @return List<ZoneDTO>
+     */
+    public List<ZoneDTO> getAllRequests() {
+        return zoneDao.getAllRequests();
     }
 
     /**

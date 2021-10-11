@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -56,6 +57,19 @@ public class ZoneDAO {
         catch(Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     *
+     * @return List<ZoneDTO>
+     */
+    public List<ZoneDTO> getAllRequests()  {
+        String query =  "SELECT DISTINCT Zone.id as zoneId, Zone.title as zoneTitle, [user].fullName as courierName " +
+                "FROM courierZone, Zone, [user] " +
+                "WHERE Zone.id = courierZone.zoneId " +
+                "AND courierZone.isApproved = 'false' " +
+                "AND courierZone.courierId = [user].userId";
+        return jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ZoneDTO.class));
     }
 
     /**

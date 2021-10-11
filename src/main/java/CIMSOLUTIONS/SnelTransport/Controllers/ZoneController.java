@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,15 @@ public class ZoneController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
+
+    /**
+     *
+     * @return List<ZoneDTO>
+     */
+    @GetMapping("/requests")
+    public List<ZoneDTO> getAllRequests(){
+        return zoneService.getAllRequests();
     }
 
     /**
