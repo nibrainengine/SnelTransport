@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Zone {
@@ -8,7 +9,7 @@ public class Zone {
     private int id;
     private String zoneTitle;
     private Boolean isApproved;
-    private List<ZonePoint> zonePoints;
+    private List<ZonePoint> zonePoints = new ArrayList<>();
 
     public Zone(){}
 
@@ -32,4 +33,14 @@ public class Zone {
     public void setZoneTitle(String zoneTitle) {
         this.zoneTitle = zoneTitle;
     }
+
+    public List<ZonePoint> getZonePoints() {
+        return zonePoints;
+    }
+
+    public void setZonePoints(List<ZonePoint> zonePoints) {
+        this.zonePoints = zonePoints;
+    }
+
+    public void addZonePoint(ZonePoint zonePoint){this.zonePoints.add(zonePoint); }
 }
