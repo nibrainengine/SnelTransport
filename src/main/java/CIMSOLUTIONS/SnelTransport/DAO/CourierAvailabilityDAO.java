@@ -26,6 +26,7 @@ public class CourierAvailabilityDAO {
      * @return List<AvailablePeriod> AvailablePeriod contains data on when a courier is available
      */
     public List<AvailablePeriod> get(int courierId) throws Exception {
+        //TODO: zorg ervoor dat booleans als anders dan false ingelezen kunnen worden
         String query =  "SELECT id, start as startTime, [end] as endTime, price, isApproved " +
                         "FROM courierAvailablePeriod " +
                         "WHERE courierId = " + courierId;
@@ -58,13 +59,42 @@ public class CourierAvailabilityDAO {
         }
     }
     /**
-     * Put call that approves an available period
+     * Put call that approves or denies an available period
      * @param id primary of the id that will be changed
      */
-    public void approve(int id){
+    public AvailablePeriod approve(int id) throws Exception{
         String query = "UPDATE courierAvailablePeriod SET isApproved = 1 - isApproved WHERE id=?";
         jdbcTemplate.update(query, id);
-        //return getPeriod(id);
+        return getOnePeriod(id);
+    }
+
+    /**
+     * Returns one item from the available period table
+     * @param periodId the primary key of the item in question.
+     * @return AvailablePeriod object
+     * @throws Exception In case the id does not exist.
+     */
+    public AvailablePeriod getOnePeriod(int periodId) throws Exception {
+        String query =  "SELECT id, [start], [end], price, isApproved, courierId " +
+                "FROM courierAvailablePeriod " +
+                "WHERE id = " + periodId;
+        List<AvailablePeriod> availablePeriods;
+
+        try {
+            availablePeriods = jdbcTemplate.query(query, (resultSet, i) -> {
+                AvailablePeriod period = new AvailablePeriod();
+                period.setId(resultSet.getInt(1));
+                period.setStartTime(resultSet.getTime(2));
+                period.setEndTime(resultSet.getTime(3));
+                period.setPrice(resultSet.getDouble(4));
+                period.setApproved(resultSet.getBoolean(5));
+                period.setCourierId(resultSet.getInt(6));
+                return period;
+            });
+            return availablePeriods.get(0);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     /**

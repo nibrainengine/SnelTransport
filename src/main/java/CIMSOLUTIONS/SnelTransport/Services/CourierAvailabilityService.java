@@ -38,7 +38,7 @@ public class CourierAvailabilityService {
      * Put call that approves an available period
      * @param id primary of the id that will be changed
      */
-    public void approve(int id) throws Exception {
-        courierAvailabilityDAO.approve(id);
+    public AvailablePeriod approve(int id) throws Exception {
+        return courierAvailabilityDAO.approve(id);
     }
 }

@@ -15,3 +15,4 @@ INSERT INTO zone (id, title) VALUES (1, 'Utrecht');
 INSERT INTO zone (id, title) VALUES (2, 'Groningen');
 INSERT INTO zone (id, title) VALUES (3, 'Noord-Brabant');
 INSERT INTO zone (id, title) VALUES (4, 'Limburg');
+INSERT INTO courierAvailablePeriod (id, courierId, start, end, price, isApproved) VALUES(1, 1, '2021-11-23 15:15:00', '2021-11-23 16:15:00', 10.12, false);

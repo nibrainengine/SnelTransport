@@ -19,8 +19,7 @@ import java.util.TimeZone;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,6 +87,12 @@ public class CourierAvailabilityControllerTest {
         this.mockMvc.perform(post("/api/available-periods/")
                 .contentType("application/json").content(objectMapper.writeValueAsString(1)))
                 .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPut() throws Exception{
+        when(courierAvailabilityService.approve(any(Integer.class))).thenReturn(getAvailablePeriod());
+        this.mockMvc.perform(put("/api/available-periods/1")).andDo(print()).andExpect(status().isOk());
     }
 
 

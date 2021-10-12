@@ -10,7 +10,7 @@ public class AvailablePeriod {
     private Date startTime;
     private Date endTime;
     private double price;
-    private boolean isApproved;
+    private Boolean isApproved;
 
     //getters and setters
     public int getId() {
@@ -53,11 +53,11 @@ public class AvailablePeriod {
         this.price = price;
     }
 
-    public boolean getApproved() {
+    public Boolean getApproved() {
         return isApproved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Boolean approved) {
         isApproved = approved;
     }
 }

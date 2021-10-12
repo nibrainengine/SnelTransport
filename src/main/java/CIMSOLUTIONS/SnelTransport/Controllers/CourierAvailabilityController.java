@@ -56,9 +56,9 @@ public class CourierAvailabilityController {
      * @return nothing
      */
     @PutMapping("/{periodId}")
-    public ResponseEntity<Void> put(@PathVariable int periodId){
+    public ResponseEntity<AvailablePeriod> put(@PathVariable int periodId){
         try {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(courierAvailabilityService.approve(periodId));
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

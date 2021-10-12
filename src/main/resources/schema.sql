@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS supplierProduct;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS productCategory;
 DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS courierAvailablePeriod;
 
 create table zone (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
@@ -57,4 +58,13 @@ create table productCategory (
 create table category (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
     name NVARCHAR2(255)
+);
+
+create table courierAvailablePeriod (
+    id int GENERATED ALWAYS AS IDENTITY not null primary key,
+    courierId int,
+    start datetime,
+    end datetime,
+    price decimal(18,2),
+    isApproved boolean
 );
