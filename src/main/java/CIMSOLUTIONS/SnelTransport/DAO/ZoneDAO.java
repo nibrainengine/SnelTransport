@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -33,13 +34,15 @@ public class ZoneDAO {
      */
     public Zone save(Zone zone) throws Exception {
         try{
+            SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
+                    .withTableName("zone").usingGeneratedKeyColumns("id");
             String query = "INSERT INTO Zone (title) VALUES ('" + zone.getZoneTitle() + "')";
-            String selectQuery = "select id as id, title as zoneTitle from Zone Where title= '"+ zone.getZoneTitle() + "'";
-            jdbcTemplate.execute(query);
-            Zone newZone = jdbcTemplate.queryForObject(selectQuery, BeanPropertyRowMapper.newInstance(Zone.class));
+            Map<String, Object> parameters = new HashMap<>(1);
+            parameters.put("title", zone.getZoneTitle());
+            Number zoneId = simpleJdbcInsert.executeAndReturnKey(parameters);
 
             //insert query for zonePoints
-            String zonePointsQuery = "INSERT INTO zonePoint (zoneId, latitude, longitude) VALUES('"+ newZone.getId() +"', ?, ?)";
+            String zonePointsQuery = "INSERT INTO zonePoint (zoneId, latitude, longitude) VALUES('"+ zoneId +"', ?, ?)";
 
             //insert array of zonePoints in database
             jdbcTemplate.batchUpdate(zonePointsQuery, new BatchPreparedStatementSetter() {
