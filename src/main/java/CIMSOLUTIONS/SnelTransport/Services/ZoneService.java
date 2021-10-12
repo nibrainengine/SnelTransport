@@ -45,11 +45,34 @@ public class ZoneService {
     }
 
     /**
-     *
+     * Gets all zone requests in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the zoneId, zoneTitle, courierId
+     * and courierName are given.
      * @return List<ZoneDTO>
      */
-    public List<ZoneDTO> getAllRequests() {
-        return zoneDao.getAllRequests();
+    public List<ZoneDTO> getAllZoneRequests() {
+        return zoneDao.getZoneAllRequests();
+    }
+
+    /**
+     * Accepts the zone request of the specified courier.
+     * @param zoneId - The id of the zone that is accepted
+     * @param courierId - The id of the courier whose zone is accepted
+     * @return 0 if successful, 1 if not
+     * @throws Exception if updating the table courierZone failed.
+     */
+    public int acceptZoneRequest(int zoneId, int courierId) throws Exception {
+        return zoneDao.acceptZoneRequest(zoneId, courierId);
+    }
+
+    /**
+     * Rejects the zone request of the specified courier.
+     * @param zoneId - The id of the zone that is rejected
+     * @param courierId - The id of the courier whose zone is rejected
+     * @return 0 if successful, 1 if not
+     * @throws Exception if updating the table courierZone failed.
+     */
+    public int rejectZoneRequest(int zoneId, int courierId) throws Exception {
+        return zoneDao.rejectZoneRequest(zoneId, courierId);
     }
 
     /**

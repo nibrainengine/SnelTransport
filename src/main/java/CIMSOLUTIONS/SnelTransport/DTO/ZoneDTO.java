@@ -5,6 +5,7 @@ public class ZoneDTO {
     //declare variables
     private int zoneId;
     private String zoneTitle;
+    private int courierId;
     private String courierName;
 
 
@@ -23,6 +24,14 @@ public class ZoneDTO {
 
     public void setZoneTitle(String zoneTitle) {
         this.zoneTitle = zoneTitle;
+    }
+
+    public int getCourierId() {
+        return courierId;
+    }
+
+    public void setCourierId(int courierid) {
+        this.courierId = courierid;
     }
 
     public String getCourierName() {
