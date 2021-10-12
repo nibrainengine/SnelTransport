@@ -3,6 +3,7 @@ package CIMSOLUTIONS.SnelTransport.ControllerTests;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,6 +30,9 @@ public class CouriersControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private CouriersService couriersService;
@@ -76,6 +81,28 @@ public class CouriersControllerTest {
                 .andExpect(jsonPath("$[0].username").value(courierDTO.getUsername()));
     }
 
+    @Test
+    void postCourierPackageSize_ReturnOk() {
+        try{
+            when(couriersService.save(courier)).thenReturn(courier);
+            this.mockMvc.perform(post("/api/courier/change-packagesize").contentType("application/json").content(objectMapper.writeValueAsString(courier))).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void postCourierPackageSize_ReturnBadRequest() {
+        try{
+            when(couriersService.save(courier)).thenThrow(new Exception());
+            this.mockMvc.perform(post("/api/courier/change-packagesize")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
     private CourierDTO getCourierDTO(){
         CourierDTO courierDTO = new CourierDTO();
         courierDTO.setId(1);
@@ -85,7 +112,7 @@ public class CouriersControllerTest {
 
     private Courier getCourier(){
         Courier courier = new Courier();
-        courier.setId(1);
+        courier.setId(0);
         courier.setKvkNumber(11111111);
         return courier;
     }

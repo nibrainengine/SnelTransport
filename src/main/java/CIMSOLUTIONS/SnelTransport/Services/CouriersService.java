@@ -45,4 +45,21 @@ public class CouriersService {
         courier.setPackageSizes(packageSizeDAO.getPackageSizeCourier(courierId));
         return courier;
     }
+
+    /**
+     * Fuses a Courier and Packagesize Object
+     * @param courier a single courier with an unique identifier
+     * @return Single Courier object
+     * @throws Exception Exeption message.
+     */
+    public Courier save(Courier courier) throws Exception {
+        try{
+            Courier courierObject = couriersDAO.save(courier);
+            courier.setPackageSizes(packageSizeDAO.getPackageSizeCourier(courierObject.getId()));
+            return courier;
+        }
+        catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 }
