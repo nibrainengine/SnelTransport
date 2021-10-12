@@ -57,6 +57,15 @@ public class CourierAvailabilityDAO {
             throw new Exception(e.getMessage());
         }
     }
+    /**
+     * Put call that approves an available period
+     * @param id primary of the id that will be changed
+     */
+    public void approve(int id){
+        String query = "UPDATE courierAvailablePeriod SET isApproved = 1 - isApproved WHERE id=?";
+        jdbcTemplate.update(query, id);
+        //return getPeriod(id);
+    }
 
     /**
      * Gets available period id from database
@@ -88,4 +97,5 @@ public class CourierAvailabilityDAO {
     private boolean courierAvailablePeriodExists(int courierId, Date startTime, Date endTime){
         return getId(courierId, startTime, endTime) != 0;
     }
+
 }

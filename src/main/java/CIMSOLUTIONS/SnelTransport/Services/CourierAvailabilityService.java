@@ -34,4 +34,11 @@ public class CourierAvailabilityService {
     public int create(AvailablePeriod availablePeriod) throws Exception {
         return courierAvailabilityDAO.insert(availablePeriod);
     }
+    /**
+     * Put call that approves an available period
+     * @param id primary of the id that will be changed
+     */
+    public void approve(int id) throws Exception {
+        courierAvailabilityDAO.approve(id);
+    }
 }
