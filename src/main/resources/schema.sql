@@ -18,7 +18,7 @@ CREATE TABLE PickupHub(
     isDisabled boolean,
     url NVARCHAR(255)
 );
-DROP TABLE IF EXISTS Zone;
+DROP TABLE IF EXISTS zone;
 DROP TABLE IF EXISTS supplierProduct;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS productCategory;
