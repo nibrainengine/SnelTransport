@@ -4,9 +4,7 @@ import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
