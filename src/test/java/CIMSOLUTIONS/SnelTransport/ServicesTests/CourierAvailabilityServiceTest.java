@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -53,6 +54,12 @@ public class CourierAvailabilityServiceTest {
     @Test
     void testCreateIs0() throws Exception {
         assertEquals(0,courierAvailabilityService.create(availablePeriod));
+    }
+
+    @Test
+    void testApprove() throws Exception {
+        when(courierAvailabilityDAO.approve(any(Integer.class))).thenReturn(availablePeriod);
+        assertEquals(true, courierAvailabilityDAO.approve(1).getApproved());
     }
 
     private AvailablePeriod getAvailablePeriod(){

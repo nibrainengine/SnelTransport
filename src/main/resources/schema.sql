@@ -1,5 +1,13 @@
+DROP TABLE IF EXISTS zone;
+DROP TABLE IF EXISTS supplierProduct;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS productCategory;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS ZonePoint;
 DROP table if exists PickupHub;
 DROP table if exists address;
+DROP TABLE IF EXISTS canceledCourierSchedule;
+DROP TABLE IF EXISTS courierAvailablePeriod;
 
 CREATE TABLE address (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
@@ -18,12 +26,6 @@ CREATE TABLE PickupHub(
     isDisabled boolean,
     url NVARCHAR(255)
 );
-DROP TABLE IF EXISTS Zone;
-DROP TABLE IF EXISTS zone;
-DROP TABLE IF EXISTS supplierProduct;
-DROP TABLE IF EXISTS product;
-DROP TABLE IF EXISTS productCategory;
-DROP TABLE IF EXISTS category;
 
 create table zone (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
@@ -57,4 +59,27 @@ create table productCategory (
 create table category (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
     name NVARCHAR2(255)
+);
+
+create table zonePoint(
+    id int GENERATED ALWAYS AS IDENTITY not null primary key,
+    zoneId int,
+    index int,
+    latitude decimal(18,15),
+    longitude decimal(18,15)
+);
+
+create table canceledCourierSchedule (
+    courierScheduleId int primary key,
+    approved bit,
+    reason NVARCHAR2(255)
+);
+
+create table courierAvailablePeriod (
+    id int GENERATED ALWAYS AS IDENTITY not null primary key,
+    courierId int,
+    start datetime,
+    end datetime,
+    price decimal(18,2),
+    isApproved boolean
 );

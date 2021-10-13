@@ -10,6 +10,7 @@ public class Schedule {
     private Date startTime;
     private Date endTime;
     private List<Route> routes;
+    private String scheduleStatus;
 
     //getters and setters
     public int getId() {
@@ -42,5 +43,13 @@ public class Schedule {
 
     public void setRoutes(List<Route> routes) {
         this.routes = routes;
+    }
+
+    public String getScheduleStatus() {
+        return scheduleStatus;
+    }
+
+    public void setScheduleStatus(String scheduleStatus) {
+        this.scheduleStatus = scheduleStatus;
     }
 }

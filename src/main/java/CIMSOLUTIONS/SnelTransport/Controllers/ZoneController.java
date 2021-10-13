@@ -4,6 +4,7 @@ import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,11 @@ public class ZoneController {
         try {
             Zone newZone = zoneService.save(zone);
             return ResponseEntity.ok(newZone);
-        } catch (Exception e) {
+        }
+        catch(DuplicateKeyException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+        catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

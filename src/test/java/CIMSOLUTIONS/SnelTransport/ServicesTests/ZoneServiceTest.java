@@ -1,8 +1,11 @@
 package CIMSOLUTIONS.SnelTransport.ServicesTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
-import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
+import org.junit.Assert;
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 public class ZoneServiceTest {
@@ -22,11 +27,82 @@ public class ZoneServiceTest {
     @Mock
     private ZoneDAO zoneDAO;
 
+    private Zone zone;
     private ZoneDTO zoneDTO;
+    private List<Zone> zones;
+    private ZonePoint zonePoint;
+    private List<ZonePoint> zonePoints;
 
     @BeforeEach
     public void setup(){
+        zone = new Zone(0, "testZone");
+        zones = new ArrayList<>();
+        zones.add(zone);
+        zonePoints = new ArrayList<>();
+        zonePoint = new ZonePoint(1, 5.123, 5.123);
         zoneDTO = getZoneDTO();
+    }
+
+    /**
+     * Test successful adding zone
+     */
+    @Test
+    void saveZone_Success() {
+        try {
+            zonePoints.add(zonePoint);
+            zonePoints.add(zonePoint);
+            zonePoints.add(zonePoint);
+            zonePoints.add(zonePoint);
+            zone.setZonePoints(zonePoints);
+
+            when(zoneDAO.save(zone)).thenReturn(zone);
+            Zone newZone = zoneService.save(zone);
+            Assert.assertEquals(newZone.getZoneTitle(), zone.getZoneTitle());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    /**
+     * Adding zone should fail when no zone points are given.
+     */
+    @Test
+    void saveZone_ThrowExceptionWhenZonePointsIsNull() {
+        try {
+            zoneService.save(zone);
+            fail();
+        } catch (Exception e) {
+            Assert.assertNotNull(e);
+        }
+    }
+
+    /**
+     * Adding zone should fail when there are less than 4 zone points given.
+     */
+    @Test
+    void saveZone_ThrowExceptionWhenZonePointsIsLessThan4() {
+        try {
+            zonePoints.add(zonePoint);
+            zone.setZonePoints(zonePoints);
+            zoneService.save(zone);
+            fail();
+        } catch (Exception e) {
+            Assert.assertNotNull(e);
+        }
+    }
+
+    /**
+     * Should return list of zones from zoneDAO
+     */
+    @Test
+    void getAllZones_Success(){
+        try {
+            when(zoneDAO.getAll()).thenReturn(zones);
+            List<Zone> getZones = zoneService.getAll();
+            Assert.assertEquals(getZones.size(), zones.size());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
@@ -55,7 +131,7 @@ public class ZoneServiceTest {
         assertEquals(0,zoneService.handleZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId(), false));
     }
 
-    private ZoneDTO getZoneDTO(){
+    private ZoneDTO getZoneDTO() {
         ZoneDTO zoneDTO = new ZoneDTO();
         zoneDTO.setZoneId(1);
         zoneDTO.setZoneTitle("Zone 01");
