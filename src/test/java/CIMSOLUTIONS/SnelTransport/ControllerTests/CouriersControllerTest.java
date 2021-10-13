@@ -160,7 +160,7 @@ public class CouriersControllerTest {
     void postCourierPackageSize_ReturnOk() {
         try{
             when(couriersService.save(courier)).thenReturn(courier);
-            this.mockMvc.perform(post("/api/courier/change-packagesize").contentType("application/json").content(objectMapper.writeValueAsString(courier))).andExpect(status().isOk());
+            this.mockMvc.perform(post("/api/couriers/change-packagesize").contentType("application/json").content(objectMapper.writeValueAsString(courier))).andExpect(status().isOk());
         }
         catch (Exception ex){
             fail();
@@ -171,7 +171,7 @@ public class CouriersControllerTest {
     void postCourierPackageSize_ReturnBadRequest() {
         try{
             when(couriersService.save(courier)).thenThrow(new Exception());
-            this.mockMvc.perform(post("/api/courier/change-packagesize")).andExpect(status().isBadRequest());
+            this.mockMvc.perform(post("/api/couriers/change-packagesize")).andExpect(status().isBadRequest());
         }
         catch (Exception ex){
             fail();
