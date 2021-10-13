@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
+import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,11 @@ public class ZoneDAOTests {
     void getZones_ShouldReturnAllZones() {
         try {
             List<Zone> zones = zoneDao.getAll();
-            assertEquals(4, zones.size());
+            assertEquals(1, zones.size());
         }
         catch (Exception e) {
             fail();
         }
-
     }
 
     /**
@@ -49,9 +49,11 @@ public class ZoneDAOTests {
     void saveZone_ShouldAddZone() {
         try {
             Zone zone = new Zone(12, "newTestZone");
+            ZonePoint zonePoint = new ZonePoint(12, 5.123, 5.123);
+            zone.addZonePoint(zonePoint);
             zoneDao.save(zone);
             List<Zone> zones = zoneDao.getAll();
-            assertEquals(5, zones.size());
+            assertEquals(2, zones.size());
         }
         catch (Exception e) {
             fail();
@@ -66,7 +68,7 @@ public class ZoneDAOTests {
         try {
             zoneDao.delete(1);
             List<Zone> zones = zoneDao.getAll();
-            assertEquals(3, zones.size());
+            assertEquals(0, zones.size());
         }
         catch (Exception e) {
             fail();
