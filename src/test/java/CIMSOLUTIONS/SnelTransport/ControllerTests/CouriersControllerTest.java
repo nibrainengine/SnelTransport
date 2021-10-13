@@ -42,8 +42,6 @@ public class CouriersControllerTest {
     @MockBean
     private CourierScheduleService courierScheduleService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private CourierDTO courierDTO;
     private Schedule schedule;
