@@ -65,7 +65,7 @@ public class ZoneDAO {
      * tables.
      * @return List<ZoneDTO>
      */
-    public List<ZoneDTO> getZoneAllRequests()  {
+    public List<ZoneDTO> getAllZoneRequests()  {
         String query =  "SELECT DISTINCT Zone.id as zoneId, Zone.title as zoneTitle, courierZone.courierId, " +
                 "[user].fullName as courierName " +
                 "FROM courierZone, Zone, [user] " +
@@ -105,7 +105,7 @@ public class ZoneDAO {
      * Function that updates the courierZone table by accepting the requested zone from a specific courier.
      * @param zoneId - The id of the zone that is accepted
      * @param courierId - The id of the courier whose zone is accepted
-     * @return 0 if successful, 1 if not
+     * @return 1 if successful, 0 if not
      * @throws Exception if updating the table courierZone failed.
      */
     public int acceptZoneRequest(int zoneId, int courierId) throws Exception {
@@ -125,7 +125,7 @@ public class ZoneDAO {
      * table.
      * @param zoneId - The id of the zone that is rejected
      * @param courierId - The id of the courier whose zone is rejected
-     * @return 0 if successful, 1 if not
+     * @return 1 if successful, 0 if not
      * @throws Exception if updating the table courierZone failed.
      */
     public int rejectZoneRequest(int zoneId, int courierId) throws Exception {

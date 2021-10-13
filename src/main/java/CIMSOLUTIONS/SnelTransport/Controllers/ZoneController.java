@@ -62,31 +62,17 @@ public class ZoneController {
 
     /**
      * Put function that updates the courierZone table by changing the isApproved field of the specified courierId and
-     * zoneId from false to true.
-     * @param zoneId - The id of the zone that is accepted
-     * @param courierId - The id of the courier whose zone is accepted
-     * @return ResponseEntity.ok with 0 being successful and 1 not
+     * zoneId from false to true, or by removing the specified row if the request is rejected.
+     * @param zoneId - The id of the zone that is accepted or rejected
+     * @param courierId - The id of the courier whose zone is accepted or rejected
+     * @param accepted - boolean indicating whether the zone request has been accepted or rejected
+     * @return ResponseEntity.ok with 1 being successful and 0 not
      */
-    @GetMapping("/requests/{zoneId}/{courierId}/accept")
-    public ResponseEntity<Integer> acceptZoneRequest(@PathVariable int zoneId, @PathVariable int courierId){
+    @PostMapping("/requests/{zoneId}/{courierId}")
+    public ResponseEntity<Integer> handleZoneRequest(@PathVariable int zoneId, @PathVariable int courierId,
+                                                     @RequestBody boolean accepted){
         try {
-            return ResponseEntity.ok(zoneService.acceptZoneRequest(zoneId, courierId));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
-    /**
-     * Function that updates the courierZone table by deleting the row of the specified courierId and zoneId from the
-     * courierZone table.
-     * @param zoneId - The id of the zone that is rejected
-     * @param courierId - The id of the courier whose zone is rejected
-     * @return ResponseEntity.ok with 0 being successful and 1 not
-     */
-    @GetMapping("/requests/{zoneId}/{courierId}/reject")
-    public ResponseEntity<Integer> rejectZoneRequest(@PathVariable int zoneId, @PathVariable int courierId){
-        try {
-            return ResponseEntity.ok(zoneService.rejectZoneRequest(zoneId, courierId));
+            return ResponseEntity.ok(zoneService.handleZoneRequest(zoneId, courierId, accepted));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

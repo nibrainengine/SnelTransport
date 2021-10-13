@@ -50,29 +50,23 @@ public class ZoneService {
      * @return List<ZoneDTO>
      */
     public List<ZoneDTO> getAllZoneRequests() {
-        return zoneDao.getZoneAllRequests();
+        return zoneDao.getAllZoneRequests();
     }
 
     /**
      * Accepts the zone request of the specified courier.
-     * @param zoneId - The id of the zone that is accepted
-     * @param courierId - The id of the courier whose zone is accepted
-     * @return 0 if successful, 1 if not
+     * @param zoneId - The id of the zone that is accepted or rejected
+     * @param courierId - The id of the courier whose zone is accepted or rejected
+     * @param accepted - boolean indicating whether the zone request has been accepted or rejected
+     * @return 1 if successful, 0 if not
      * @throws Exception if updating the table courierZone failed.
      */
-    public int acceptZoneRequest(int zoneId, int courierId) throws Exception {
-        return zoneDao.acceptZoneRequest(zoneId, courierId);
-    }
-
-    /**
-     * Rejects the zone request of the specified courier.
-     * @param zoneId - The id of the zone that is rejected
-     * @param courierId - The id of the courier whose zone is rejected
-     * @return 0 if successful, 1 if not
-     * @throws Exception if updating the table courierZone failed.
-     */
-    public int rejectZoneRequest(int zoneId, int courierId) throws Exception {
-        return zoneDao.rejectZoneRequest(zoneId, courierId);
+    public int handleZoneRequest(int zoneId, int courierId, boolean accepted) throws Exception {
+        if(accepted){
+            return zoneDao.acceptZoneRequest(zoneId, courierId);
+        }else{
+            return zoneDao.rejectZoneRequest(zoneId, courierId);
+        }
     }
 
     /**
