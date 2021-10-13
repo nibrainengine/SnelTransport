@@ -60,7 +60,9 @@ public class CourierAvailabilityDAO {
     }
     /**
      * Put call that approves or denies an available period
+     * @throws Exception if the period to be changed does not exist.
      * @param id primary of the id that will be changed
+     * @return the period that has just been changed.
      */
     public AvailablePeriod approve(int id) throws Exception{
         String query = "UPDATE courierAvailablePeriod SET isApproved = 1 - isApproved WHERE id=?";
