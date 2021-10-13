@@ -12,6 +12,7 @@ INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (1, 1, false, 'htt
 INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (2, 3, true, 'http://disabledurl.com/disabled');
 INSERT INTO pickUpHub (id, addressId, isDisabled, url) VALUES (3, 2, false, 'http://localhost:8080');
 INSERT INTO zone (id, title) VALUES (1, 'Utrecht');
+INSERT INTO courierAvailablePeriod (id, courierId, start, end, price, isApproved) VALUES(1, 1, '2021-11-23 15:15:00', '2021-11-23 16:15:00', 10.12, false);
 
 INSERT INTO zonePoint (id, zoneId, latitude, longitude) VALUES (1, 1, 5.123, 5.123);
 INSERT INTO zonePoint (id, zoneId, latitude, longitude) VALUES (2, 1, 5.123, 5.123);

@@ -34,4 +34,13 @@ public class CourierAvailabilityService {
     public int create(AvailablePeriod availablePeriod) throws Exception {
         return courierAvailabilityDAO.insert(availablePeriod);
     }
+    /**
+     * Put call that approves an available period
+     * @throws Exception throws an exception if the table has no period with this id or db connection is broken
+     * @param id primary of the id that will be changed
+     * @return AvailablePeriod returns the changed period in its entirety.
+     */
+    public AvailablePeriod approve(int id) throws Exception {
+        return courierAvailabilityDAO.approve(id);
+    }
 }
