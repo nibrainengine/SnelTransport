@@ -109,7 +109,7 @@ public class CouriersController {
      * @return Json String of a single courier.
      */
     @RequestMapping(method = RequestMethod.POST, path = "/change-packagesize")
-    public ResponseEntity<Courier> postZone(@RequestBody Courier courier) {
+    public ResponseEntity<Courier> postCourier(@RequestBody Courier courier) {
         try {
             Courier newPackageSize = couriersService.save(courier);
             return ResponseEntity.ok(newPackageSize);

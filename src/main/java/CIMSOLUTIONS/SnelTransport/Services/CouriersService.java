@@ -54,8 +54,7 @@ public class CouriersService {
      */
     public Courier save(Courier courier) throws Exception {
         try{
-            Courier courierObject = couriersDAO.save(courier);
-            courier.setPackageSizes(packageSizeDAO.getPackageSizeCourier(courierObject.getId()));
+            couriersDAO.save(courier);
             return courier;
         }
         catch(Exception e){
