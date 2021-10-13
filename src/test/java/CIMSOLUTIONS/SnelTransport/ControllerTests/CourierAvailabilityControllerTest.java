@@ -95,6 +95,12 @@ public class CourierAvailabilityControllerTest {
         this.mockMvc.perform(put("/api/available-periods/1")).andDo(print()).andExpect(status().isOk());
     }
 
+    @Test
+    public void testPutBad() throws Exception {
+        when(courierAvailabilityService.approve(any(Integer.class))).thenThrow(Exception.class);
+        this.mockMvc.perform(put("/api/available-periods/1")).andDo(print()).andExpect(status().isBadRequest());
+    }
+
 
 
     private SimpleDateFormat getSimpleDateFormat(){
