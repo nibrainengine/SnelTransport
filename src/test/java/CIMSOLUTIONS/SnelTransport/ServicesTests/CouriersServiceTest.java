@@ -57,6 +57,12 @@ public class CouriersServiceTest {
     }
 
     @Test
+    void testSaveCourierPackageSize() throws Exception {
+        when(mockService.save(courier)).thenReturn(courier);
+        assertSame(mockService.save(courier).getClass(), Courier.class);
+    }
+
+    @Test
     void testGetEmptyList() {
         assertEquals(Collections.emptyList(),couriersService.getAll());
     }

@@ -34,4 +34,11 @@ public class CouriersDAOTest {
         when(couriersDAO.getCourierInfo(1)).thenReturn(courier);
         assertTrue(couriersDAO.getCourierInfo(1).getClass() == Courier.class);
     }
+
+    @Test
+    void save() throws Exception {
+        Courier courier = new Courier();
+        when(couriersDAO.save(courier)).thenReturn(courier);
+        assertTrue(couriersDAO.save(courier).getClass() == Courier.class);
+    }
 }
