@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS ZonePoint;
 DROP table if exists PickupHub;
 DROP table if exists address;
 DROP TABLE IF EXISTS canceledCourierSchedule;
+DROP TABLE IF EXISTS courierZone;
 
 CREATE TABLE address (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
@@ -72,4 +73,11 @@ create table canceledCourierSchedule (
     courierScheduleId int primary key,
     approved bit,
     reason NVARCHAR2(255)
+);
+
+create table courierZone (
+    courierId int,
+    zoneId int,
+    isApproved bit,
+    primary key (courierId, zoneId)
 );

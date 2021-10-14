@@ -2,9 +2,11 @@ package CIMSOLUTIONS.SnelTransport.ServicesTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CouriersDAO;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
+import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import CIMSOLUTIONS.SnelTransport.Services.RouteService;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class CouriersServiceTest {
@@ -66,6 +68,35 @@ public class CouriersServiceTest {
         courierDTO.setId(1);
         courierDTO.setFullName("Courier 01");
         return courierDTO;
+    }
+
+    @Test
+    void addZoneToCourierSuccess() {
+        try {
+            CourierZoneDTO courierZoneDTO = new CourierZoneDTO();
+            courierZoneDTO.setZoneId(1);
+            courierZoneDTO.setCourierId(1);
+
+            doNothing().when(couriersDAO).addZoneToCourier(courierZoneDTO);
+            couriersService.addZoneToCourier(courierZoneDTO);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    void addZoneToCourierException() {
+        try {
+            CourierZoneDTO courierZoneDTO = new CourierZoneDTO();
+            courierZoneDTO.setZoneId(1);
+            courierZoneDTO.setCourierId(1);
+
+            doThrow(new Exception()).when(couriersDAO).addZoneToCourier(courierZoneDTO);
+            couriersService.addZoneToCourier(courierZoneDTO);
+            fail();
+        } catch (Exception e) {
+            //success
+        }
     }
 
     private Courier getCourier(){
