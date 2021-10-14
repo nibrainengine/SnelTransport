@@ -2,6 +2,7 @@ package CIMSOLUTIONS.SnelTransport.DAO;
 
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,25 @@ public class CouriersDAO {
                     " from courier where userId = " + courierId;
             return jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(Courier.class)).get(0);
         }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * Adds zone to courier
+     * @param courierZoneDTO object with courierId and zoneId
+     * @throws Exception Exception on insert
+     */
+    public void addZoneToCourier(CourierZoneDTO courierZoneDTO) throws Exception{
+        try{
+            String query = "INSERT INTO courierZone (courierId, zoneId, isApproved) " +
+                    "VALUES ('"+ courierZoneDTO.getCourierId() +"', '"+ courierZoneDTO.getZoneId() +"', 'false')";
+            jdbcTemplate.update(query);
+        }
+        catch(DuplicateKeyException e){
+            throw new DuplicateKeyException(e.getMessage());
+        }
+        catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }

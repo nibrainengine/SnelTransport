@@ -2,12 +2,14 @@ package CIMSOLUTIONS.SnelTransport.Controllers;
 
 import CIMSOLUTIONS.SnelTransport.DTO.CancelCourierScheduleRequestDTO;
 import CIMSOLUTIONS.SnelTransport.DTO.CourierDTO;
+import CIMSOLUTIONS.SnelTransport.DTO.CourierZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
 import CIMSOLUTIONS.SnelTransport.Services.CourierScheduleService;
 import CIMSOLUTIONS.SnelTransport.Services.CouriersService;
 import CIMSOLUTIONS.SnelTransport.Models.Schedule;
 import CIMSOLUTIONS.SnelTransport.DTO.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +100,26 @@ public class CouriersController {
             courierScheduleService.insertCancelRequest(cancelRequest);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    /**
+     * Adds zone to courier
+     * @param courierZoneDTO object with courierId + zoneId
+     * @return ResponseEntity<void> with http response
+     */
+    @CrossOrigin
+    @PostMapping("/add-zone-to-courier")
+    public ResponseEntity<Void> addZoneToCourier(@RequestBody CourierZoneDTO courierZoneDTO){
+        try{
+            couriersService.addZoneToCourier(courierZoneDTO);
+            return ResponseEntity.ok().build();
+        }
+        catch(DuplicateKeyException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+        catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

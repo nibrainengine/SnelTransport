@@ -45,4 +45,13 @@ public class CouriersService {
         courier.setPackageSizes(packageSizeDAO.getPackageSizeCourier(courierId));
         return courier;
     }
+
+    /**
+     * Adds zone to courier
+     * @param courierZoneDTO object with courierId and zoneId
+     * @throws Exception Exception in courierDAO
+     */
+    public void addZoneToCourier(CourierZoneDTO courierZoneDTO) throws Exception {
+        couriersDAO.addZoneToCourier(courierZoneDTO);
+    }
 }
