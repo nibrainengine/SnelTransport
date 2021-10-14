@@ -5,41 +5,42 @@ import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
 import org.junit.Assert;
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class ZoneServiceTest {
 
     @InjectMocks
-    private ZoneService zoneService = new ZoneService();
+    ZoneService zoneService;
 
     @Mock
-    ZoneDAO zoneDAO;
+    private ZoneDAO zoneDAO;
 
     private Zone zone;
+    private ZoneDTO zoneDTO;
     private List<Zone> zones;
     private ZonePoint zonePoint;
     private List<ZonePoint> zonePoints;
 
     @BeforeEach
-    public void setup() {
+    public void setup(){
         zone = new Zone(0, "testZone");
         zones = new ArrayList<>();
         zones.add(zone);
         zonePoints = new ArrayList<>();
         zonePoint = new ZonePoint(1, 5.123, 5.123);
+        zoneDTO = getZoneDTO();
     }
 
     /**
@@ -102,5 +103,40 @@ public class ZoneServiceTest {
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @Test
+    void testGetAllZoneRequests() throws Exception {
+        List<ZoneDTO> zoneDTOS = Collections.singletonList(zoneDTO);
+        when(zoneDAO.getAllZoneRequests()).thenReturn(zoneDTOS);
+        assertEquals(zoneDTOS,zoneService.getAllZoneRequests());
+    }
+
+    @Test
+    void testGetEmptyZoneRequestsList() {
+        assertEquals(Collections.emptyList(),zoneService.getAllZoneRequests());
+    }
+
+    @Test
+    void testHandleZoneRequest() throws Exception {
+        when(zoneDAO.acceptZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId())).thenReturn(1);
+        assertEquals(1,zoneService.handleZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId(), true));
+        when(zoneDAO.rejectZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId())).thenReturn(1);
+        assertEquals(1,zoneService.handleZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId(), false));
+    }
+
+    @Test
+    void testHandleZoneRequestIs0() throws Exception {
+        assertEquals(0,zoneService.handleZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId(), true));
+        assertEquals(0,zoneService.handleZoneRequest(zoneDTO.getZoneId(), zoneDTO.getCourierId(), false));
+    }
+
+    private ZoneDTO getZoneDTO() {
+        ZoneDTO zoneDTO = new ZoneDTO();
+        zoneDTO.setZoneId(1);
+        zoneDTO.setZoneTitle("Zone 01");
+        zoneDTO.setCourierId(1);
+        zoneDTO.setCourierName("Courier 01");
+        return zoneDTO;
     }
 }

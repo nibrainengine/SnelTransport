@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.DAO;
 
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,22 @@ public class ZoneDAO {
     }
 
     /**
+     * Function that returns a list of zone requests in CIMSOLUTIONS.SnelTransport.dto format, ensuring only the zoneId,
+     * zoneTitle, courierId and courierName are given, by extracting data both from the courierZone, Zone and user
+     * tables.
+     * @return List<ZoneDTO>
+     */
+    public List<ZoneDTO> getAllZoneRequests()  {
+        String query =  "SELECT DISTINCT Zone.id as zoneId, Zone.title as zoneTitle, courierZone.courierId, " +
+                "[user].fullName as courierName " +
+                "FROM courierZone, Zone, [user] " +
+                "WHERE Zone.id = courierZone.zoneId " +
+                "AND courierZone.isApproved = 'false' " +
+                "AND courierZone.courierId = [user].userId";
+        return jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ZoneDTO.class));
+    }
+
+    /**
      * Updates existing zone
      *
      * @param id   id of the zone
@@ -140,6 +157,42 @@ public class ZoneDAO {
             jdbcTemplate.update(query);
         }
         catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * Function that updates the courierZone table by accepting the requested zone from a specific courier.
+     * @param zoneId - The id of the zone that is accepted
+     * @param courierId - The id of the courier whose zone is accepted
+     * @return 1 if successful, 0 if not
+     * @throws Exception if updating the table courierZone failed.
+     */
+    public int acceptZoneRequest(int zoneId, int courierId) throws Exception {
+        try {
+            String query =  "UPDATE courierZone " +
+                    "SET isApproved = 'true' " +
+                    "WHERE zoneId = "+zoneId +
+                    "AND courierId = "+courierId;
+            return jdbcTemplate.update(query);
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * Function that updates the courierZone table by removing the requested zone from the specific courier from the
+     * table.
+     * @param zoneId - The id of the zone that is rejected
+     * @param courierId - The id of the courier whose zone is rejected
+     * @return 1 if successful, 0 if not
+     * @throws Exception if updating the table courierZone failed.
+     */
+    public int rejectZoneRequest(int zoneId, int courierId) throws Exception {
+        try {
+            String query = "DELETE FROM courierZone WHERE zoneId = " + zoneId +" AND courierId = "+courierId;
+            return jdbcTemplate.update(query);
+        } catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
