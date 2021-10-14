@@ -105,6 +105,22 @@ public class CouriersController {
     }
 
     /**
+     * Post method that alters the package size of a single courier in the database. It returns the altered courier as a json
+     * string.
+     * @param courier a single courier object with an unique identifier
+     * @return Json String of a single courier.
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/change-packagesize")
+    public ResponseEntity<Courier> postCourier(@RequestBody Courier courier) {
+        try {
+            Courier newPackageSize = couriersService.save(courier);
+            return ResponseEntity.ok(newPackageSize);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    /**
      * Adds zone to courier
      * @param courierZoneDTO object with courierId + zoneId
      * @return ResponseEntity<void> with http response

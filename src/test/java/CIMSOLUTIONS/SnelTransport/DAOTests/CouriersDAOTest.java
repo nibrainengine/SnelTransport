@@ -1,17 +1,13 @@
 package CIMSOLUTIONS.SnelTransport.DAOTests;
 
 import CIMSOLUTIONS.SnelTransport.DAO.CouriersDAO;
-import CIMSOLUTIONS.SnelTransport.DAO.ZoneDAO;
 import CIMSOLUTIONS.SnelTransport.DTO.*;
 import CIMSOLUTIONS.SnelTransport.Models.Courier;
-import CIMSOLUTIONS.SnelTransport.Models.Zone;
-import CIMSOLUTIONS.SnelTransport.Models.ZonePoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
@@ -56,6 +52,13 @@ public class CouriersDAOTest {
         Courier courier = new Courier();
         when(couriersDAO.getCourierInfo(1)).thenReturn(courier);
         assertTrue(couriersDAO.getCourierInfo(1).getClass() == Courier.class);
+    }
+
+    @Test
+    void save() throws Exception {
+        Courier courier = new Courier();
+        when(couriersDAO.save(courier)).thenReturn(courier);
+        assertTrue(couriersDAO.save(courier).getClass() == Courier.class);
     }
 
     @Test

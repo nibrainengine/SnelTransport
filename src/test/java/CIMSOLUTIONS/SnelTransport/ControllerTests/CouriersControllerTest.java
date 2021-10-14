@@ -35,13 +35,14 @@ public class CouriersControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockBean
     private CouriersService couriersService;
     @MockBean
     private CourierScheduleService courierScheduleService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private CourierDTO courierDTO;
     private Schedule schedule;
@@ -157,6 +158,28 @@ public class CouriersControllerTest {
     }
 
     @Test
+    void postCourierPackageSize_ReturnOk() {
+        try{
+            when(couriersService.save(courier)).thenReturn(courier);
+            this.mockMvc.perform(post("/api/couriers/change-packagesize").contentType("application/json").content(objectMapper.writeValueAsString(courier))).andExpect(status().isOk());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
+    void postCourierPackageSize_ReturnBadRequest() {
+        try{
+            when(couriersService.save(courier)).thenThrow(new Exception());
+            this.mockMvc.perform(post("/api/couriers/change-packagesize")).andExpect(status().isBadRequest());
+        }
+        catch (Exception ex){
+            fail();
+        }
+    }
+
+    @Test
     public void testAddZoneToCourierOk(){
         try{
             CourierZoneDTO courierZoneDTO = new CourierZoneDTO();
@@ -211,7 +234,7 @@ public class CouriersControllerTest {
 
     private Courier getCourier(){
         Courier courier = new Courier();
-        courier.setId(1);
+        courier.setId(0);
         courier.setKvkNumber(11111111);
         return courier;
     }

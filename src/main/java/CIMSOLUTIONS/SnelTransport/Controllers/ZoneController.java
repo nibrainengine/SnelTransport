@@ -1,5 +1,6 @@
 package CIMSOLUTIONS.SnelTransport.Controllers;
 
+import CIMSOLUTIONS.SnelTransport.DTO.ZoneDTO;
 import CIMSOLUTIONS.SnelTransport.Services.ZoneService;
 import CIMSOLUTIONS.SnelTransport.Models.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -48,6 +48,35 @@ public class ZoneController {
         try {
             List<Zone> zones = zoneService.getAll();
             return ResponseEntity.ok(zones);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    /**
+     * Fetches all zone requests from the databases and converts this into a json format (an array of ZoneDTO's with a
+     * zoneId, zoneTitle, CourierId and CourierName (ie a combination of several tables enabling the displaying of
+     * useful information to the user and allowing the correct selection of the zone request).
+     * @return List<ZoneDTO>
+     */
+    @GetMapping("/requests")
+    public List<ZoneDTO> getAllZoneRequests(){
+        return zoneService.getAllZoneRequests();
+    }
+
+    /**
+     * Put function that updates the courierZone table by changing the isApproved field of the specified courierId and
+     * zoneId from false to true, or by removing the specified row if the request is rejected.
+     * @param zoneId - The id of the zone that is accepted or rejected
+     * @param courierId - The id of the courier whose zone is accepted or rejected
+     * @param accepted - boolean indicating whether the zone request has been accepted or rejected
+     * @return ResponseEntity.ok with 1 being successful and 0 not
+     */
+    @PostMapping("/requests/{zoneId}/{courierId}")
+    public ResponseEntity<Integer> handleZoneRequest(@PathVariable int zoneId, @PathVariable int courierId,
+                                                     @RequestBody boolean accepted){
+        try {
+            return ResponseEntity.ok(zoneService.handleZoneRequest(zoneId, courierId, accepted));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

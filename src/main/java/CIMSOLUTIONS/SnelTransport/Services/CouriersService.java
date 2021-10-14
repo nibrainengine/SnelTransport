@@ -47,6 +47,22 @@ public class CouriersService {
     }
 
     /**
+     * Fuses a Courier and Packagesize Object
+     * @param courier a single courier with an unique identifier
+     * @return Single Courier object
+     * @throws Exception Exeption message.
+     */
+    public Courier save(Courier courier) throws Exception {
+        try{
+            couriersDAO.save(courier);
+            return courier;
+        }
+        catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * Adds zone to courier
      * @param courierZoneDTO object with courierId and zoneId
      * @throws Exception Exception in courierDAO
