@@ -61,4 +61,13 @@ public class CouriersService {
             throw new Exception(e.getMessage());
         }
     }
+
+    /**
+     * Adds zone to courier
+     * @param courierZoneDTO object with courierId and zoneId
+     * @throws Exception Exception in courierDAO
+     */
+    public void addZoneToCourier(CourierZoneDTO courierZoneDTO) throws Exception {
+        couriersDAO.addZoneToCourier(courierZoneDTO);
+    }
 }

@@ -8,6 +8,7 @@ DROP table if exists PickupHub;
 DROP table if exists address;
 DROP TABLE IF EXISTS canceledCourierSchedule;
 DROP TABLE IF EXISTS courierAvailablePeriod;
+DROP TABLE IF EXISTS courierZone;
 
 CREATE TABLE address (
     id int GENERATED ALWAYS AS IDENTITY not null primary key,
@@ -82,4 +83,11 @@ create table courierAvailablePeriod (
     end datetime,
     price decimal(18,2),
     isApproved boolean
+);
+
+create table courierZone (
+    courierId int,
+    zoneId int,
+    isApproved bit,
+    primary key (courierId, zoneId)
 );
