@@ -12,7 +12,8 @@ import java.nio.charset.StandardCharsets;
 public class PythonEndPoint {
 
     /**
-     * This method gets the data from python
+     * This method gets the data from python endpoint
+     * todo: to use data, set method to return data of type - 'x'
      */
     public void getDataFromPython(){
         try {
@@ -46,6 +47,7 @@ public class PythonEndPoint {
 
     /**
      *method for posting the data to python
+     * todo: to use data, set method to return data of type - 'x'
      * @param inputData contains arraylist posted to python flask
      */
 
